@@ -66,8 +66,8 @@ const Logout = styled.div`
   font-size: 15px;
   line-height: 18px;
 
-  transform: ${(props) =>
-    props.show ? "translateX(0px)" : "translateX(130px)"};
+  transform: ${(props) => props.show ? "translateY(0px)" : "translateY(-45px)"};
+  opacity: ${(props) => props.show ? "1" : "0"};
   transition: all 0.3s ease-in-out;
 
   &:hover {

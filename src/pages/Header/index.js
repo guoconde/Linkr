@@ -8,7 +8,7 @@ export default function Header() {
   const [toggleLogout, setToggleLogout] = useState(false);
   const { pathname } = useLocation();
 
-  if (pathname === "/login" || pathname === "/register") {
+  if (pathname === "/" || pathname === "/sign-up") {
     return null;
   }
 

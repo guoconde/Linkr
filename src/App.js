@@ -9,6 +9,8 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home/>}/>
+        <Route path="/sign-up" element={<Home/>}/>
+        <Route path="/timeline" element={<Home/>}/>
       </Routes>
     </BrowserRouter>
   );
