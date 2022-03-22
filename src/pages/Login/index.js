@@ -15,7 +15,7 @@ export default function Login() {
             <Input placeholder="e-mail"></Input>
             <Input placeholder="password"></Input>
             <Button>Log In</Button>
-            <StyledLink to="/">First time? Create an account!</StyledLink>
+            <StyledLink to="/sign-up">First time? Create an account!</StyledLink>
           </Form>
         </FormSide>
         
