@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from "react-router";
 import { AuthContainer, SloganSide, Logo, Slogan, FormSide } from "../../components/AuthScreenComponents"
 import { Form, Input, Button, StyledLink } from "../../components/FormComponents";
 import useApi from "../../hooks/useApi";
+import useAuth from "../../hooks/useAuth";
 import { fireAlert } from "../../utils/alerts";
 
 export default function Login() {
   const navigate = useNavigate();
   const api = useApi()
+  const { auth, login } = useAuth()
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(()=>{
+    console.log(auth)
+    if(auth)navigate("/timeline")
+    //eslint-disable-next-line
+  }, [])
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,7 +41,7 @@ export default function Login() {
         try {
           const { data } = await api.auth.login(formData)
           console.log(data)
-          
+          login(data)
           setIsLoading(false);
           navigate("/timeline");
         } catch (error) {
