@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from "react-router";
 import { AuthContainer, SloganSide, Logo, Slogan, FormSide } from "../../components/AuthScreenComponents"
@@ -11,12 +11,6 @@ export default function Login() {
     const api = useApi()
     const [formData, setFormData] = useState({ email: '', password: '' })
     const [isLoading, setIsLoading] = useState(false);
-    //const { user, setUser } = useContext(UserContext)
-
-    // useEffect(()=>{
-    //     if(user)navigate("/")
-    //     //eslint-disable-next-line
-    // }, [])
 
     function handleChange(e) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,7 +22,7 @@ export default function Login() {
 
         if(!formData.email || !formData.password) {
           setIsLoading(false);
-          return fireAlert("Peencha todos os campos")
+          return fireAlert("Fill in all fields")
         }
 
         try {
@@ -36,7 +30,6 @@ export default function Login() {
           console.log(data)
           
           setIsLoading(false);
-          //setUser({ token:data.token, username:data.username })
           navigate("/timeline");
         } catch (error) {
           setIsLoading(false);
@@ -80,7 +73,7 @@ export default function Login() {
                 </Button>
 
                 <StyledLink to="/sign-up">
-                  Primeira vez? Cadastre-se!
+                  First time? Create an account!
               </StyledLink>
             </Form>
             
