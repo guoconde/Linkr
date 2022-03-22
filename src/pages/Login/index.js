@@ -1,24 +1,91 @@
+import { useEffect, useState } from "react";
+import { ThreeDots } from 'react-loader-spinner';
+import { useNavigate } from "react-router";
 import { AuthContainer, SloganSide, Logo, Slogan, FormSide } from "../../components/AuthScreenComponents"
-import {  Form, Input, Button, StyledLink } from "../../components/FormComponents";
+import { Form, Input, Button, StyledLink } from "../../components/FormComponents";
+import useApi from "../../hooks/useApi";
+import { fireAlert } from "../../utils/alerts";
 
 export default function Login() {
-    return (
-      <AuthContainer>
+  const navigate = useNavigate();
+  const api = useApi()
+  const [formData, setFormData] = useState({ email: '', password: '' })
+  const [isLoading, setIsLoading] = useState(false);
+  //const { user, setUser } = useContext(UserContext)
 
-        <SloganSide>
-          <Logo>linkr</Logo>
-          <Slogan>save, share and discover <br/> the best links on the web</Slogan>
-        </SloganSide>
+  // useEffect(()=>{
+  //     if(user)navigate("/")
+  //     //eslint-disable-next-line
+  // }, [])
 
-        <FormSide>
-          <Form>
-            <Input placeholder="e-mail"></Input>
-            <Input placeholder="password"></Input>
-            <Button>Log In</Button>
-            <StyledLink to="/sign-up">First time? Create an account!</StyledLink>
-          </Form>
-        </FormSide>
-        
-      </AuthContainer>
-    );
+  function handleChange(e) {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setIsLoading(true);
+
+    if (!formData.email || !formData.password) {
+      setIsLoading(false);
+      return fireAlert("Peencha todos os campos")
+    }
+
+    try {
+      const { data } = await api.auth.login(formData)
+      console.log(data)
+
+      setIsLoading(false);
+      //setUser({ token:data.token, username:data.username })
+      navigate("/timeline");
+    } catch (error) {
+      setIsLoading(false);
+      fireAlert(error.response.data)
+    }
+  }
+
+  return (
+    <AuthContainer>
+
+      <SloganSide>
+        <Logo>linkr</Logo>
+        <Slogan>save, share and discover <br /> the best links on the web</Slogan>
+      </SloganSide>
+
+      <FormSide>
+        <Form onSubmit={handleSubmit}>
+          <Input
+            type="email"
+            placeholder="E-mail"
+            name="email"
+            onChange={handleChange}
+            value={formData.email}
+            disabled={isLoading}
+          />
+          <Input
+            type="password"
+            placeholder="Senha"
+            name="password"
+            onChange={handleChange}
+            value={formData.password}
+            disabled={isLoading}
+          />
+
+          <Button type="submit" disabled={isLoading}>
+            {
+              isLoading
+                ? <ThreeDots type="ThreeDots" color="#FFFFFF" height={50} width={50} />
+                : "Entrar"
+            }
+          </Button>
+
+          <StyledLink to="/sign-up">
+            First time? Create an account!
+          </StyledLink>
+        </Form>
+
+      </FormSide>
+
+    </AuthContainer>
+  );
+}

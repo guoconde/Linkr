@@ -6,7 +6,6 @@ import Register from "./pages/Register";
 import { AuthProvider } from "./contexts/AuthContext";
 
 export default function App() {
-
   return (
     <AuthProvider>
       <BrowserRouter>
