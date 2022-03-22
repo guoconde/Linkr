@@ -40,6 +40,7 @@ const DownArrow = styled(BiChevronDown)`
   color: #fff;
   font-size: 40px;
   transition: all 0.3s ease-in-out;
+  transform: ${(props) => props.show && "rotate(180deg)" };
 
   &:hover {
     color: #1a936f;
@@ -54,6 +55,7 @@ const Logout = styled.div`
   position: absolute;
   right: -20px;
   top: 72px;
+  z-index: -1;
 
   background-color: #171717;
   border-radius: 0px 0px 20px 20px;

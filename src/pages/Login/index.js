@@ -14,9 +14,9 @@ export default function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(auth)
-    if(auth)navigate("/timeline")
+    if (auth) navigate("/timeline")
     //eslint-disable-next-line
   }, [])
 
@@ -30,25 +30,20 @@ export default function Login() {
 
     if (!formData.email || !formData.password) {
       setIsLoading(false);
-      return fireAlert("Peencha todos os campos")
+      return fireAlert("Fill in all fields")
     }
 
-        if(!formData.email || !formData.password) {
-          setIsLoading(false);
-          return fireAlert("Fill in all fields")
-        }
-
-        try {
-          const { data } = await api.auth.login(formData)
-          console.log(data)
-          login(data)
-          setIsLoading(false);
-          navigate("/timeline");
-        } catch (error) {
-          setIsLoading(false);
-          fireAlert(error.response.data)
-        }
+    try {
+      const { data } = await api.auth.login(formData)
+      console.log(data)
+      login(data)
+      setIsLoading(false);
+      navigate("/timeline");
+    } catch (error) {
+      setIsLoading(false);
+      fireAlert(error.response.data)
     }
+  }
 
   return (
     <AuthContainer>

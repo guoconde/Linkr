@@ -1,18 +1,17 @@
-import { createContext, useState } from "react";
+import { createContext } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const persistedAuth = JSON.parse(localStorage.getItem("auth")); 
-  const [auth, setAuth] = useState(persistedAuth);
+  const [auth, setAuth] = useLocalStorage('auth', null);
 
   function login(authData) {
     setAuth(authData);
-    localStorage.setItem("auth", JSON.stringify(authData));
   }
 
   function logout() {
-    localStorage.removeItem("auth");
+    setAuth(null);
   }
 
   return (
