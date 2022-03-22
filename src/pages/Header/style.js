@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BiChevronDown } from "react-icons/bi";
+import { BiChevronDown } from "react-icons/bi"
 
 const Container = styled.header`
   position: fixed;
