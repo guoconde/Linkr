@@ -1,20 +1,51 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ProfilePicture from "../../../components/profilePicture";
+import useApi from "../../../hooks/useApi";
 import { Button, Container, Description, Input, TextArea } from "./style";
+import AuthContext from "../../../contexts/AuthContext";
+import { fireAlert } from "../../../utils/alerts";
 
 export default function PublishPost() {
   const [formData, setFormData] = useState({
     url: "",
     description: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const { auth } = useContext(AuthContext);
+  const api = useApi();
+  const headers = {
+    headers: {
+      Authorization: `Bearer 1${auth.token}`
+    }
+  }
 
   function handleInputChange({ target }) {
     setFormData({ ...formData, [target.name]: target.value });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+
+    if (!formData.url) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      await api.posts.publish(formData, headers);
+      setFormData({
+        url: "",
+        description: "",
+      });
+
+    } catch (error) {
+      fireAlert(error.response.data);
+    }
+
+    setIsLoading(false);
   }
+
   return (
     <Container>
       <ProfilePicture />
@@ -28,6 +59,8 @@ export default function PublishPost() {
           value={formData.url}
           placeholder="http://..."
           onChange={handleInputChange}
+          disabled={isLoading}
+          required
         />
         
         <TextArea
@@ -35,9 +68,12 @@ export default function PublishPost() {
           value={formData.description}
           placeholder="Awesome article about #javascript"
           onChange={handleInputChange}
+          disabled={isLoading}
         />
 
-        <Button>Publish</Button>
+        <Button disabled={isLoading}>
+          {isLoading ? "Publishing..." : "Publish"}
+        </Button>
       </form>
     </Container>
   );
