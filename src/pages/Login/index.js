@@ -25,18 +25,22 @@ export default function Login() {
       return fireAlert("Peencha todos os campos")
     }
 
-    try {
-      const { data } = await api.auth.login(formData)
-      console.log(data)
+        if(!formData.email || !formData.password) {
+          setIsLoading(false);
+          return fireAlert("Fill in all fields")
+        }
 
-      setIsLoading(false);
-      //setUser({ token:data.token, username:data.username })
-      navigate("/timeline");
-    } catch (error) {
-      setIsLoading(false);
-      fireAlert(error.response.data)
+        try {
+          const { data } = await api.auth.login(formData)
+          console.log(data)
+          
+          setIsLoading(false);
+          navigate("/timeline");
+        } catch (error) {
+          setIsLoading(false);
+          fireAlert(error.response.data)
+        }
     }
-  }
 
   return (
     <AuthContainer>
