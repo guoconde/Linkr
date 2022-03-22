@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from "react-router";
 import { AuthContainer, SloganSide, Logo, Slogan, FormSide } from "../../components/AuthScreenComponents"
@@ -11,12 +11,6 @@ export default function Login() {
   const api = useApi()
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [isLoading, setIsLoading] = useState(false);
-  //const { user, setUser } = useContext(UserContext)
-
-  // useEffect(()=>{
-  //     if(user)navigate("/")
-  //     //eslint-disable-next-line
-  // }, [])
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
