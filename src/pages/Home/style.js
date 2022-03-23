@@ -10,11 +10,15 @@ const Container = styled.div`
 const Content = styled.div`
   width: 100%;
 
-  margin-top: 150px;
+  padding-top: 150px;
 
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: start;
+  justify-content: center;
 `;
 
-export { Container, Content };
+const ContainerFeed = styled.div`
+  margin-right: 20px;
+`;
+
+export { Container, Content, ContainerFeed };
