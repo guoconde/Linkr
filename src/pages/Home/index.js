@@ -1,5 +1,5 @@
 import PublishPost from "./PublishPost";
-import { Container, Content } from "./style";
+import { Container, Content, TitleOfSection } from "./style";
 import useMenu from "../../hooks/useMenu";
 
 export default function Home() {
@@ -8,6 +8,7 @@ export default function Home() {
   return (
     <Container onClick={() => handleHideLogout()}>
       <Content>
+        <TitleOfSection>timeline</TitleOfSection>
         <PublishPost />
       </Content>
     </Container>

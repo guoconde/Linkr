@@ -5,7 +5,6 @@ const Container = styled.div`
   width: 611px;
   min-height: 209px;
 
-  position: relative;
   padding: 20px;
 
   background: #ffffff;
@@ -13,10 +12,10 @@ const Container = styled.div`
   border-radius: 16px;
 
   display: flex;
-  gap: 18px;
+  gap: 8px;
 
   form {
-    width: 100%;
+    width: 502px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -24,10 +23,15 @@ const Container = styled.div`
 
   @media screen and (max-width: 610px) {
     width: 100%;
+    border-radius: 0;
     
     ${Image} {
       display: none;
       border: 2px solid black;
+    }
+    
+    form {
+      width: 100%;
     }
   }
 `;
