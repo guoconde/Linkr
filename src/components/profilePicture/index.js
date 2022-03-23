@@ -1,7 +1,18 @@
 import styled from "styled-components";
+import useAuth from "../../hooks/useAuth";
+import useMenu from "../../hooks/useMenu";
 
-export default function ProfilePicture (source) {
-  return <Image src={source} alt="profile-picture" />
+export default function ProfilePicture() {
+  const { auth } = useAuth();
+  const { handleToggleLogout } = useMenu();
+
+  return (
+    <Image
+      onClick={() => handleToggleLogout()}
+      src={auth?.photo}
+      alt="profile-picture"
+    />
+  );
 }
 
 const Image = styled.img`

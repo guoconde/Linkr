@@ -4,18 +4,21 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { AuthProvider } from "./contexts/AuthContext";
+import { MenuProvider } from "./contexts/MenuContext";
 
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/timeline" element={<Home />} />
-          <Route path="/" element={<Login />} />
-          <Route path="/sign-up" element={<Register />} />
-        </Routes>
-      </BrowserRouter>
+      <MenuProvider>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/timeline" element={<Home />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/sign-up" element={<Register />} />
+          </Routes>
+        </BrowserRouter>
+      </MenuProvider>
     </AuthProvider>
   );
 }
