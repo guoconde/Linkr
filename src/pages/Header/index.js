@@ -8,8 +8,8 @@ import { Container, DownArrow, Logout, Title, UserIcon } from "./style";
 export default function Header() {
   const navigate = useNavigate();
   const { auth, logout } = useAuth();
-  const [toggleLogout, setToggleLogout] = useState(false);
   const { pathname } = useLocation();
+  const [toggleLogout, setToggleLogout] = useState(false);
 
   useEffect(() => {
     if(!auth) navigate("/");
@@ -24,9 +24,12 @@ export default function Header() {
     <Container>
       <Title>linkr</Title>
       <UserIcon>
-        <DownArrow show={toggleLogout} onClick={() => setToggleLogout(!toggleLogout)}/>
-        
-        <Logout onClick={logout} show={toggleLogout}>Logout</Logout>
+        <DownArrow 
+          show={toggleLogout ? 1 : undefined} 
+          onClick={() => setToggleLogout(!toggleLogout)}
+        />
+
+        <Logout onClick={() => logout()} show={toggleLogout ? 1 : undefined}>Logout</Logout>
 
         <ProfilePicture />
       </UserIcon>

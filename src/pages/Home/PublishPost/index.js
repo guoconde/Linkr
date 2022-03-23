@@ -15,7 +15,7 @@ export default function PublishPost() {
   const api = useApi();
   const headers = {
     headers: {
-      Authorization: `Bearer 1${auth.token}`
+      Authorization: `Bearer ${auth?.token}`
     }
   }
 
