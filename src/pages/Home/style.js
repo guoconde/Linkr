@@ -3,20 +3,20 @@ import styled from "styled-components";
 const Container = styled.div`
   width: 100%;
 
-  padding-top: 120px;
-
+  margin: 120px auto 0 auto;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 
   font-family: "Lato", sans-serif;
 `;
 
-const Content = styled.main`
-  width: 612px;
+const Content = styled.div`
+  width: 100%;
 
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: start;
+  justify-content: center;
 `;
 
 const TitleOfSection = styled.h2`
@@ -35,4 +35,8 @@ const TitleOfSection = styled.h2`
   }
 `;
 
-export { Container, Content, TitleOfSection};
+const ContainerFeed = styled.div`
+  margin-right: 20px;
+`;
+
+export { Container, Content, ContainerFeed, TitleOfSection };

@@ -1,5 +1,6 @@
 import PublishPost from "./PublishPost";
-import { Container, Content, TitleOfSection } from "./style";
+import Trendings from "./Trendings";
+import { Container, Content, ContainerFeed, TitleOfSection } from "./style";
 import useMenu from "../../hooks/useMenu";
 
 export default function Home() {
@@ -8,8 +9,12 @@ export default function Home() {
   return (
     <Container onClick={() => handleHideLogout()}>
       <Content>
-        <TitleOfSection>timeline</TitleOfSection>
-        <PublishPost />
+        <ContainerFeed>
+          <TitleOfSection>timeline</TitleOfSection>
+          <PublishPost />
+        </ContainerFeed>
+
+        <Trendings />
       </Content>
     </Container>
   );
