@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { Image } from "../../../components/profilePicture";
 
 const Container = styled.div`
   width: 611px;
-  height: 209px;
+  min-height: 209px;
 
   position: relative;
   padding: 20px;
@@ -18,11 +19,16 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
   }
 
   @media screen and (max-width: 610px) {
     width: 100%;
+    
+    ${Image} {
+      display: none;
+      border: 2px solid black;
+    }
   }
 `;
 
@@ -72,9 +78,7 @@ const Button = styled.button`
   width: 112px;
   height: 31px;
 
-  position: absolute;
-  bottom: 16px;
-  right: 22px;
+  align-self: flex-end;
 
   background: #1877f2;
   border-radius: 5px;
