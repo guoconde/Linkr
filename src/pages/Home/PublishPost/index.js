@@ -5,6 +5,7 @@ import useMenu from "../../../hooks/useMenu";
 import { Button, Container, Description, Input, TextArea } from "./style";
 import AuthContext from "../../../contexts/AuthContext";
 import { fireAlert } from "../../../utils/alerts";
+import AllPosts from "../AllPosts";
 
 export default function PublishPost() {
   const [formData, setFormData] = useState({
@@ -49,34 +50,37 @@ export default function PublishPost() {
   }
 
   return (
-    <Container onClick={() => handleHideLogout()}>
-      <ProfilePicture />
+    <>
+      <Container onClick={() => handleHideLogout()}>
+        <ProfilePicture />
 
-      <form onSubmit={handleSubmit}>
-        <Description>What are you going to share today?</Description>
+        <form onSubmit={handleSubmit}>
+          <Description>What are you going to share today?</Description>
 
-        <Input
-          type="url"
-          name="url"
-          value={formData.url}
-          placeholder="http://..."
-          onChange={handleInputChange}
-          disabled={isLoading}
-          required
-        />
-        
-        <TextArea
-          name="description"
-          value={formData.description}
-          placeholder="Awesome article about #javascript"
-          onChange={handleInputChange}
-          disabled={isLoading}
-        />
+          <Input
+            type="url"
+            name="url"
+            value={formData.url}
+            placeholder="http://..."
+            onChange={handleInputChange}
+            disabled={isLoading}
+            required
+          />
 
-        <Button disabled={isLoading}>
-          {isLoading ? "Publishing..." : "Publish"}
-        </Button>
-      </form>
-    </Container>
+          <TextArea
+            name="description"
+            value={formData.description}
+            placeholder="Awesome article about #javascript"
+            onChange={handleInputChange}
+            disabled={isLoading}
+          />
+
+          <Button disabled={isLoading}>
+            {isLoading ? "Publishing..." : "Publish"}
+          </Button>
+        </form>
+      </Container>
+      <AllPosts></AllPosts>
+    </>
   );
 }
