@@ -13,7 +13,10 @@ export default function Header() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (!auth) navigate("/");
+    if (!auth) {
+      handleHideLogout();
+      navigate("/");
+    }
     //eslint-disable-next-line
   }, [auth]);
 
