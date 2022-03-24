@@ -3,18 +3,49 @@ import styled from "styled-components";
 const Container = styled.div`
   width: 100%;
 
-  background-color: #333333;
+  margin-top: 120px;
+
+  display: flex;
+  justify-content: center;
+
   font-family: "Lato", sans-serif;
 `;
 
 const Content = styled.div`
-  width: 100%;
+  width: 610px;
 
-  margin-top: 150px;
+  margin-right: 25px;
+  margin-bottom: 60px;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+
+  @media screen and (max-width: 1000px) {
+    margin-right: 0px;
+  }
+  @media screen and (max-width: 650px) {
+    width: 100%;
+  }
 `;
 
-export { Container, Content };
+const TitleOfSection = styled.h2`
+  color: #FFFFFF;
+  font-family: 'Oswald';
+  font-weight: 700;
+  font-size: 43px;
+  line-height: 64px;
+
+  margin-bottom: 40px;
+  align-self: flex-start;
+
+  @media screen and (max-width: 650px) {
+    margin-top: 19px;
+    margin-left: 18px;
+  }
+`;
+
+export { 
+  Container, 
+  Content, 
+  TitleOfSection
+};

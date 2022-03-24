@@ -15,7 +15,7 @@ export default function ProfilePicture() {
   );
 }
 
-const Image = styled.img`
+export const Image = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;

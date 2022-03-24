@@ -2,9 +2,16 @@ import { useState, useContext } from "react";
 import ProfilePicture from "../../../components/profilePicture";
 import useApi from "../../../hooks/useApi";
 import useMenu from "../../../hooks/useMenu";
-import { Button, Container, Description, Input, TextArea } from "./style";
+import { 
+  Button, 
+  Container, 
+  ContainerProfilePicture, 
+  Description, 
+  Input, 
+  TextArea } from "./style";
 import AuthContext from "../../../contexts/AuthContext";
 import { fireAlert } from "../../../utils/alerts";
+import { useLocation } from "react-router";
 
 export default function PublishPost() {
   const [formData, setFormData] = useState({
@@ -13,6 +20,7 @@ export default function PublishPost() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const { auth } = useContext(AuthContext);
+  const { pathname } = useLocation();
   const api = useApi();
   const headers = {
     headers: {
@@ -48,9 +56,15 @@ export default function PublishPost() {
     setIsLoading(false);
   }
 
+  if (pathname.includes('hashtag') || pathname.includes('user')) {
+    return null;
+  }
+
   return (
     <Container onClick={() => handleHideLogout()}>
-      <ProfilePicture />
+      <ContainerProfilePicture>
+        <ProfilePicture />
+      </ContainerProfilePicture>
 
       <form onSubmit={handleSubmit}>
         <Description>What are you going to share today?</Description>
@@ -64,7 +78,7 @@ export default function PublishPost() {
           disabled={isLoading}
           required
         />
-        
+
         <TextArea
           name="description"
           value={formData.description}
