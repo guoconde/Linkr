@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import ProfilePicture from "../../../components/profilePicture";
 import useApi from "../../../hooks/useApi";
 import useMenu from "../../../hooks/useMenu";
-import { Button, Container, Description, Input, TextArea } from "./style";
+import { Button, Container, Description, DivTimeline, Input, TextArea } from "./style";
 import AuthContext from "../../../contexts/AuthContext";
 import { fireAlert } from "../../../utils/alerts";
 import AllPosts from "../AllPosts";
@@ -51,9 +51,9 @@ export default function PublishPost() {
 
   return (
     <>
+      <DivTimeline>timeline</DivTimeline>
       <Container onClick={() => handleHideLogout()}>
         <ProfilePicture />
-
         <form onSubmit={handleSubmit}>
           <Description>What are you going to share today?</Description>
 
