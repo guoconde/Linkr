@@ -11,6 +11,7 @@ import {
   Content,
   MetaLink,
   ImagePost,
+  GrEditCustom
 } from "./style";
 import { Watch } from "react-loader-spinner";
 import { fireAlert } from "../../../utils/alerts";
@@ -62,6 +63,7 @@ export default function AllPosts() {
         <Container key={i}>
           <ContainerImage>
             <Image src={el.photo} />
+            <GrEditCustom />
           </ContainerImage>
           <ContainerPost>
             <Name>{el.name}</Name>
