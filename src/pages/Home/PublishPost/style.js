@@ -1,10 +1,10 @@
 import styled from "styled-components";
+import { Image } from "../../../components/profilePicture";
 
 const Container = styled.div`
-  width: 611px;
-  height: 209px;
+  width: 100%;
+  min-height: 209px;
 
-  position: relative;
   padding: 20px;
 
   background: #ffffff;
@@ -12,18 +12,32 @@ const Container = styled.div`
   border-radius: 16px;
 
   display: flex;
-  gap: 18px;
+  gap: 8px;
 
   form {
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
   }
 
-  @media screen and (max-width: 610px) {
+  @media screen and (max-width: 650px) {
     width: 100%;
+    border-radius: 0;
+    
+    ${Image} {
+      display: none;
+      border: 2px solid black;
+    }
+    
+    form {
+      width: 100%;
+    }
   }
+`;
+
+const ContainerProfilePicture = styled.div`
+  width: 10%;
 `;
 
 const Description = styled.span`
@@ -72,9 +86,7 @@ const Button = styled.button`
   width: 112px;
   height: 31px;
 
-  position: absolute;
-  bottom: 16px;
-  right: 22px;
+  align-self: flex-end;
 
   background: #1877f2;
   border-radius: 5px;
@@ -93,4 +105,11 @@ const Button = styled.button`
   }
 `;
 
-export { Container, Description, TextArea, Button, Input };
+export { 
+  Container, 
+  ContainerProfilePicture,
+  Description, 
+  TextArea, 
+  Button, 
+  Input
+ };

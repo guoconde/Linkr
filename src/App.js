@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import { MenuProvider } from "./contexts/MenuContext";
+
 import Header from "./pages/Header";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { AuthProvider } from "./contexts/AuthContext";
-import { MenuProvider } from "./contexts/MenuContext";
 import Hashtag from "./pages/Hashtag";
+import Temporary from "./temporary";
 
 export default function App() {
   return (
@@ -18,6 +20,7 @@ export default function App() {
             <Route path="/" element={<Login />} />
             <Route path="/sign-up" element={<Register />} />
             <Route path="/hashtag/:hashtag" element={<Hashtag/>} />
+            <Route path="/teste" element={<Temporary />} />
           </Routes>
         </BrowserRouter>
       </MenuProvider>
