@@ -93,4 +93,13 @@ const Button = styled.button`
   }
 `;
 
-export { Container, Description, TextArea, Button, Input };
+const DivTimeline = styled.div`
+  font-family: Oswald;
+  font-size: 43px;
+  font-weight: 700;
+  line-height: 64px;
+  color: white;
+  margin-bottom: 43px;
+`
+
+export { Container, Description, TextArea, Button, Input, DivTimeline };
