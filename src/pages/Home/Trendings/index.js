@@ -6,7 +6,7 @@ import { Container, Divider, TitleContainer, Title, HashtagsContainer, HashtagLi
 export default function Trendings() {
   const api = useApi();
   const { auth } = useAuth();
-  const [trendings, setTrendings] = useState(null);
+  const [trendings, setTrendings] = useState([]);
 
   useEffect(() => {
     handleTrendings();
