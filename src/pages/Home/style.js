@@ -15,6 +15,7 @@ const Content = styled.div`
   width: 610px;
 
   margin-right: 25px;
+  margin-bottom: 60px;
 
   display: flex;
   flex-direction: column;
