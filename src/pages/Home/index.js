@@ -3,10 +3,7 @@ import Trendings from "./Trendings";
 import {
   Container,
   Content,
-  TimelineTitle,
-  ContainerFeed,
-  ContainerTrendings,
-  ContainerTimeLine
+  TitleOfSection
 } from "./style";
 import useMenu from "../../hooks/useMenu";
 import AllPosts from "./AllPosts";
@@ -17,19 +14,11 @@ export default function Home() {
   return (
     <Container onClick={() => handleHideLogout()}>
       <Content>
-        <TimelineTitle>timeline</TimelineTitle>
-
-        <ContainerTimeLine>
-          <ContainerFeed>
-            <PublishPost />
-            <AllPosts></AllPosts>
-          </ContainerFeed>
-
-          <ContainerTrendings>
-            <Trendings />
-          </ContainerTrendings>
-        </ContainerTimeLine>
+        <TitleOfSection>timeline</TitleOfSection>
+        <PublishPost />
+        <AllPosts />
       </Content>
+      <Trendings />
     </Container>
   );
 }

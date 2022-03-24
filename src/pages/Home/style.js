@@ -3,58 +3,48 @@ import styled from "styled-components";
 const Container = styled.div`
   width: 100%;
 
+  margin-top: 120px;
+
   display: flex;
   justify-content: center;
-  align-items: center;
 
-  background-color: #333333;
   font-family: "Lato", sans-serif;
 `;
 
 const Content = styled.div`
-  width: 70%;
+  width: 610px;
 
-  padding-top: 150px;
-
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  flex-direction: column;
-`;
-
-const ContainerFeed = styled.div`
   margin-right: 25px;
 
-  width: 65%;
-`;
-
-const ContainerTrendings = styled.div`
-  height: 100%;
-
-  width: 35%;
-`;
-
-const ContainerTimeLine = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 
-  width: 100%;
+  @media screen and (max-width: 1000px) {
+    margin-right: 0px;
+  }
+  @media screen and (max-width: 650px) {
+    width: 100%;
+  }
 `;
 
-const TimelineTitle = styled.div`
-  font-family: Oswald;
-  font-size: 43px;
+const TitleOfSection = styled.h2`
+  color: #FFFFFF;
+  font-family: 'Oswald';
   font-weight: 700;
+  font-size: 43px;
   line-height: 64px;
-  color: white;
-  margin-bottom: 43px;
+
+  margin-bottom: 40px;
+  align-self: flex-start;
+
+  @media screen and (max-width: 650px) {
+    margin-top: 19px;
+    margin-left: 18px;
+  }
 `;
 
 export { 
   Container, 
   Content, 
-  TimelineTitle, 
-  ContainerFeed, 
-  ContainerTrendings,
-  ContainerTimeLine 
+  TitleOfSection
 };

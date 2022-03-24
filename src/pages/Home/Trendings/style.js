@@ -2,11 +2,16 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 100%;
+  width: 301px;
   height: 406px;
+  margin-top: 100px;
 
   background: #171717;
   border-radius: 16px;
+  
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const Divider = styled.hr`
