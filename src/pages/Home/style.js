@@ -3,20 +3,28 @@ import styled from "styled-components";
 const Container = styled.div`
   width: 100%;
 
-  margin: 120px auto 0 auto;
+  margin-top: 120px;
+
   display: flex;
-  flex-direction: column;
   justify-content: center;
 
   font-family: "Lato", sans-serif;
 `;
 
 const Content = styled.div`
-  width: 100%;
+  width: 610px;
+
+  margin-right: 25px;
 
   display: flex;
-  align-items: start;
-  justify-content: center;
+  flex-direction: column;
+
+  @media screen and (max-width: 1000px) {
+    margin-right: 0px;
+  }
+  @media screen and (max-width: 650px) {
+    width: 100%;
+  }
 `;
 
 const TitleOfSection = styled.h2`
@@ -29,14 +37,14 @@ const TitleOfSection = styled.h2`
   margin-bottom: 40px;
   align-self: flex-start;
 
-  @media screen and (max-width: 610px) {
+  @media screen and (max-width: 650px) {
     margin-top: 19px;
     margin-left: 18px;
   }
 `;
 
-const ContainerFeed = styled.div`
-  margin-right: 20px;
-`;
-
-export { Container, Content, ContainerFeed, TitleOfSection };
+export { 
+  Container, 
+  Content, 
+  TitleOfSection
+};

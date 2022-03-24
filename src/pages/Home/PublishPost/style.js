@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Image } from "../../../components/profilePicture";
 
 const Container = styled.div`
-  width: 611px;
+  width: 100%;
   min-height: 209px;
 
   padding: 20px;
@@ -15,13 +15,13 @@ const Container = styled.div`
   gap: 8px;
 
   form {
-    width: 502px;
+    width: 90%;
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
 
-  @media screen and (max-width: 610px) {
+  @media screen and (max-width: 650px) {
     width: 100%;
     border-radius: 0;
     
@@ -34,6 +34,10 @@ const Container = styled.div`
       width: 100%;
     }
   }
+`;
+
+const ContainerProfilePicture = styled.div`
+  width: 10%;
 `;
 
 const Description = styled.span`
@@ -101,4 +105,11 @@ const Button = styled.button`
   }
 `;
 
-export { Container, Description, TextArea, Button, Input };
+export { 
+  Container, 
+  ContainerProfilePicture,
+  Description, 
+  TextArea, 
+  Button, 
+  Input
+ };
