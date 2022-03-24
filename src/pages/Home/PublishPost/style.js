@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 611px;
+  width: 100%;
   height: 209px;
 
   position: relative;
@@ -15,7 +15,7 @@ const Container = styled.div`
   gap: 18px;
 
   form {
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -24,6 +24,10 @@ const Container = styled.div`
   @media screen and (max-width: 610px) {
     width: 100%;
   }
+`;
+
+const ContainerProfilePicture = styled.div`
+  width: 10%;
 `;
 
 const Description = styled.span`
@@ -93,13 +97,11 @@ const Button = styled.button`
   }
 `;
 
-const DivTimeline = styled.div`
-  font-family: Oswald;
-  font-size: 43px;
-  font-weight: 700;
-  line-height: 64px;
-  color: white;
-  margin-bottom: 43px;
-`
-
-export { Container, Description, TextArea, Button, Input, DivTimeline };
+export { 
+  Container, 
+  ContainerProfilePicture,
+  Description, 
+  TextArea, 
+  Button, 
+  Input
+ };

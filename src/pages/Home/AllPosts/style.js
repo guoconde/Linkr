@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 const Container = styled.div`
-  width: 611px;
+  width: 100%;
 
   position: relative;
   padding: 20px;
@@ -14,13 +14,19 @@ const Container = styled.div`
   gap: 18px;
 
   margin-top: 30px;
+`;
 
-  div{
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-  }
-`
+const ContainerImage = styled.div`
+    width: 10%;
+`;
+
+const ContainerPost = styled.div`
+    width: 90%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`;
 
 const Image = styled.img`
   width: 50px;
@@ -28,7 +34,7 @@ const Image = styled.img`
   border-radius: 50%;
 
   cursor: pointer;
-`
+`;
 
 const Name = styled.div`
     font-family: Lato;
@@ -47,8 +53,6 @@ const Description = styled.div`
     color: #B7B7B7;
 `;
 
-
-
 const Content = styled.div`
     width: 100%;
     display: flex;
@@ -64,10 +68,10 @@ const Content = styled.div`
     line-height: 20px;
 
     margin-top: 30px;
-`
+`;
 
 const MetaLink = styled.div`
-    width: 503px;
+    width: 100%;
     min-height: 155px;
 
     border: 1px solid #4d4d44;
@@ -101,8 +105,8 @@ const MetaLink = styled.div`
             color: #9B9595;
         }
     }
-    
-`
+`;
+
 const Link = styled.a`
     all: unset;
     font-size: 11px;
@@ -120,10 +124,13 @@ const ImagePost = styled.div`
 
     position: absolute;
     right: 0;
-`
+    top: 0;
+`;
 
 export {
     Container,
+    ContainerPost,
+    ContainerImage,
     Image,
     Name,
     Description,

@@ -2,10 +2,15 @@ import { useState, useContext } from "react";
 import ProfilePicture from "../../../components/profilePicture";
 import useApi from "../../../hooks/useApi";
 import useMenu from "../../../hooks/useMenu";
-import { Button, Container, Description, DivTimeline, Input, TextArea } from "./style";
+import { 
+  Button, 
+  Container, 
+  ContainerProfilePicture, 
+  Description, 
+  Input, 
+  TextArea } from "./style";
 import AuthContext from "../../../contexts/AuthContext";
 import { fireAlert } from "../../../utils/alerts";
-import AllPosts from "../AllPosts";
 
 export default function PublishPost() {
   const [formData, setFormData] = useState({
@@ -50,37 +55,36 @@ export default function PublishPost() {
   }
 
   return (
-    <>
-      <DivTimeline>timeline</DivTimeline>
-      <Container onClick={() => handleHideLogout()}>
+    <Container onClick={() => handleHideLogout()}>
+      <ContainerProfilePicture>
         <ProfilePicture />
-        <form onSubmit={handleSubmit}>
-          <Description>What are you going to share today?</Description>
+      </ContainerProfilePicture>
 
-          <Input
-            type="url"
-            name="url"
-            value={formData.url}
-            placeholder="http://..."
-            onChange={handleInputChange}
-            disabled={isLoading}
-            required
-          />
+      <form onSubmit={handleSubmit}>
+        <Description>What are you going to share today?</Description>
 
-          <TextArea
-            name="description"
-            value={formData.description}
-            placeholder="Awesome article about #javascript"
-            onChange={handleInputChange}
-            disabled={isLoading}
-          />
+        <Input
+          type="url"
+          name="url"
+          value={formData.url}
+          placeholder="http://..."
+          onChange={handleInputChange}
+          disabled={isLoading}
+          required
+        />
 
-          <Button disabled={isLoading}>
-            {isLoading ? "Publishing..." : "Publish"}
-          </Button>
-        </form>
-      </Container>
-      <AllPosts></AllPosts>
-    </>
+        <TextArea
+          name="description"
+          value={formData.description}
+          placeholder="Awesome article about #javascript"
+          onChange={handleInputChange}
+          disabled={isLoading}
+        />
+
+        <Button disabled={isLoading}>
+          {isLoading ? "Publishing..." : "Publish"}
+        </Button>
+      </form>
+    </Container>
   );
 }

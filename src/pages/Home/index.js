@@ -1,7 +1,15 @@
 import PublishPost from "./PublishPost";
 import Trendings from "./Trendings";
-import { Container, Content, ContainerFeed } from "./style";
+import {
+  Container,
+  Content,
+  TimelineTitle,
+  ContainerFeed,
+  ContainerTrendings,
+  ContainerTimeLine
+} from "./style";
 import useMenu from "../../hooks/useMenu";
+import AllPosts from "./AllPosts";
 
 export default function Home() {
   const { handleHideLogout } = useMenu();
@@ -9,11 +17,18 @@ export default function Home() {
   return (
     <Container onClick={() => handleHideLogout()}>
       <Content>
-        <ContainerFeed>
-          <PublishPost />
-        </ContainerFeed>
+        <TimelineTitle>timeline</TimelineTitle>
 
-        <Trendings />
+        <ContainerTimeLine>
+          <ContainerFeed>
+            <PublishPost />
+            <AllPosts></AllPosts>
+          </ContainerFeed>
+
+          <ContainerTrendings>
+            <Trendings />
+          </ContainerTrendings>
+        </ContainerTimeLine>
       </Content>
     </Container>
   );

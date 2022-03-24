@@ -1,6 +1,16 @@
 import { useState, useEffect } from "react"
 import useApi from "../../../hooks/useApi"
-import { Container, Name, Image, Description, Link, Content, MetaLink, ImagePost } from "./style"
+import { 
+    Container,
+    ContainerPost,
+    ContainerImage, 
+    Name, 
+    Image, 
+    Description, 
+    Link, 
+    Content, 
+    MetaLink, 
+    ImagePost } from "./style"
 import { Watch } from 'react-loader-spinner';
 import { fireAlert } from "../../../utils/alerts";
 
@@ -46,8 +56,10 @@ export default function AllPosts() {
         <>
             {data.map((el, i) =>
                 <Container key={i}>
-                    <Image src={el.photo} />
-                    <div>
+                    <ContainerImage>
+                        <Image src={el.photo} />
+                    </ContainerImage>
+                    <ContainerPost>
                         <Name>{el.name}</Name>
                         <Description>{el.description}</Description>
                         <MetaLink>
@@ -58,7 +70,7 @@ export default function AllPosts() {
                             </div>
                             <ImagePost backgroundImage={el.metadataImage} />
                         </MetaLink>
-                    </div>
+                    </ContainerPost>
                 </Container>
             )}
         </>
