@@ -1,24 +1,29 @@
 import { useEffect, useRef, useState } from "react";
+import useApi from "../../../../hooks/useApi";
+import useAuth from "../../../../hooks/useAuth";
 import styled from "styled-components";
 import HighlightHashtag from "../HighlightHashtags/HighlightHashtag";
 
-export default function PostDescription({ edit, setEdit, description, authUserId, elUserId }) {
+export default function PostDescription({ postId, url, edit, setEdit, description, authUserId, elUserId }) {
   const [showAction, setShowAction] = useState(<PostParagraph description={description} />);
 
   useEffect(() => {
     if (edit && (authUserId === elUserId)) {
       setShowAction(
-      <PostInput 
-        setEdit={setEdit}
-        description={description} 
-        setShowAction={setShowAction}
-      />)
+        <PostInput
+          postId={postId}
+          url={url}
+          setEdit={setEdit}
+          description={description}
+          setShowAction={setShowAction}
+        />
+      );
     }
 
     if (!edit && (authUserId === elUserId)) {
-      setShowAction(<PostParagraph description={description} />)
+      setShowAction(<PostParagraph description={description} />);
     }
-  }, [edit, authUserId, elUserId, description, setEdit])
+  }, [edit, authUserId, elUserId, description, setEdit, postId, url])
 
   return (
     showAction
@@ -35,17 +40,21 @@ function PostParagraph({ description }) {
   );
 }
 
-function PostInput({ description, setShowAction, setEdit }) {
+function PostInput({ postId, url, description, setShowAction, setEdit }) {
   const [descriptionReceived, setDescriptionReceived] = useState(description);
+  const [isLoading, setIsLoading] = useState(false);
   const descriptionInputRef = useRef(null);
-  const handleKeyDown = (event) => {
+  const api = useApi();
+  const { auth } = useAuth();
+  const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
-      console.log('do validate key Enter');
       setEdit(false);
+      setIsLoading(true);
+      /* await new Promise(resolve => setTimeout(resolve, 3000)); */
+      handleUpdatePost(postId, { url, description: descriptionReceived });
     }
 
     if (event.key === 'Escape') {
-      console.log('do validate key Escape');
       setEdit(false);
       setShowAction(<PostParagraph description={description} />);
     }
@@ -55,6 +64,25 @@ function PostInput({ description, setShowAction, setEdit }) {
     descriptionInputRef.current.focus();
   }, []);
 
+  async function handleUpdatePost(postId, data) {
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${auth?.token}`
+      }
+    }
+
+    try {
+      await api.posts.updatePost(postId, data, headers);
+
+      setShowAction(<PostParagraph description={descriptionReceived} />);
+    } catch (error) {
+      console.log(error.response.data);
+
+      alert("Unable to edit the post! Try again!");
+      setIsLoading(false);
+    }
+  }
+
   return (
     <Input
       type={'text'}
@@ -62,6 +90,7 @@ function PostInput({ description, setShowAction, setEdit }) {
       onChange={(e) => setDescriptionReceived(e.target.value)}
       onKeyDown={handleKeyDown}
       ref={descriptionInputRef}
+      disabled={isLoading ? 1 : undefined}
     />
   );
 }
@@ -70,9 +99,11 @@ const Input = styled.input`
   width: 100%;
   height: 44px;
 
+  pointer-events: ${(props) => props.disabled ? "none" : "all"};
+
   padding: 10px;
 
-  background: #FFFFFF;
+  background-color: ${(props) => props.disabled ? "#F2F2F2" : "#FFFFFF"};
   border: none;
   border-radius: 7px;
 
@@ -82,5 +113,5 @@ const Input = styled.input`
   font-size: 14px;
   line-height: 17px;
 
-  color: #4C4C4C;
+  color: ${(props) => props.disabled ? "#AFAFAF" : "#4C4C4C"};
 `;

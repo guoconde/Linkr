@@ -6,6 +6,10 @@ export default class PostsApi {
     }
 
     getAllPosts() {
-        return api.get("/posts")
+        return api.get("/posts");
+    }
+
+    updatePost(postId, data, headers) {
+        return api.put(`/posts/${postId}`, data, headers);
     }
 }

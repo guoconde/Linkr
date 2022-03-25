@@ -58,7 +58,7 @@ export default function AllPosts() {
     teste();
 
     // eslint-disable-next-line
-  }, [pathname]);
+  }, [pathname, edit]);
 
   if (!data)
     return (
@@ -75,8 +75,6 @@ export default function AllPosts() {
       </Content>
     );
 
-  console.log("edit: ", edit);
-
   return (
     <>
       {data.map((el, i) => (
@@ -90,6 +88,8 @@ export default function AllPosts() {
 
             <Description>
               <PostDescription
+                postId={el.id}
+                url={el.url}
                 edit={edit}
                 setEdit={setEdit}
                 description={el.description}
