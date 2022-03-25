@@ -4,6 +4,7 @@ import useApi from "../../../hooks/useApi";
 import useMenu from "../../../hooks/useMenu";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { fireAlert } from "../../../utils/alerts";
+import ProfilePicture from "../../../components/ProfilePicture";
 import { 
   Button, 
   Container, 
@@ -11,7 +12,6 @@ import {
   Description, 
   Input, 
   TextArea } from "./style";
-import ProfilePicture from "../../../components/ProfilePicture";
 
 
 export default function PublishPost() {
