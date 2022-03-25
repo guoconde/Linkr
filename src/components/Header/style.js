@@ -44,7 +44,7 @@ const DownArrow = styled(BiChevronDown)`
 
   &:hover {
     color: #1a936f;
-    transform: scale(1.2);
+    transform: scale(1.2) rotate(180deg);
   }
 `;
 

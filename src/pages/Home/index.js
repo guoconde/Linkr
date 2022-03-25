@@ -1,22 +1,23 @@
+import { useState } from "react";
+import { useLocation } from "react-router";
+import { useEffect } from "react/cjs/react.development";
 import PublishPost from "./PublishPost";
 import Trendings from "./Trendings";
+import AllPosts from "./AllPosts";
+import useMenu from "../../hooks/useMenu";
+import useSearchedUser from "../../hooks/useSearchedUser";
 import {
   Container,
   Content,
   TitleOfSection
 } from "./style";
-import useMenu from "../../hooks/useMenu";
-import AllPosts from "./AllPosts";
-import { useLocation } from "react-router";
-import { useContext, useEffect } from "react/cjs/react.development";
-import { useState } from "react";
-import { SearchedUserContext } from "../../contexts/SearchedUserContext";
+
 
 export default function Home() {
   const { handleHideLogout } = useMenu();
   const { pathname } = useLocation();
   const [ title, setTitle ] = useState()
-  const { usernameSearched } = useContext(SearchedUserContext)
+  const { usernameSearched } = useSearchedUser()
   
   useEffect(() => {
     if(pathname.split("/")[1] === "timeline") setTitle("timeline")

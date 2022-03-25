@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useMenu from "../../hooks/useMenu";
-import ProfilePicture from "../../components/profilePicture";
+import ProfilePicture from "../ProfilePicture";
 
 import { Container, DownArrow, Logout, Title, UserIcon } from "./style";
 

@@ -1,8 +1,8 @@
 import api from "./api"
 
 export default class FeedApi {
-    getAllPosts() {
-        return api.get("/posts")
+    listAll(headers) {
+        return api.get(`/posts`, headers)
     }
     listByHashtag(hashtag, headers) {
         return api.get(`/hashtag/${hashtag}`, headers);
@@ -11,13 +11,14 @@ export default class FeedApi {
         return api.get(`/user/${userId}`, headers);
     }
     getLike(id, headers) {
-        return api.get(`/posts/${id}`, headers)
+        return api.get(`/posts/${id}/like`, headers)
     }
-    updateLike(id, isLiked, headers) {
-        return api.put(`/posts/${id}`, {isLiked}, headers)
+    deleteLike(postId, userId, isLiked, headers) {
+        console.log('estou no updated')
+        return api.put(`/posts/${postId}/like`, {isLiked, userId}, headers)
     }
     insertLike(postId, userId, isLiked, headers) {
-        return api.post(`/posts/${postId}`, {isLiked, userId}, headers)
+        return api.post(`/posts/${postId}/like`, {isLiked, userId}, headers)
     }
 }
 

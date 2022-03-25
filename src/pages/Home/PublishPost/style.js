@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import { Image } from "../../../components/profilePicture";
+import { Image } from "../../../components/ProfilePicture";
 
 const Container = styled.div`
   width: 100%;
   min-height: 209px;
 
   padding: 20px;
+  margin-bottom: 30px;
 
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -38,6 +39,9 @@ const Container = styled.div`
 
 const ContainerProfilePicture = styled.div`
   width: 10%;
+  @media screen  and (max-width: 650px) {
+    display: none;
+  }
 `;
 
 const Description = styled.span`

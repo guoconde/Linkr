@@ -1,8 +1,8 @@
 import { createContext, useState } from "react";
 
-const MenuContext = createContext();
+export const MenuContext = createContext();
 
-export function MenuProvider({ children }) {
+export default function MenuProvider({ children }) {
   const [toggleLogout, setToggleLogout] = useState(false);
 
   function handleToggleLogout() {
@@ -19,5 +19,3 @@ export function MenuProvider({ children }) {
     </MenuContext.Provider>
   )
 }
-
-export default MenuContext;

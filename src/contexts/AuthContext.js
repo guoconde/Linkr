@@ -1,9 +1,9 @@
 import { createContext } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
+export default function AuthProvider({ children }) {
   const [auth, setAuth] = useLocalStorage('auth', null);
 
   function login(authData) {
@@ -20,5 +20,3 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   )
 }
-
-export default AuthContext;

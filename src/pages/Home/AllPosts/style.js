@@ -1,6 +1,14 @@
-import styled from "styled-components"
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { GrEdit } from 'react-icons/gr';
 
-const Container = styled.div`
+const Feed = styled.ul`
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+`;
+
+const Container = styled.li`
   width: 100%;
 
   position: relative;
@@ -12,8 +20,6 @@ const Container = styled.div`
 
   display: flex;
   gap: 18px;
-
-  margin-top: 30px;
 `;
 
 const ContainerImage = styled.div`
@@ -36,7 +42,7 @@ const Image = styled.img`
   cursor: pointer;
 `;
 
-const Name = styled.div`
+const Name = styled(Link)`
     font-family: Lato;
     font-size: 19px;
     font-weight: 400;
@@ -107,7 +113,7 @@ const MetaLink = styled.div`
     }
 `;
 
-const Link = styled.a`
+const ExternalLink = styled.a`
     all: unset;
     font-size: 11px;
     font-weight: 400;
@@ -127,15 +133,32 @@ const ImagePost = styled.div`
     top: 0;
 `;
 
+const ContainerAction = styled.div`
+    position: absolute;
+    right: 50px;
+    top: 20px;
+`;
+
+const GrEditCustom = styled(GrEdit)`
+    > * {
+        fill: transparent;
+        stroke: #FFFFFF;
+        cursor: pointer;
+    }
+`;
+
 export {
+    Feed,
     Container,
     ContainerPost,
     ContainerImage,
     Image,
     Name,
     Description,
-    Link,
+    ExternalLink,
     Content,
     MetaLink,
-    ImagePost
+    ImagePost,
+    ContainerAction,
+    GrEditCustom
 }
