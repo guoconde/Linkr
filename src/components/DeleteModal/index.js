@@ -8,7 +8,7 @@ import { Button, SectionButton, Title, Trash } from "./style";
 import { fireToast } from "../../utils/alerts";
 import usePost from "../../hooks/usePost";
 
-export default function DeleteModal({ postId, userId}) {
+export default function DeleteModal({ id: postId, userId}) {
   const [showModal, setShowModal] = useState(false);
   const [isProcessingRequest, setIsProcessingRequest] = useState(false);
   const api = useApi();

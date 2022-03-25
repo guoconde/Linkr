@@ -55,7 +55,7 @@ const Trash = styled(BsFillTrashFill)`
   top: 20px;
   z-index: 1;
   
-  font-size: 15px;
+  font-size: 20px;
   color: #fff;
 
   display: ${(props) => props.authid === props.userid ? "block": "none"};
