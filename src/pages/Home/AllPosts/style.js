@@ -1,4 +1,5 @@
-import styled from "styled-components"
+import styled from "styled-components";
+import { GrEdit } from 'react-icons/gr';
 
 const Container = styled.div`
   width: 100%;
@@ -127,6 +128,20 @@ const ImagePost = styled.div`
     top: 0;
 `;
 
+const ContainerAction = styled.div`
+    position: absolute;
+    right: 20px;
+    top: 20px;
+`;
+
+const GrEditCustom = styled(GrEdit)`
+    > * {
+        fill: transparent;
+        stroke: #FFFFFF;
+        cursor: pointer;
+    }
+`;
+
 export {
     Container,
     ContainerPost,
@@ -137,5 +152,7 @@ export {
     Link,
     Content,
     MetaLink,
-    ImagePost
+    ImagePost,
+    ContainerAction,
+    GrEditCustom
 }
