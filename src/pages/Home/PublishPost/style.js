@@ -38,6 +38,9 @@ const Container = styled.div`
 
 const ContainerProfilePicture = styled.div`
   width: 10%;
+  @media screen  and (max-width: 650px) {
+    display: none;
+  }
 `;
 
 const Description = styled.span`

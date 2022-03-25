@@ -63,7 +63,7 @@ export default function DeleteModal({ postId, userId}) {
   }
   return (
     <>
-      <Trash onClick={handleModal} userId={userId} authId={auth.userId}/>
+      <Trash onClick={handleModal} userid={userId} authid={auth.userId}/>
       <ReactModal
         isOpen={showModal}
         style={{ overlay, content }}

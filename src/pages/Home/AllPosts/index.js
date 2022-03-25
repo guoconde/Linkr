@@ -11,7 +11,7 @@ import {
   Name,
   Image,
   Description,
-  Link,
+  ExternalLink,
   Content,
   MetaLink,
   ImagePost,
@@ -87,15 +87,15 @@ export default function AllPosts() {
             <Image src={el.photo} />
           </ContainerImage>
           <ContainerPost>
-            <Name>{el.name}</Name>
+            <Name to={`/user/${el.userId}`}>{el.name}</Name>
             <Description><HighlightHashtag>{el.description}</HighlightHashtag></Description>
             <MetaLink>
               <div className="infoPost">
                 <p className="title">{el.metadataTitle}</p>
                 <p className="description">{el.metadataDescription}</p>
-                <Link href={el.url} target="_blank">
+                <ExternalLink href={el.url} target="_blank">
                   {el.url}
-                </Link>
+                </ExternalLink>
               </div>
               <ImagePost backgroundImage={el.metadataImage} />
             </MetaLink>

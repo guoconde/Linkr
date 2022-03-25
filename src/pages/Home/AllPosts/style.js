@@ -1,4 +1,5 @@
-import styled from "styled-components"
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -36,7 +37,7 @@ const Image = styled.img`
   cursor: pointer;
 `;
 
-const Name = styled.div`
+const Name = styled(Link)`
     font-family: Lato;
     font-size: 19px;
     font-weight: 400;
@@ -107,7 +108,7 @@ const MetaLink = styled.div`
     }
 `;
 
-const Link = styled.a`
+const ExternalLink = styled.a`
     all: unset;
     font-size: 11px;
     font-weight: 400;
@@ -134,7 +135,7 @@ export {
     Image,
     Name,
     Description,
-    Link,
+    ExternalLink,
     Content,
     MetaLink,
     ImagePost,

@@ -53,10 +53,12 @@ const Trash = styled(BsFillTrashFill)`
   position: absolute;
   right: 20px;
   top: 20px;
+  z-index: 1;
+  
   font-size: 15px;
   color: #fff;
 
-  display: ${(props) => props.authId === props.userId ? "block": "none"};
+  display: ${(props) => props.authid === props.userid ? "block": "none"};
 `;
 
 export {
