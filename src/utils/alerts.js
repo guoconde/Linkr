@@ -18,3 +18,24 @@ export async function fireConfirm(){
     })
     return res
 }
+
+export async function fireToast(type, title){
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 1200,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  });
+
+  const icon = Toast.fire({
+    icon: type,
+    title: title
+  });
+
+  return icon;
+}

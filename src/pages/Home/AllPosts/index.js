@@ -1,5 +1,9 @@
 import { useState, useEffect, useContext } from "react";
+import { useLocation } from "react-router";
 import useApi from "../../../hooks/useApi";
+import useAuth from "../../../hooks/useAuth";
+import usePost from "../../../hooks/usePost";
+
 import {
   Container,
   ContainerPost,
@@ -7,19 +11,19 @@ import {
   Name,
   Image,
   Description,
-  Link,
+  ExternalLink,
   Content,
   MetaLink,
   ImagePost,
   ContainerAction,
   GrEditCustom
 } from "./style";
+
 import { Watch } from "react-loader-spinner";
 import { fireAlert } from "../../../utils/alerts";
 import PostDescription from "./PostDescription";
-import { useLocation } from "react-router";
-import useAuth from "../../../hooks/useAuth";
 import { SearchedUserContext } from "../../../contexts/SearchedUserContext"
+import DeleteModal from "../../../components/DeleteModal";
 
 export default function AllPosts() {
   const [data, setData] = useState([]);
@@ -28,6 +32,7 @@ export default function AllPosts() {
   const { pathname } = useLocation();
   const { auth } = useAuth()
   const { setUsernameSearched } = useContext(SearchedUserContext)
+  const { reloadPage } = usePost();
 
   useEffect(() => {
     async function teste() {
@@ -58,7 +63,7 @@ export default function AllPosts() {
     teste();
 
     // eslint-disable-next-line
-  }, [pathname, edit]);
+  }, [pathname, reloadPage, edit]);
 
   if (!data)
     return (
@@ -74,18 +79,19 @@ export default function AllPosts() {
         <div>There are no posts yet!</div>
       </Content>
     );
+    console.log(data)
 
   return (
     <>
       {data.map((el, i) => (
         <Container key={i}>
+          <DeleteModal {...el}/>
           <ContainerImage>
             <Image src={el.photo} />
           </ContainerImage>
 
           <ContainerPost>
-            <Name>{el.name}</Name>
-
+            <Name to={`/user/${el.userId}`}>{el.name}</Name>
             <Description>
               <PostDescription
                 postId={el.id}
@@ -102,10 +108,9 @@ export default function AllPosts() {
               <div className="infoPost">
                 <p className="title">{el.metadataTitle}</p>
                 <p className="description">{el.metadataDescription}</p>
-
-                <Link href={el.url} target="_blank">
+                <ExternalLink href={el.url} target="_blank">
                   {el.url}
-                </Link>
+                </ExternalLink>
               </div>
 
               <ImagePost backgroundImage={el.metadataImage} />
