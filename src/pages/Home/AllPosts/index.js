@@ -1,5 +1,11 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router";
+import { Watch } from "react-loader-spinner";
+import { fireAlert } from "../../../utils/alerts";
+import HighlightHashtag from "./HighlightHashtags/HighlightHashtag";
+import useAuth from "../../../hooks/useAuth";
 import useApi from "../../../hooks/useApi";
+import useSearchedUser from "../../../hooks/useSearchedUser";
 import {
   Container,
   ContainerPost,
@@ -11,20 +17,16 @@ import {
   Content,
   MetaLink,
   ImagePost,
+  Feed,
 } from "./style";
-import { Watch } from "react-loader-spinner";
-import { fireAlert } from "../../../utils/alerts";
-import HighlightHashtag from "./HighlightHashtags/HighlightHashtag";
-import { useLocation } from "react-router";
-import useAuth from "../../../hooks/useAuth";
-import { SearchedUserContext } from "../../../contexts/SearchedUserContext"
 
 export default function AllPosts() {
-  const [data, setData] = useState([]);
   const api = useApi();
+  const [data, setData] = useState([]);
   const { pathname } = useLocation();
   const { auth } = useAuth()
-  const { setUsernameSearched } = useContext(SearchedUserContext)
+  const { setUsernameSearched } = useSearchedUser()
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function teste() {
@@ -32,24 +34,26 @@ export default function AllPosts() {
         const headers = { headers: { Authorization: `Bearer ${auth?.token}` }}
         let promisse
 
-        if(pathname.split("/")[1] === "timeline") promisse = await api.feed.getAllPosts();
-        else if (pathname.split("/")[1] === "hashtag") promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
-        else if (pathname.split("/")[1] === "user") {
+        if(pathname.includes("timeline")) promisse = await api.feed.listAll();
+        else if (pathname.includes("hashtag")) promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
+        else if (pathname.includes("user")) {
           promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
+          if(!promisse.data) {
+            fireAlert("User doesn't exists")
+            navigate("/timeline")
+          }
           setData(promisse.data.posts);
-          console.log(promisse.data)
           setUsernameSearched(promisse.data.name)
           return
         }
 
-        console.log(promisse.data);
         setData(promisse.data);
       } catch (error) {
         if (error)
+          console.log(error);
           return fireAlert(
             "An error occured while trying to fetch the posts, Plese refresh the page!"
           );
-        console.log(error);
       }
     }
 
@@ -74,7 +78,7 @@ export default function AllPosts() {
     );
 
   return (
-    <>
+    <Feed>
       {data.map((el, i) => (
         <Container key={i}>
           <ContainerImage>
@@ -96,6 +100,6 @@ export default function AllPosts() {
           </ContainerPost>
         </Container>
       ))}
-    </>
+    </Feed>
   );
 }

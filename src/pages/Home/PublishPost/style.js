@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Image } from "../../../components/profilePicture";
+import { Image } from "../../../components/ProfilePicture";
 
 const Container = styled.div`
   width: 100%;

@@ -1,6 +1,12 @@
 import styled from "styled-components"
 
-const Container = styled.div`
+const Feed = styled.ul`
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+`;
+
+const Container = styled.li`
   width: 100%;
 
   position: relative;
@@ -12,8 +18,6 @@ const Container = styled.div`
 
   display: flex;
   gap: 18px;
-
-  margin-top: 30px;
 `;
 
 const ContainerImage = styled.div`
@@ -128,6 +132,7 @@ const ImagePost = styled.div`
 `;
 
 export {
+    Feed,
     Container,
     ContainerPost,
     ContainerImage,

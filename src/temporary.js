@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import ReactModal from "react-modal";
 import styled from "styled-components";
-import { Container } from "./pages/Header/style";
+import { Container } from "./components/Header/style";
 
 export default function Temporary() {
   const [showModal, setShowModal] = useState(false);

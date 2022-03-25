@@ -29,8 +29,7 @@ export default function Register() {
         return;
       }
 
-      const { data } = await api.user.register(formData);
-      console.log(data);
+      await api.user.register(formData);
 
       setIsLoading(false);
       navigate("/");

@@ -1,8 +1,8 @@
 import AuthApi from "../services/AuthApi";
 import FeedApi from "../services/FeedApi";
-import HashtagsApi from "../services/hashtagsApi";
-import PostsApi from "../services/postsApi";
-import UserApi from "../services/userApi";
+import HashtagsApi from "../services/HashtagsApi";
+import PostsApi from "../services/PostsApi";
+import UserApi from "../services/UserApi";
 
 export default function useApi() {
     return {
