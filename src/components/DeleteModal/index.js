@@ -6,12 +6,14 @@ import ReactModal from "react-modal";
 import { Watch } from "react-loader-spinner";
 import { Button, SectionButton, Title, Trash } from "./style";
 import { fireToast } from "../../utils/alerts";
+import usePost from "../../hooks/usePost";
 
 export default function DeleteModal({ postId }) {
   const [showModal, setShowModal] = useState(false);
   const [isProcessingRequest, setIsProcessingRequest] = useState(false);
   const api = useApi();
   const { auth } = useAuth();
+  const { reloadPage, setReloadPage } = usePost();
 
   const headers = {
     headers: {
@@ -52,6 +54,7 @@ export default function DeleteModal({ postId }) {
       await api.posts.deletePost(postId, headers);
 
       fireToast("success", "The post was deleted!");
+      setReloadPage(!reloadPage);
     } catch (error) {
       fireToast("error", error.response.data);
     }

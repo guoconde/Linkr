@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import useApi from "../../../hooks/useApi";
 import useAuth from "../../../hooks/useAuth";
+import usePost from "../../../hooks/usePost";
+
 import { Container, Divider, TitleContainer, Title, HashtagsContainer, HashtagLink } from "./style";
 
 export default function Trendings() {
   const api = useApi();
   const { auth } = useAuth();
   const [trendings, setTrendings] = useState([]);
+  const { reloadPage } = usePost();
 
   useEffect(() => {
     handleTrendings();
     //eslint-disable-next-line
-  }, []);
+  }, [reloadPage]);
 
   async function handleTrendings() {
     const headers = {

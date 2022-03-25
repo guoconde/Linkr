@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext";
-import { MenuProvider } from "./contexts/MenuContext";
-import { SearchedUserProvider } from "./contexts/SearchedUserContext";
+import GlobalContext from "./contexts";
 
 import Header from "./pages/Header";
 import Home from "./pages/Home";
@@ -10,21 +8,17 @@ import Register from "./pages/Register";
 
 export default function App() {
   return (
-    <AuthProvider>
-      <MenuProvider>
-        <SearchedUserProvider>
-          <BrowserRouter>
-            <Header />
-            <Routes>
-              <Route path="/timeline" element={<Home />} />
-              <Route path="/" element={<Login />} />
-              <Route path="/sign-up" element={<Register />} />
-              <Route path="/hashtag/:hashtag" element={<Home/>} />
-              <Route path="/user/:id" element={<Home/>} />
-            </Routes>
-          </BrowserRouter>
-        </SearchedUserProvider>
-      </MenuProvider>
-    </AuthProvider>
+    <GlobalContext>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/timeline" element={<Home />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/sign-up" element={<Register />} />
+          <Route path="/hashtag/:hashtag" element={<Home />} />
+          <Route path="/user/:id" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    </GlobalContext>
   );
 }

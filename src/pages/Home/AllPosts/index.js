@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router";
 import useApi from "../../../hooks/useApi";
 import useAuth from "../../../hooks/useAuth";
+import usePost from "../../../hooks/usePost";
 
 import {
   Container,
@@ -28,6 +29,7 @@ export default function AllPosts() {
   const { pathname } = useLocation();
   const { auth } = useAuth()
   const { setUsernameSearched } = useContext(SearchedUserContext)
+  const { reloadPage } = usePost();
 
   useEffect(() => {
     async function teste() {
@@ -59,7 +61,7 @@ export default function AllPosts() {
     teste();
 
     // eslint-disable-next-line
-  }, [pathname]);
+  }, [pathname, reloadPage]);
 
   if (!data)
     return (
