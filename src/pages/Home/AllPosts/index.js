@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+
 import { useLocation, useNavigate } from "react-router";
 import { Watch } from "react-loader-spinner";
 import { fireAlert } from "../../../utils/alerts";
-import HighlightHashtag from "./HighlightHashtags/HighlightHashtag";
 import useAuth from "../../../hooks/useAuth";
 import useApi from "../../../hooks/useApi";
 import useSearchedUser from "../../../hooks/useSearchedUser";
+import { useState, useEffect } from "react";
+import usePost from "../../../hooks/usePost";
+import PostDescription from "./PostDescription";
+import DeleteModal from "../../../components/DeleteModal";
 import {
   Container,
   ContainerPost,
@@ -13,25 +16,29 @@ import {
   Name,
   Image,
   Description,
-  Link,
+  ExternalLink,
   Content,
   MetaLink,
   ImagePost,
-  Feed,
+  ContainerAction,
+  GrEditCustom,
+  Feed
 } from "./style";
 
 export default function AllPosts() {
-  const api = useApi();
   const [data, setData] = useState([]);
+  const [edit, setEdit] = useState(false);
+  const api = useApi();
   const { pathname } = useLocation();
-  const { auth } = useAuth()
+  const { auth, logout } = useAuth()
   const { setUsernameSearched } = useSearchedUser()
   const navigate = useNavigate()
+  const { reloadPage } = usePost();
 
   useEffect(() => {
     async function teste() {
       try {
-        const headers = { headers: { Authorization: `Bearer ${auth?.token}` }}
+        const headers = { headers: { Authorization: `Bearer ${auth?.token}` } }
         let promisse
 
         if(pathname.includes("timeline")) promisse = await api.feed.listAll();
@@ -49,18 +56,21 @@ export default function AllPosts() {
 
         setData(promisse.data);
       } catch (error) {
-        if (error)
-          console.log(error);
-          return fireAlert(
-            "An error occured while trying to fetch the posts, Plese refresh the page!"
-          );
+        if(error.response.status === 401) {
+          await fireAlert(error.response.data);
+          logout()
+          return navigate("/")
+        }
+        return fireAlert(
+          "An error occured while trying to fetch the posts, Plese refresh the page!"
+        );
       }
     }
 
     teste();
 
     // eslint-disable-next-line
-  }, [pathname]);
+  }, [pathname, reloadPage, edit]);
 
   if (!data)
     return (
@@ -81,23 +91,43 @@ export default function AllPosts() {
     <Feed>
       {data.map((el, i) => (
         <Container key={i}>
+          <DeleteModal {...el}/>
           <ContainerImage>
             <Image src={el.photo} />
           </ContainerImage>
+
           <ContainerPost>
-            <Name>{el.name}</Name>
-            <Description><HighlightHashtag>{el.description}</HighlightHashtag></Description>
+            <Name to={`/user/${el.userId}`}>{el.name}</Name>
+            <Description>
+              <PostDescription
+                postId={el.id}
+                url={el.url}
+                edit={edit}
+                setEdit={setEdit}
+                description={el.description}
+                authUserId={auth?.userId}
+                elUserId={el.userId}
+              />
+            </Description>
+
             <MetaLink>
               <div className="infoPost">
                 <p className="title">{el.metadataTitle}</p>
                 <p className="description">{el.metadataDescription}</p>
-                <Link href={el.url} target="_blank">
+                <ExternalLink href={el.url} target="_blank">
                   {el.url}
-                </Link>
+                </ExternalLink>
               </div>
+
               <ImagePost backgroundImage={el.metadataImage} />
             </MetaLink>
           </ContainerPost>
+
+          {auth?.userId === el.userId &&
+            <ContainerAction>
+              <GrEditCustom onClick={() => setEdit(!edit)} size={20} />
+            </ContainerAction>
+          }
         </Container>
       ))}
     </Feed>
