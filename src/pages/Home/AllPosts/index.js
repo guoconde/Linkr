@@ -27,8 +27,7 @@ import DeleteModal from "../../../components/DeleteModal";
 
 export default function AllPosts() {
   const [data, setData] = useState([]);
-  const [edit, setEdit] = useState(false);
-  const [postEditedId, setPostEditedId] = useState(null);
+  const [edit, setEdit] = useState(null);
   const api = useApi();
   const { pathname } = useLocation();
   const { auth } = useAuth()
@@ -83,11 +82,12 @@ export default function AllPosts() {
     console.log(data)
 
   function handleEdit(postId) {
-    setEdit(!edit);
-    setPostEditedId(postId);
+    if(edit !== null && edit === postId){
+      setEdit(null);
+    }else{
+      setEdit(postId);
+    }
   }
-
-  console.log("postEditedId: ", postEditedId);
 
   return (
     <>
@@ -103,10 +103,9 @@ export default function AllPosts() {
             <Description>
               <PostDescription
                 postId={el.id}
-                postEditedId={postEditedId}
-                url={el.url}
                 edit={edit}
                 setEdit={setEdit}
+                url={el.url}
                 description={el.description}
               />
             </Description>
