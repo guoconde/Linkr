@@ -4,11 +4,11 @@ import useAuth from "../../../../hooks/useAuth";
 import styled from "styled-components";
 import HighlightHashtag from "../HighlightHashtags/HighlightHashtag";
 
-export default function PostDescription({ postId, url, edit, setEdit, description, authUserId, elUserId }) {
+export default function PostDescription({ postId, postEditedId, url, edit, setEdit, description }) {
   const [showAction, setShowAction] = useState(<PostParagraph description={description} />);
 
   useEffect(() => {
-    if (edit && (authUserId === elUserId)) {
+    if (edit && (postId === postEditedId)) {
       setShowAction(
         <PostInput
           postId={postId}
@@ -20,10 +20,10 @@ export default function PostDescription({ postId, url, edit, setEdit, descriptio
       );
     }
 
-    if (!edit && (authUserId === elUserId)) {
+    if (!edit && (postId === postEditedId)) {
       setShowAction(<PostParagraph description={description} />);
     }
-  }, [edit, authUserId, elUserId, description, setEdit, postId, url])
+  }, [edit, description, setEdit, postId, postEditedId, url])
 
   return (
     showAction
