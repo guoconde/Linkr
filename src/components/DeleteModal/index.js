@@ -8,7 +8,7 @@ import { Button, SectionButton, Title, Trash } from "./style";
 import { fireToast } from "../../utils/alerts";
 import usePost from "../../hooks/usePost";
 
-export default function DeleteModal({ postId }) {
+export default function DeleteModal({ postId, userId}) {
   const [showModal, setShowModal] = useState(false);
   const [isProcessingRequest, setIsProcessingRequest] = useState(false);
   const api = useApi();
@@ -63,7 +63,7 @@ export default function DeleteModal({ postId }) {
   }
   return (
     <>
-      <Trash onClick={handleModal} />
+      <Trash onClick={handleModal} userId={userId} authId={auth.userId}/>
       <ReactModal
         isOpen={showModal}
         style={{ overlay, content }}

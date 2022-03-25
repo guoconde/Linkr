@@ -82,7 +82,7 @@ export default function AllPosts() {
     <>
       {data.map((el, i) => (
         <Container key={i}>
-          <DeleteModal postId={el.id}/>
+          <DeleteModal {...el}/>
           <ContainerImage>
             <Image src={el.photo} />
           </ContainerImage>
