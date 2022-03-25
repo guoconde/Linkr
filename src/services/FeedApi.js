@@ -1,7 +1,7 @@
 import api from "./api"
 
 export default class FeedApi {
-    getAllPosts() {
+    listAll() {
         return api.get("/posts")
     }
     listByHashtag(hashtag, headers) {

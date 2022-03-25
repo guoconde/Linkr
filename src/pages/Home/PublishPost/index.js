@@ -1,12 +1,10 @@
-import { useState } from "react";
-import { useLocation } from "react-router";
+import { useState, } from "react";
+import { useLocation, useNavigate } from "react-router";
 import useApi from "../../../hooks/useApi";
 import useMenu from "../../../hooks/useMenu";
-import usePost from "../../../hooks/usePost";
 import useAuth from "../../../hooks/useAuth";
-
-import ProfilePicture from "../../../components/profilePicture";
 import { fireAlert } from "../../../utils/alerts";
+import ProfilePicture from "../../../components/ProfilePicture";
 import { 
   Button, 
   Container, 
@@ -15,23 +13,15 @@ import {
   Input, 
   TextArea } from "./style";
 
-export default function PublishPost() {
-  const [formData, setFormData] = useState({
-    url: "",
-    description: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const { auth } = useAuth();
-  const { pathname } = useLocation();
-  const api = useApi();
-  const { reloadPage, setReloadPage } = usePost();
 
-  const headers = {
-    headers: {
-      Authorization: `Bearer ${auth?.token}`
-    }
-  }
+export default function PublishPost() {
+  const [formData, setFormData] = useState({ url: "", description: "", });
+  const [isLoading, setIsLoading] = useState(false);
+  const { pathname } = useLocation();
+  const { auth, logout } = useAuth()
+  const api = useApi();
   const { handleHideLogout } = useMenu();
+  const navigate = useNavigate()
 
   function handleInputChange({ target }) {
     setFormData({ ...formData, [target.name]: target.value });
@@ -47,14 +37,17 @@ export default function PublishPost() {
     setIsLoading(true);
 
     try {
+      const headers = { headers: { Authorization: `Bearer ${auth?.token}` } }
+
       await api.posts.publish(formData, headers);
-      setFormData({
-        url: "",
-        description: "",
-      });
-      setReloadPage(!reloadPage);
+      setFormData({ url: "", description: "", });
+
     } catch (error) {
-      fireAlert(error.response.data);
+      await fireAlert(error.response.data);
+      if(error.response.status === 401) {
+        logout()
+        return navigate("/")
+      }
     }
 
     setIsLoading(false);

@@ -1,9 +1,14 @@
-import { useState, useEffect, useContext } from "react";
-import { useLocation } from "react-router";
-import useApi from "../../../hooks/useApi";
-import useAuth from "../../../hooks/useAuth";
-import usePost from "../../../hooks/usePost";
 
+import { useLocation, useNavigate } from "react-router";
+import { Watch } from "react-loader-spinner";
+import { fireAlert } from "../../../utils/alerts";
+import useAuth from "../../../hooks/useAuth";
+import useApi from "../../../hooks/useApi";
+import useSearchedUser from "../../../hooks/useSearchedUser";
+import { useState, useEffect } from "react";
+import usePost from "../../../hooks/usePost";
+import PostDescription from "./PostDescription";
+import DeleteModal from "../../../components/DeleteModal";
 import {
   Container,
   ContainerPost,
@@ -16,22 +21,18 @@ import {
   MetaLink,
   ImagePost,
   ContainerAction,
-  GrEditCustom
+  GrEditCustom,
+  Feed
 } from "./style";
-
-import { Watch } from "react-loader-spinner";
-import { fireAlert } from "../../../utils/alerts";
-import PostDescription from "./PostDescription";
-import { SearchedUserContext } from "../../../contexts/SearchedUserContext"
-import DeleteModal from "../../../components/DeleteModal";
 
 export default function AllPosts() {
   const [data, setData] = useState([]);
   const [edit, setEdit] = useState(null);
   const api = useApi();
   const { pathname } = useLocation();
-  const { auth } = useAuth()
-  const { setUsernameSearched } = useContext(SearchedUserContext)
+  const { auth, logout } = useAuth()
+  const { setUsernameSearched } = useSearchedUser()
+  const navigate = useNavigate()
   const { reloadPage } = usePost();
 
   useEffect(() => {
@@ -40,23 +41,29 @@ export default function AllPosts() {
         const headers = { headers: { Authorization: `Bearer ${auth?.token}` } }
         let promisse
 
-        if (pathname.split("/")[1] === "timeline") promisse = await api.feed.getAllPosts();
-        else if (pathname.split("/")[1] === "hashtag") promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
-        else if (pathname.split("/")[1] === "user") {
+        if(pathname.includes("timeline")) promisse = await api.feed.listAll();
+        else if (pathname.includes("hashtag")) promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
+        else if (pathname.includes("user")) {
           promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
+          if(!promisse.data) {
+            fireAlert("User doesn't exists")
+            navigate("/timeline")
+          }
           setData(promisse.data.posts);
-          console.log(promisse.data)
           setUsernameSearched(promisse.data.name)
           return
         }
 
         setData(promisse.data);
       } catch (error) {
-        if (error)
-          return fireAlert(
-            "An error occured while trying to fetch the posts, Plese refresh the page!"
-          );
-        console.log(error);
+        if(error.response.status === 401) {
+          await fireAlert(error.response.data);
+          logout()
+          return navigate("/")
+        }
+        return fireAlert(
+          "An error occured while trying to fetch the posts, Plese refresh the page!"
+        );
       }
     }
 
@@ -79,7 +86,6 @@ export default function AllPosts() {
         <div>There are no posts yet!</div>
       </Content>
     );
-    console.log(data)
 
   function handleEdit(postId) {
     if(edit !== null && edit === postId){
@@ -90,7 +96,7 @@ export default function AllPosts() {
   }
 
   return (
-    <>
+    <Feed>
       {data.map((el, i) => (
         <Container key={i}>
           <DeleteModal {...el}/>
@@ -123,13 +129,13 @@ export default function AllPosts() {
             </MetaLink>
           </ContainerPost>
 
-          {auth.userId === el.userId &&
+          {auth?.userId === el.userId &&
             <ContainerAction>
               <GrEditCustom onClick={() => handleEdit(el.id)} size={20} />
             </ContainerAction>
           }
         </Container>
       ))}
-    </>
+    </Feed>
   );
 }

@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router";
+import { fireAlert } from "../../../../utils/alerts";
 import useApi from "../../../../hooks/useApi";
 import useAuth from "../../../../hooks/useAuth";
 import styled from "styled-components";
@@ -47,7 +49,8 @@ function PostInput({ postId, url, description, setShowAction, setEdit }) {
   const [isLoading, setIsLoading] = useState(false);
   const descriptionInputRef = useRef(null);
   const api = useApi();
-  const { auth } = useAuth();
+  const { auth, logout } = useAuth();
+  const navigate = useNavigate()
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
       setEdit(null);
@@ -78,7 +81,11 @@ function PostInput({ postId, url, description, setShowAction, setEdit }) {
 
       setShowAction(<PostParagraph description={descriptionReceived} />);
     } catch (error) {
-      console.log(error.response.data);
+      if(error.response.status === 401) {
+        await fireAlert(error.response.data);
+        logout()
+        return navigate("/")
+      }
 
       alert("Unable to edit the post! Try again!");
       setIsLoading(false);

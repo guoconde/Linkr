@@ -2,7 +2,13 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { GrEdit } from 'react-icons/gr';
 
-const Container = styled.div`
+const Feed = styled.ul`
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+`;
+
+const Container = styled.li`
   width: 100%;
 
   position: relative;
@@ -14,8 +20,6 @@ const Container = styled.div`
 
   display: flex;
   gap: 18px;
-
-  margin-top: 30px;
 `;
 
 const ContainerImage = styled.div`
@@ -144,6 +148,7 @@ const GrEditCustom = styled(GrEdit)`
 `;
 
 export {
+    Feed,
     Container,
     ContainerPost,
     ContainerImage,

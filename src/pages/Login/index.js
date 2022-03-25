@@ -34,8 +34,6 @@ export default function Login() {
 
     try {
       const { data } = await api.auth.login(formData)
-
-      console.log(data);
       login(data)
       setIsLoading(false);
       navigate("/timeline");
@@ -57,7 +55,7 @@ export default function Login() {
         <Form onSubmit={handleSubmit}>
           <Input
             type="email"
-            placeholder="E-mail"
+            placeholder="e-mail"
             name="email"
             onChange={handleChange}
             value={formData.email}
@@ -65,7 +63,7 @@ export default function Login() {
           />
           <Input
             type="password"
-            placeholder="Senha"
+            placeholder="password"
             name="password"
             onChange={handleChange}
             value={formData.password}
@@ -76,7 +74,7 @@ export default function Login() {
             {
               isLoading
                 ? <ThreeDots type="ThreeDots" color="#FFFFFF" height={50} width={50} />
-                : "Entrar"
+                : "Log In"
             }
           </Button>
 
