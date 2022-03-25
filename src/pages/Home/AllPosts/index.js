@@ -28,6 +28,7 @@ import {
 export default function AllPosts() {
   const [data, setData] = useState([]);
   const [edit, setEdit] = useState(false);
+  const [postEditedId, setPostEditedId] = useState(null);
   const api = useApi();
   const { pathname } = useLocation();
   const { auth, logout } = useAuth()
@@ -87,6 +88,11 @@ export default function AllPosts() {
       </Content>
     );
 
+  function handleEdit(postId) {
+    setEdit(!edit);
+    setPostEditedId(postId);
+  }
+
   return (
     <Feed>
       {data.map((el, i) => (
@@ -101,12 +107,11 @@ export default function AllPosts() {
             <Description>
               <PostDescription
                 postId={el.id}
+                postEditedId={postEditedId}
                 url={el.url}
                 edit={edit}
                 setEdit={setEdit}
                 description={el.description}
-                authUserId={auth?.userId}
-                elUserId={el.userId}
               />
             </Description>
 
@@ -125,7 +130,7 @@ export default function AllPosts() {
 
           {auth?.userId === el.userId &&
             <ContainerAction>
-              <GrEditCustom onClick={() => setEdit(!edit)} size={20} />
+              <GrEditCustom onClick={() => handleEdit(el.id)} size={20} />
             </ContainerAction>
           }
         </Container>
