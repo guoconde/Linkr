@@ -11,6 +11,7 @@ import {
   TextArea } from "./style";
 import AuthContext from "../../../contexts/AuthContext";
 import { fireAlert } from "../../../utils/alerts";
+import { useLocation } from "react-router";
 
 export default function PublishPost() {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ export default function PublishPost() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const { auth } = useContext(AuthContext);
+  const { pathname } = useLocation();
   const api = useApi();
   const headers = {
     headers: {
@@ -52,6 +54,10 @@ export default function PublishPost() {
     }
 
     setIsLoading(false);
+  }
+
+  if (pathname.includes('hashtag') || pathname.includes('user')) {
+    return null;
   }
 
   return (

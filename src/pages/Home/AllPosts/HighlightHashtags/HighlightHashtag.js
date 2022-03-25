@@ -6,7 +6,7 @@ export default function HighlightHashtag ({ children }) {
   return (
     <ReactHashtag
       renderHashtag={(hashtagValue) => (
-        <StyledLink to={`/hashtag/${hashtagValue.replace("#","")}`}>
+        <StyledLink key={hashtagValue} to={`/hashtag/${hashtagValue.replace("#","")}`}>
           {hashtagValue}
         </StyledLink>
       )}
