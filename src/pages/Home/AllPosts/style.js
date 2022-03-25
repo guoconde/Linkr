@@ -137,5 +137,5 @@ export {
     Link,
     Content,
     MetaLink,
-    ImagePost
+    ImagePost,
 }

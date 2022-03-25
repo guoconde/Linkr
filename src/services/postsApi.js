@@ -6,6 +6,10 @@ export default class PostsApi {
     }
 
     getAllPosts() {
-        return api.get("/posts")
+        return api.get("/posts");
+    }
+    
+    deletePost(id, headers) {
+        return api.delete(`/posts/${id}`, headers);
     }
 }

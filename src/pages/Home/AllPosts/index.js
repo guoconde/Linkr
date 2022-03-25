@@ -1,5 +1,8 @@
 import { useState, useEffect, useContext } from "react";
+import { useLocation } from "react-router";
 import useApi from "../../../hooks/useApi";
+import useAuth from "../../../hooks/useAuth";
+
 import {
   Container,
   ContainerPost,
@@ -12,12 +15,12 @@ import {
   MetaLink,
   ImagePost,
 } from "./style";
+
 import { Watch } from "react-loader-spinner";
 import { fireAlert } from "../../../utils/alerts";
-import HighlightHashtag from "./HighlightHashtags/HighlightHashtag";
-import { useLocation } from "react-router";
-import useAuth from "../../../hooks/useAuth";
 import { SearchedUserContext } from "../../../contexts/SearchedUserContext"
+import HighlightHashtag from "./HighlightHashtags/HighlightHashtag";
+import DeleteModal from "../../../components/DeleteModal";
 
 export default function AllPosts() {
   const [data, setData] = useState([]);
@@ -77,6 +80,7 @@ export default function AllPosts() {
     <>
       {data.map((el, i) => (
         <Container key={i}>
+          <DeleteModal postId={el.id}/>
           <ContainerImage>
             <Image src={el.photo} />
           </ContainerImage>
