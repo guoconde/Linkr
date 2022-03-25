@@ -6,11 +6,11 @@ import useAuth from "../../../../hooks/useAuth";
 import styled from "styled-components";
 import HighlightHashtag from "../HighlightHashtags/HighlightHashtag";
 
-export default function PostDescription({ postId, postEditedId, url, edit, setEdit, description }) {
+export default function PostDescription({ postId, edit, setEdit, url, description }) {
   const [showAction, setShowAction] = useState(<PostParagraph description={description} />);
 
   useEffect(() => {
-    if (edit && (postId === postEditedId)) {
+    if (edit === postId) {
       setShowAction(
         <PostInput
           postId={postId}
@@ -22,10 +22,12 @@ export default function PostDescription({ postId, postEditedId, url, edit, setEd
       );
     }
 
-    if (!edit && (postId === postEditedId)) {
+    if (edit === null || edit !== postId) {
       setShowAction(<PostParagraph description={description} />);
     }
-  }, [edit, description, setEdit, postId, postEditedId, url])
+
+    // eslint-disable-next-line
+  }, [edit])
 
   return (
     showAction
@@ -51,14 +53,14 @@ function PostInput({ postId, url, description, setShowAction, setEdit }) {
   const navigate = useNavigate()
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
-      setEdit(false);
+      setEdit(null);
       setIsLoading(true);
       /* await new Promise(resolve => setTimeout(resolve, 3000)); */
       handleUpdatePost(postId, { url, description: descriptionReceived });
     }
 
     if (event.key === 'Escape') {
-      setEdit(false);
+      setEdit(null);
       setShowAction(<PostParagraph description={description} />);
     }
   }
