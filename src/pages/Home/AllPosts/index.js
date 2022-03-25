@@ -80,7 +80,7 @@ export default function AllPosts() {
                 <Container key={i}>
                     <ContainerImage>
                         <Image src={el.photo} />
-                        <Likes postId={el.id} userId={el.userId}/>
+                        <Likes postId={el.id} userId={el.userId} isLike={el.isLike}/>
                     </ContainerImage>
                     <ContainerPost>
                         <Name>{el.name}</Name>

@@ -4,9 +4,9 @@ import { LikeOrDislike } from "./style"
 import useApi from "../../../../hooks/useApi"
 import useAuth from "../../../../hooks/useAuth"
 
-export default function Likes({ postId, userId }) {
+export default function Likes({ postId, userId, isLike }) {
 
-    const [liked, setLike] = useState(false)
+    const [liked, setLike] = useState(isLike)
     const [data, setData] = useState()
     const api = useApi()
     const { auth } = useAuth()

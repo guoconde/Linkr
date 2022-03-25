@@ -5,7 +5,7 @@ export default class PostsApi {
         return api.post("/posts", data, headers);
     }
 
-    getAllPosts() {
-        return api.get("/posts")
+    getAllPosts(id) {
+        return api.get(`/posts`, { id })
     }
 }
