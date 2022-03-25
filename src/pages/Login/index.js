@@ -34,6 +34,8 @@ export default function Login() {
 
     try {
       const { data } = await api.auth.login(formData)
+
+      console.log(data);
       login(data)
       setIsLoading(false);
       navigate("/timeline");

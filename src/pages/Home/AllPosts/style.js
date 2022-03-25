@@ -128,10 +128,17 @@ const ImagePost = styled.div`
     top: 0;
 `;
 
+const ContainerAction = styled.div`
+    position: absolute;
+    right: 20px;
+    top: 20px;
+`;
+
 const GrEditCustom = styled(GrEdit)`
     > * {
-        fill: #B3B3B3;
-        size: 16;
+        fill: transparent;
+        stroke: #FFFFFF;
+        cursor: pointer;
     }
 `;
 
@@ -146,5 +153,6 @@ export {
     Content,
     MetaLink,
     ImagePost,
+    ContainerAction,
     GrEditCustom
 }
