@@ -35,39 +35,41 @@ export default function AllPosts() {
   const navigate = useNavigate()
   const { reloadPage } = usePost();
 
-  useEffect(() => {
-    async function teste() {
-      try {
-        const headers = { headers: { Authorization: `Bearer ${auth?.token}` } }
-        let promisse
+  async function handleGetAllPosts() {
+    try {
+      const headers = { headers: { Authorization: `Bearer ${auth?.token}` } }
+      let promisse
 
-        if(pathname.includes("timeline")) promisse = await api.feed.listAll(headers);
-        else if (pathname.includes("hashtag")) promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
-        else if (pathname.includes("user")) {
-          promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
-          if(!promisse.data) {
-            fireAlert("User doesn't exists")
-            navigate("/timeline")
-          }
-          setData(promisse.data.posts);
-          setUsernameSearched(promisse.data.name)
-          return
+      if(pathname.includes("timeline")) promisse = await api.feed.listAll(headers);
+      else if (pathname.includes("hashtag")) promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
+      else if (pathname.includes("user")) {
+        promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
+        if(!promisse.data) {
+          fireAlert("User doesn't exists")
+          navigate("/timeline")
         }
 
-        setData(promisse.data);
-      } catch (error) {
-        if(error.response.status === 401) {
-          await fireAlert(error.response.data);
-          logout()
-          return navigate("/")
-        }
-        return fireAlert(
-          "An error occured while trying to fetch the posts, Plese refresh the page!"
-        );
+        setData(promisse.data.posts);
+        setUsernameSearched(promisse.data.name)
+        return
       }
+      
+      setData(promisse.data);
+    } catch (error) {
+      if(error.response.status === 401) {
+        await fireAlert(error.response.data);
+        logout()
+        return navigate("/")
+      }
+      return fireAlert(
+        "An error occured while trying to fetch the posts, Plese refresh the page!"
+      );
     }
+  }
 
-        teste();
+  useEffect(() => {
+
+        handleGetAllPosts();
 
     // eslint-disable-next-line
   }, [pathname, reloadPage, edit]);
@@ -75,7 +77,7 @@ export default function AllPosts() {
     if (!data)
         return (
             <Content>
-                <Watch color="white" message="Teste" ariaLabel="loading-indicator" />
+                <Watch color="white" ariaLabel="loading-indicator" />
                 <div>Loading...</div>
             </Content>
         );
@@ -102,7 +104,13 @@ export default function AllPosts() {
           <DeleteModal {...el}/>
           <ContainerImage>
             <Image src={el.photo} />
-            <Likes postId={el.id} isLike={el.isLike}/>
+            <Likes 
+                postId={el.id} 
+                postLikes={el.postLikes} 
+                isLike={el.isLike} 
+                likeNames={el.likeNames} 
+                handleGetAllPosts={handleGetAllPosts}
+            />
           </ContainerImage>
 
           <ContainerPost>
@@ -114,6 +122,7 @@ export default function AllPosts() {
                 setEdit={setEdit}
                 url={el.url}
                 description={el.description}
+                index={i}
               />
             </Description>
 

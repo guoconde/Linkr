@@ -14,7 +14,6 @@ export default class FeedApi {
         return api.get(`/posts/${id}/like`, headers)
     }
     deleteLike(postId, userId, isLiked, headers) {
-        console.log('estou no updated')
         return api.put(`/posts/${postId}/like`, {isLiked, userId}, headers)
     }
     insertLike(postId, userId, isLiked, headers) {
