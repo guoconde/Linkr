@@ -43,7 +43,7 @@ const DownArrow = styled(BiChevronDown)`
   color: #fff;
   font-size: 40px;
   transition: all 0.3s ease-in-out;
-  transform: ${(props) => props.show && "rotate(180deg)" };
+  transform: ${(props) => props.show && "rotate(180deg)"};
 
   &:hover {
     color: #1a936f;
@@ -79,6 +79,13 @@ const Logout = styled.div`
     cursor: pointer;
     background-color: #51a3a3;
   }
+`;
+
+const ContainerInputFindUser = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const InputFindUser = styled.div`
@@ -145,7 +152,7 @@ const InputFindUser = styled.div`
   }
 
 `
-const SearchIcon = styled(AiOutlineSearch) `
+const SearchIcon = styled(AiOutlineSearch)`
   top: 9px;
   right: 10px;
   font-size: 25px;
@@ -153,4 +160,13 @@ const SearchIcon = styled(AiOutlineSearch) `
   color: #C6C6C6;
 `
 
-export { Container, UserIcon, Title, DownArrow, Logout, InputFindUser, SearchIcon };
+export { 
+  Container, 
+  UserIcon, 
+  Title, 
+  DownArrow, 
+  Logout, 
+  ContainerInputFindUser,
+  InputFindUser, 
+  SearchIcon 
+};

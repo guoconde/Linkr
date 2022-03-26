@@ -4,8 +4,16 @@ import useAuth from "../../hooks/useAuth";
 import useMenu from "../../hooks/useMenu";
 import ProfilePicture from "../ProfilePicture";
 import { DebounceInput } from "react-debounce-input";
-
-import { Container, DownArrow, InputFindUser, Logout, SearchIcon, Title, UserIcon } from "./style";
+import { 
+  Container, 
+  DownArrow, 
+  ContainerInputFindUser,
+  InputFindUser, 
+  Logout, 
+  SearchIcon, 
+  Title, 
+  UserIcon 
+} from "./style";
 import useApi from "../../hooks/useApi";
 import ListUsers from "./findUsers";
 
@@ -51,28 +59,30 @@ export default function Header() {
   return (
     <Container>
       <Title onClick={() => handleClickTitle()}>linkr</Title>
-      <InputFindUser>
-        <DebounceInput
-          className="debounce-input"
-          minLength={3}
-          debounceTimeout={300}
-          placeholder="Search for people"
-          onChange={event => handleFindUsers(event)}
-          onSubmit={event => event.preventDefault()}
-        />
-        <SearchIcon />
-        <div className="list-users">
-          <ListUsers users={users} setUsers={setUsers} />
-        </div>
-      </InputFindUser>
+
+      <ContainerInputFindUser onClick={() => handleHideLogout()}>
+        <InputFindUser>
+          <DebounceInput
+            className="debounce-input"
+            minLength={3}
+            debounceTimeout={300}
+            placeholder="Search for people"
+            onChange={event => handleFindUsers(event)}
+            onSubmit={event => event.preventDefault()}
+          />
+          <SearchIcon />
+          <div className="list-users">
+            <ListUsers users={users} setUsers={setUsers} />
+          </div>
+        </InputFindUser>
+      </ContainerInputFindUser>
+
       <UserIcon>
         <DownArrow
           show={toggleLogout ? 1 : undefined}
           onClick={() => handleToggleLogout()}
         />
-
         <Logout onClick={() => logout()} show={toggleLogout ? 1 : undefined}>Logout</Logout>
-
         <ProfilePicture />
       </UserIcon>
     </Container>
