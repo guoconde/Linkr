@@ -4,4 +4,8 @@ export default class UserApi {
   register(data) {
     return api.post("/sign-up", data);
   }
+
+  getAllUsers(data) {
+    return api.get(`/users?find=${data}`)
+  }
 }
