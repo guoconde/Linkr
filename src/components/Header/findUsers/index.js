@@ -12,7 +12,6 @@ export default function ListUsers({ users, setUsers }) {
 
     }
 
-
     return (
         <>
             {users.map(el =>
