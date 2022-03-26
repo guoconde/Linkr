@@ -55,8 +55,11 @@ function PostInput({ postId, url, description, setShowAction, setEdit, index }) 
     if (event.key === 'Enter') {
       setEdit(null);
       setIsLoading(true);
-      /* await new Promise(resolve => setTimeout(resolve, 3000)); */
-      handleUpdatePost(postId, { url, description: descriptionReceived });
+      handleUpdatePost(postId, { 
+        url, 
+        description: descriptionReceived, 
+        originalDescription: description 
+      });
     }
 
     if (event.key === 'Escape') {

@@ -24,6 +24,10 @@ const Container = styled.li`
 
 const ContainerImage = styled.div`
     width: 10%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const ContainerPost = styled.div`
