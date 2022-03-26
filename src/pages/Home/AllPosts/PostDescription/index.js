@@ -6,9 +6,8 @@ import useAuth from "../../../../hooks/useAuth";
 import styled from "styled-components";
 import HighlightHashtag from "../HighlightHashtags/HighlightHashtag";
 
-export default function PostDescription({ postId, edit, setEdit, url, description }) {
-  const [showAction, setShowAction] = useState(<PostParagraph description={description} />);
-
+export default function PostDescription({ postId, edit, setEdit, url, description, index }) {
+  const [showAction, setShowAction] = useState(<PostParagraph description={description} index={index}/>);
   useEffect(() => {
     if (edit === postId) {
       setShowAction(
@@ -18,33 +17,34 @@ export default function PostDescription({ postId, edit, setEdit, url, descriptio
           setEdit={setEdit}
           description={description}
           setShowAction={setShowAction}
-        />
-      );
-    }
-
+          index={index}
+          />
+          );
+      }
+      
     if (edit === null || edit !== postId) {
-      setShowAction(<PostParagraph description={description} />);
+      setShowAction(<PostParagraph description={description} index={index}/>);
     }
-
+    
     // eslint-disable-next-line
   }, [edit])
-
+  
   return (
     showAction
   );
 }
 
-function PostParagraph({ description }) {
+function PostParagraph({ description, index }) {
   return (
     <p>
-      <HighlightHashtag>
+      <HighlightHashtag index={index}>
         {description}
       </HighlightHashtag>
     </p>
   );
 }
 
-function PostInput({ postId, url, description, setShowAction, setEdit }) {
+function PostInput({ postId, url, description, setShowAction, setEdit, index }) {
   const [descriptionReceived, setDescriptionReceived] = useState(description);
   const [isLoading, setIsLoading] = useState(false);
   const descriptionInputRef = useRef(null);
@@ -64,10 +64,10 @@ function PostInput({ postId, url, description, setShowAction, setEdit }) {
 
     if (event.key === 'Escape') {
       setEdit(null);
-      setShowAction(<PostParagraph description={description} />);
+      setShowAction(<PostParagraph description={description} index={index}/>);
     }
   }
-
+  
   useEffect(() => {
     descriptionInputRef.current.focus();
   }, []);
@@ -82,7 +82,7 @@ function PostInput({ postId, url, description, setShowAction, setEdit }) {
     try {
       await api.posts.updatePost(postId, data, headers);
 
-      setShowAction(<PostParagraph description={descriptionReceived} />);
+      setShowAction(<PostParagraph description={descriptionReceived} index={index}/>);
     } catch (error) {
       if(error.response.status === 401) {
         await fireAlert(error.response.data);

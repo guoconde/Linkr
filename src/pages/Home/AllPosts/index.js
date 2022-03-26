@@ -1,4 +1,3 @@
-
 import { useLocation, useNavigate } from "react-router";
 import { Watch } from "react-loader-spinner";
 import { fireAlert } from "../../../utils/alerts";
@@ -9,83 +8,85 @@ import { useState, useEffect } from "react";
 import usePost from "../../../hooks/usePost";
 import PostDescription from "./PostDescription";
 import DeleteModal from "../../../components/DeleteModal";
+import Likes from "./Likes";
 import {
-  Container,
-  ContainerPost,
-  ContainerImage,
-  Name,
-  Image,
-  Description,
-  ExternalLink,
-  Content,
-  MetaLink,
-  ImagePost,
-  ContainerAction,
-  GrEditCustom,
-  Feed
+    Container,
+    ContainerPost,
+    ContainerImage,
+    Name,
+    Image,
+    Description,
+    ExternalLink,
+    Content,
+    MetaLink,
+    ImagePost,
+    ContainerAction,
+    GrEditCustom,
+    Feed
 } from "./style";
 
 export default function AllPosts() {
   const [data, setData] = useState();
   const [edit, setEdit] = useState(null);
   const api = useApi();
+  const navigate = useNavigate()
   const { pathname } = useLocation();
   const { auth, logout } = useAuth()
   const { setUsernameSearched } = useSearchedUser()
-  const navigate = useNavigate()
   const { reloadPage } = usePost();
 
-  useEffect(() => {
-    async function teste() {
-      try {
-        const headers = { headers: { Authorization: `Bearer ${auth?.token}` } }
-        let promisse
-
-        if(pathname.includes("timeline")) promisse = await api.feed.listAll();
-        else if (pathname.includes("hashtag")) promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
-        else if (pathname.includes("user")) {
-          promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
-          if(!promisse.data) {
-            fireAlert("User doesn't exists")
-            navigate("/timeline")
-          }
-          setData(promisse.data.posts);
-          setUsernameSearched(promisse.data.name)
-          return
+  async function handleGetAllPosts() {
+    try {
+      const headers = { headers: { Authorization: `Bearer ${auth?.token}` } }
+      let promisse
+      
+      if(pathname.includes("timeline")) promisse = await api.feed.listAll(headers);
+      else if (pathname.includes("hashtag")) promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
+      else if (pathname.includes("user")) {
+        promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
+        if(!promisse.data) {
+          fireAlert("User doesn't exists")
+          navigate("/timeline")
         }
-
-        setData(promisse.data);
-      } catch (error) {
-        if(error.response.status === 401) {
-          await fireAlert(error.response.data);
-          logout()
-          return navigate("/")
-        }
-        return fireAlert(
-          "An error occured while trying to fetch the posts, Plese refresh the page!"
-        );
+        
+        setData(promisse.data.posts);
+        setUsernameSearched(promisse.data.name)
+        return
       }
+      
+      setData(promisse.data);
+    } catch (error) {
+      if(error.response?.status === 401 || error.response?.status === 404) {
+        await fireAlert(error.response.data);
+        logout()
+        return navigate("/")
+      }
+      return fireAlert(
+        "An error occured while trying to fetch the posts, Plese refresh the page!"
+      );
     }
+  }
 
-    teste();
+  useEffect(() => {
+        handleGetAllPosts();
 
     // eslint-disable-next-line
   }, [pathname, reloadPage, edit]);
 
-  if (!data)
-    return (
-      <Content>
-        <Watch color="white" message="Teste" ariaLabel="loading-indicator" />
-        <div>Loading...</div>
-      </Content>
-    );
+    if (!data)
+        return (
+            <Content>
+                <Watch color="white" ariaLabel="loading-indicator" />
+                <div>Loading...</div>
+            </Content>
+        );
 
-  if (data.length === 0)
-    return (
-      <Content>
-        <div>There are no posts yet!</div>
-      </Content>
-    );
+    if (data.length === 0)
+        return (
+            <Content>
+                <div>There are no posts yet!</div>
+            </Content>
+        );
 
   function handleEdit(postId) {
     if(edit !== null && edit === postId){
@@ -97,11 +98,19 @@ export default function AllPosts() {
 
   return (
     <Feed>
-      {data.map((el, i) => (
+      {data.map((el, i) => {
+        return (
         <Container key={i}>
           <DeleteModal {...el}/>
           <ContainerImage>
             <Image src={el.photo} />
+            <Likes 
+                postId={el.id} 
+                postLikes={el.postLikes} 
+                isLike={el.isLike} 
+                likeNames={el.likeNames} 
+                handleGetAllPosts={handleGetAllPosts}
+            />
           </ContainerImage>
 
           <ContainerPost>
@@ -113,6 +122,7 @@ export default function AllPosts() {
                 setEdit={setEdit}
                 url={el.url}
                 description={el.description}
+                index={i}
               />
             </Description>
 
@@ -135,7 +145,7 @@ export default function AllPosts() {
             </ContainerAction>
           }
         </Container>
-      ))}
+      )})}
     </Feed>
   );
 }

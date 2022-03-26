@@ -31,7 +31,7 @@ export default function Trendings() {
 
       setTrendings(data);
     } catch (error) {
-      if(error.response.status === 401) {
+      if(error.response?.status === 401) {
         await fireAlert(error.response.data);
         logout()
         navigate("/")

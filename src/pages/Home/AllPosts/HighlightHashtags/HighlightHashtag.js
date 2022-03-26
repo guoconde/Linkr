@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ReactHashtag from "@mdnm/react-hashtag";
 
-export default function HighlightHashtag ({ children }) {
+export default function HighlightHashtag ({ children, index }) {
   return (
     <ReactHashtag
       renderHashtag={(hashtagValue) => (
