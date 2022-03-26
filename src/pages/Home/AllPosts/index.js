@@ -26,7 +26,7 @@ import {
 } from "./style";
 
 export default function AllPosts() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [edit, setEdit] = useState(null);
   const api = useApi();
   const { pathname } = useLocation();
