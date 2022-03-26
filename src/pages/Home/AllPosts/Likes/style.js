@@ -4,7 +4,8 @@ const LikeOrDislike = styled.div`
     font-size: 40px;
     text-align: center;
     margin-top: 20px;
-
+    cursor: pointer;
+    
     .number-of-likes {
         color: white;
         font-family: Lato;
