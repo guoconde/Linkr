@@ -1,32 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
-import { useEffect } from "react/cjs/react.development";
 import PublishPost from "./PublishPost";
 import Trendings from "./Trendings";
 import AllPosts from "./AllPosts";
 import useMenu from "../../hooks/useMenu";
 import useSearchedUser from "../../hooks/useSearchedUser";
-import {
-  Container,
-  Content,
-  TitleOfSection
-} from "./style";
-
+import { Container, Content, TitleOfSection } from "./style";
 
 export default function Home() {
   const { handleHideLogout } = useMenu();
   const { pathname } = useLocation();
-  const [ title, setTitle ] = useState()
-  const { usernameSearched } = useSearchedUser()
+  const [ title, setTitle ] = useState();
+  const { usernameSearched } = useSearchedUser();
   
   useEffect(() => {
     if(pathname.split("/")[1] === "timeline") setTitle("timeline")
     else if (pathname.split("/")[1] === "hashtag") setTitle(`# ${pathname.split("/")[2]}`)
     else if (pathname.split("/")[1] === "user") setTitle(`${usernameSearched}'s posts`)
     //eslint-disable-next-line
-  }, [pathname, usernameSearched])
-
- 
+  }, [pathname, usernameSearched]);
 
   return (
     <Container onClick={() => handleHideLogout()}>

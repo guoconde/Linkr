@@ -28,6 +28,8 @@ const Title = styled.h1`
   font-size: 49px;
   line-height: 54px;
   letter-spacing: 0.05em;
+
+  cursor: pointer;
 `;
 
 const UserIcon = styled.div`

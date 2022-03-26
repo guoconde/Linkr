@@ -1,8 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { ThreeDots } from "react-loader-spinner";
+import { fireAlert } from "../../utils/alerts";
 import useApi from "../../hooks/useApi";
-import { AuthContainer, SloganSide, Logo, Slogan, FormSide } from "../../components/AuthScreenComponents"
 import { Form, Input, Button, StyledLink } from "../../components/FormComponents";
+import { 
+  AuthContainer, 
+  SloganSide, 
+  Logo, 
+  Slogan, 
+  FormSide 
+} from "../../components/AuthScreenComponents";
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -24,7 +32,7 @@ export default function Register() {
       }
       
       if(email === '' || password === '' || username === ''){
-        alert("There are empty fields, fill them all to continue!");
+        fireAlert("There are empty fields, fill them all to continue!");
         setIsLoading(false);
         return;
       }
@@ -37,9 +45,9 @@ export default function Register() {
       setIsLoading(false);
 
       if(error.response.status === 409){
-        alert("This email is already in use! Try again!");
+        fireAlert("This email is already in use! Try again!");
       }else{
-        alert(error.response.data);
+        fireAlert(error.response.data);
       }
     }
   }
@@ -84,7 +92,7 @@ export default function Register() {
 
           <Button type="submit" disabled={isLoading}>
             {isLoading ?
-              "Loading..."
+              <ThreeDots type="ThreeDots" color="#FFFFFF" height={50} width={50} />
               :
               "Sign Up"
             }

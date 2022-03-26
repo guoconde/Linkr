@@ -31,7 +31,6 @@ export default function Header() {
 
   useEffect(() => {
     // handleFindUsers()
-
     if (!auth) {
       handleHideLogout();
       navigate("/");
@@ -44,9 +43,14 @@ export default function Header() {
     return null;
   }
 
+  function handleClickTitle() {
+    handleHideLogout();
+    navigate("/timeline");
+  }
+
   return (
     <Container>
-      <Title onClick={() => handleHideLogout()}>linkr</Title>
+      <Title onClick={() => handleClickTitle()}>linkr</Title>
       <InputFindUser>
         <DebounceInput
           className="debounce-input"

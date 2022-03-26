@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react";
-import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from "react-router";
-import { AuthContainer, SloganSide, Logo, Slogan, FormSide } from "../../components/AuthScreenComponents"
-import { Form, Input, Button, StyledLink } from "../../components/FormComponents";
+import { ThreeDots } from 'react-loader-spinner';
+import { fireAlert } from "../../utils/alerts";
 import useApi from "../../hooks/useApi";
 import useAuth from "../../hooks/useAuth";
-import { fireAlert } from "../../utils/alerts";
+import { Form, Input, Button, StyledLink } from "../../components/FormComponents";
+import { 
+  AuthContainer, 
+  SloganSide, 
+  Logo, 
+  Slogan, 
+  FormSide 
+} from "../../components/AuthScreenComponents";
 
 export default function Login() {
   const navigate = useNavigate();
-  const api = useApi()
-  const { auth, login } = useAuth()
-  const [formData, setFormData] = useState({ email: '', password: '' })
+  const api = useApi();
+  const { auth, login } = useAuth();
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (auth) navigate("/timeline")
+    if (auth) navigate("/timeline");
     //eslint-disable-next-line
   }, [])
 
@@ -29,23 +35,22 @@ export default function Login() {
 
     if (!formData.email || !formData.password) {
       setIsLoading(false);
-      return fireAlert("Fill in all fields")
+      return fireAlert("Fill in all fields");
     }
 
     try {
-      const { data } = await api.auth.login(formData)
-      login(data)
+      const { data } = await api.auth.login(formData);
+      login(data);
       setIsLoading(false);
       navigate("/timeline");
     } catch (error) {
       setIsLoading(false);
-      fireAlert(error.response.data)
+      fireAlert(error.response.data);
     }
   }
 
   return (
     <AuthContainer>
-
       <SloganSide>
         <Logo>linkr</Logo>
         <Slogan>save, share and discover <br /> the best links on the web</Slogan>
@@ -82,9 +87,7 @@ export default function Login() {
             First time? Create an account!
           </StyledLink>
         </Form>
-
       </FormSide>
-
     </AuthContainer>
   );
 }
