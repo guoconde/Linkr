@@ -8,7 +8,6 @@ import HighlightHashtag from "../HighlightHashtags/HighlightHashtag";
 
 export default function PostDescription({ postId, edit, setEdit, url, description, index }) {
   const [showAction, setShowAction] = useState(<PostParagraph description={description} index={index}/>);
-
   useEffect(() => {
     if (edit === postId) {
       setShowAction(
@@ -19,17 +18,17 @@ export default function PostDescription({ postId, edit, setEdit, url, descriptio
           description={description}
           setShowAction={setShowAction}
           index={index}
-        />
-      );
-    }
-
+          />
+          );
+      }
+      
     if (edit === null || edit !== postId) {
       setShowAction(<PostParagraph description={description} index={index}/>);
     }
-
+    
     // eslint-disable-next-line
   }, [edit])
-
+  
   return (
     showAction
   );
@@ -56,8 +55,11 @@ function PostInput({ postId, url, description, setShowAction, setEdit, index }) 
     if (event.key === 'Enter') {
       setEdit(null);
       setIsLoading(true);
-      /* await new Promise(resolve => setTimeout(resolve, 3000)); */
-      handleUpdatePost(postId, { url, description: descriptionReceived });
+      handleUpdatePost(postId, { 
+        url, 
+        description: descriptionReceived, 
+        originalDescription: description 
+      });
     }
 
     if (event.key === 'Escape') {
@@ -65,7 +67,7 @@ function PostInput({ postId, url, description, setShowAction, setEdit, index }) 
       setShowAction(<PostParagraph description={description} index={index}/>);
     }
   }
-
+  
   useEffect(() => {
     descriptionInputRef.current.focus();
   }, []);

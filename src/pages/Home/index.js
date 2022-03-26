@@ -26,6 +26,8 @@ export default function Home() {
     //eslint-disable-next-line
   }, [pathname, usernameSearched])
 
+ 
+
   return (
     <Container onClick={() => handleHideLogout()}>
       <Content>

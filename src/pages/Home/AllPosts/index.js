@@ -29,17 +29,17 @@ export default function AllPosts() {
   const [data, setData] = useState();
   const [edit, setEdit] = useState(null);
   const api = useApi();
+  const navigate = useNavigate()
   const { pathname } = useLocation();
   const { auth, logout } = useAuth()
   const { setUsernameSearched } = useSearchedUser()
-  const navigate = useNavigate()
   const { reloadPage } = usePost();
 
   async function handleGetAllPosts() {
     try {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } }
       let promisse
-
+      
       if(pathname.includes("timeline")) promisse = await api.feed.listAll(headers);
       else if (pathname.includes("hashtag")) promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
       else if (pathname.includes("user")) {
@@ -48,7 +48,7 @@ export default function AllPosts() {
           fireAlert("User doesn't exists")
           navigate("/timeline")
         }
-
+        
         setData(promisse.data.posts);
         setUsernameSearched(promisse.data.name)
         return
@@ -56,7 +56,7 @@ export default function AllPosts() {
       
       setData(promisse.data);
     } catch (error) {
-      if(error.response.status === 401) {
+      if(error.response?.status === 401 || error.response?.status === 404) {
         await fireAlert(error.response.data);
         logout()
         return navigate("/")
@@ -68,7 +68,6 @@ export default function AllPosts() {
   }
 
   useEffect(() => {
-
         handleGetAllPosts();
 
     // eslint-disable-next-line
@@ -99,7 +98,8 @@ export default function AllPosts() {
 
   return (
     <Feed>
-      {data.map((el, i) => (
+      {data.map((el, i) => {
+        return (
         <Container key={i}>
           <DeleteModal {...el}/>
           <ContainerImage>
@@ -145,7 +145,7 @@ export default function AllPosts() {
             </ContainerAction>
           }
         </Container>
-      ))}
+      )})}
     </Feed>
   );
 }

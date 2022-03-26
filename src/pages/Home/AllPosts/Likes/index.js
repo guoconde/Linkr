@@ -1,9 +1,10 @@
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { LikeOrDislike } from "./style"
 import useApi from "../../../../hooks/useApi"
 import useAuth from "../../../../hooks/useAuth"
 import ReactTooltip from "react-tooltip"
+import usePost from "../../../../hooks/usePost"
 
 export default function Likes({ postId, isLike, postLikes, likeNames, handleGetAllPosts }) {
 
@@ -14,6 +15,7 @@ export default function Likes({ postId, isLike, postLikes, likeNames, handleGetA
     const [countLikes, setCountLikes] = useState(parseInt(postLikes))
     const api = useApi()
     const { auth } = useAuth()
+    const { reloadPage, setReloadPage } = usePost();
     
     let message = ''
 
@@ -22,7 +24,7 @@ export default function Likes({ postId, isLike, postLikes, likeNames, handleGetA
 
         if (likeNames.length === 0) return message = ([])
 
-        const yourName = likeNames.indexOf(auth.userName)
+        const yourName = likeNames.indexOf(auth?.userName)
 
         if(yourName === 0 && likeNames.length === 1) return message = 'You liked the message'
         if(yourName === -1 && likeNames.length === 1) return message = `${likeNames[0]} liked the message`
@@ -52,20 +54,15 @@ export default function Likes({ postId, isLike, postLikes, likeNames, handleGetA
         if (value) {
             await api.feed.insertLike(postId, auth.userId, value, headers)
             setCountLikes(countLikes + 1)
+            setReloadPage(!reloadPage)
         } else {
             await api.feed.deleteLike(postId, auth.userId, value, headers)
             setCountLikes(countLikes - 1)
+            setReloadPage(!reloadPage)
         }
         
         setLike(value)
     }
-    
-    useEffect(() => {
-        
-        handleGetAllPosts();
-
-        // eslint-disable-next-line
-    }, [countLikes]);
 
     let count
 
