@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { fireAlert } from "../../../utils/alerts";
 import useApi from "../../../hooks/useApi";
 import useAuth from "../../../hooks/useAuth";
 import usePost from "../../../hooks/usePost";
-import { fireAlert } from "../../../utils/alerts";
 
 import { Container, Divider, TitleContainer, Title, HashtagsContainer, HashtagLink } from "./style";
 
@@ -12,7 +12,7 @@ export default function Trendings() {
   const { auth, logout } = useAuth();
   const [trendings, setTrendings] = useState([]);
   const { reloadPage } = usePost();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleTrendings();
@@ -33,8 +33,8 @@ export default function Trendings() {
     } catch (error) {
       if(error.response?.status === 401) {
         await fireAlert(error.response.data);
-        logout()
-        navigate("/")
+        logout();
+        navigate("/");
       }
     }
   }

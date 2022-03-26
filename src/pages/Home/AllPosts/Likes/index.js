@@ -1,12 +1,12 @@
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"
-import { useState } from "react"
-import { LikeOrDislike } from "./style"
-import useApi from "../../../../hooks/useApi"
-import useAuth from "../../../../hooks/useAuth"
-import ReactTooltip from "react-tooltip"
-import usePost from "../../../../hooks/usePost"
+import { useState } from "react";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import LikeOrDislike from "./style";
+import useApi from "../../../../hooks/useApi";
+import useAuth from "../../../../hooks/useAuth";
+import ReactTooltip from "react-tooltip";
+import usePost from "../../../../hooks/usePost";
 
-export default function Likes({ postId, isLike, postLikes, likeNames, handleGetAllPosts }) {
+export default function Likes({ postId, isLike, postLikes, likeNames }) {
 
     if (isLike === null) isLike = false
     if (postLikes === null) postLikes = 0

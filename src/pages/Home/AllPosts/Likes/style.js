@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const LikeOrDislike = styled.div`
     font-size: 40px;
@@ -14,8 +14,6 @@ const LikeOrDislike = styled.div`
         line-height: 13px;
     }
 
-`
+`;
 
-export {
-    LikeOrDislike
-}
+export default LikeOrDislike;

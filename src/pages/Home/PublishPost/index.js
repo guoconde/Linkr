@@ -1,9 +1,9 @@
 import { useState, } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { fireAlert } from "../../../utils/alerts";
 import useApi from "../../../hooks/useApi";
 import useMenu from "../../../hooks/useMenu";
 import useAuth from "../../../hooks/useAuth";
-import { fireAlert } from "../../../utils/alerts";
 import ProfilePicture from "../../../components/ProfilePicture";
 import { 
   Button, 
@@ -11,7 +11,8 @@ import {
   ContainerProfilePicture, 
   Description, 
   Input, 
-  TextArea } from "./style";
+  TextArea 
+} from "./style";
 
 
 export default function PublishPost() {
@@ -45,8 +46,8 @@ export default function PublishPost() {
     } catch (error) {
       await fireAlert(error.response.data);
       if(error.response.status === 401) {
-        logout()
-        return navigate("/")
+        logout();
+        return navigate("/");
       }
     }
 

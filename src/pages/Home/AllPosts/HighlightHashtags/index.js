@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import StyledLink from "./styled";
 import ReactHashtag from "@mdnm/react-hashtag";
 
 export default function HighlightHashtag ({ children, index }) {
@@ -15,9 +14,3 @@ export default function HighlightHashtag ({ children, index }) {
     </ReactHashtag>
   )
 }
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  font-weight: 700;
-  color: #FFFFFF;
-`;
