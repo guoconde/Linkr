@@ -1,14 +1,23 @@
 import api from "./api"
 
 export default class FeedApi {
-    listAll() {
-        return api.get("/posts")
+    listAll(headers) {
+        return api.get(`/posts`, headers)
     }
     listByHashtag(hashtag, headers) {
         return api.get(`/hashtag/${hashtag}`, headers);
     }
     listByUser(userId, headers) {
         return api.get(`/user/${userId}`, headers);
+    }
+    getLike(id, headers) {
+        return api.get(`/posts/${id}/like`, headers)
+    }
+    deleteLike(postId, userId, isLiked, headers) {
+        return api.put(`/posts/${postId}/like`, {isLiked, userId}, headers)
+    }
+    insertLike(postId, userId, isLiked, headers) {
+        return api.post(`/posts/${postId}/like`, {isLiked, userId}, headers)
     }
 }
 
