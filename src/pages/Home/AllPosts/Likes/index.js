@@ -22,7 +22,7 @@ export default function Likes({ postId, isLike, postLikes, likeNames, handleGetA
 
         if (likeNames.length === 0) return message = ([])
 
-        const yourName = likeNames.indexOf(auth.userName)
+        const yourName = likeNames.indexOf(auth?.userName)
 
         if(yourName === 0 && likeNames.length === 1) return message = 'You liked the message'
         if(yourName === -1 && likeNames.length === 1) return message = `${likeNames[0]} liked the message`
