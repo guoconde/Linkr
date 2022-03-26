@@ -56,7 +56,7 @@ export default function AllPosts() {
       
       setData(promisse.data);
     } catch (error) {
-      if(error.response.status === 401) {
+      if(error.response?.status === 401 || error.response?.status === 404) {
         await fireAlert(error.response.data);
         logout()
         return navigate("/")
