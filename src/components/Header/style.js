@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { BiChevronDown } from "react-icons/bi"
+import { AiOutlineSearch } from "react-icons/ai"
 
 const Container = styled.header`
   position: fixed;
@@ -78,4 +79,76 @@ const Logout = styled.div`
   }
 `;
 
-export { Container, UserIcon, Title, DownArrow, Logout };
+const InputFindUser = styled.div`
+  width: 563px;
+  height: 45px;
+  position: relative;
+
+  .debounce-input {
+
+    width: 563px;
+    height: 45px;
+    padding-left: 17px;
+    
+    background-color: white;
+    
+    border-radius: 8px;
+    border: none;
+    
+    font-family: Lato;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 23px;
+    color: #515151;
+    
+    z-index: 2;
+    
+    ::placeholder {
+      color: #C6C6C6;
+    }
+  }
+  
+  .list-users {
+    width: 100%;
+    min-height: 45px;
+
+    padding-top: 30px;
+    padding-bottom: 15px;
+    
+    border-radius: 8px;
+    border: none;
+
+    background-color: #E7E7E7;
+    font-weight: regular;
+    color: red;
+
+    position: absolute;
+    top: 0;
+    z-index: -1;
+
+    
+    div:first-child{
+      margin-top: 30px;
+    }
+    
+    div {
+      padding: 3px 17px;
+      
+      display: flex;
+      align-items: center;
+      
+      color: #515151;
+      cursor: pointer;
+    }
+  }
+
+`
+const SearchIcon = styled(AiOutlineSearch) `
+  top: 9px;
+  right: 10px;
+  font-size: 25px;
+  position: absolute;
+  color: #C6C6C6;
+`
+
+export { Container, UserIcon, Title, DownArrow, Logout, InputFindUser, SearchIcon };
