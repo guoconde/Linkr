@@ -51,7 +51,7 @@ export default function PublishPost() {
         return navigate("/");
       }
     }
-
+    
     setIsLoading(false);
   }
 

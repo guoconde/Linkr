@@ -50,7 +50,7 @@ export default function AllPosts() {
           fireAlert("User doesn't exists");
           navigate("/timeline");
         }
-
+        
         setData(promisse.data.posts);
         setUsernameSearched(promisse.data.name);
         return;
@@ -68,12 +68,12 @@ export default function AllPosts() {
       );
     }
   }
-  console.log(data);
   useEffect(() => {
     handleGetAllPosts();
 
     // eslint-disable-next-line
   }, [pathname, reloadPage]);
+  console.log(data);
 
   if (!data)
     return (

@@ -24,7 +24,6 @@ export default function Trendings() {
 
   useEffect(() => {
     handleTrendings();
-
     // eslint-disable-next-line
   }, [reloadPage]);
 
@@ -33,7 +32,6 @@ export default function Trendings() {
 
     try {
       const { data } = await api.hashtags.getHashtags(headers);
-
       setTrendings(data);
     } catch (error) {
       if (error.response?.status === 401) {
