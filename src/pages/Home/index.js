@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useRef } from "react";
 import { useLocation } from "react-router";
 import PublishPost from "./PublishPost";
 import Trendings from "./Trendings";
@@ -10,20 +10,17 @@ import { Container, Content, TitleOfSection } from "./style";
 export default function Home() {
   const { handleHideLogout } = useMenu();
   const { pathname } = useLocation();
-  const [ title, setTitle ] = useState();
   const { usernameSearched } = useSearchedUser();
-  
-  useEffect(() => {
-    if(pathname.split("/")[1] === "timeline") setTitle("timeline")
-    else if (pathname.split("/")[1] === "hashtag") setTitle(`# ${pathname.split("/")[2]}`)
-    else if (pathname.split("/")[1] === "user") setTitle(`${usernameSearched}'s posts`)
-    //eslint-disable-next-line
-  }, [pathname, usernameSearched]);
 
+  let title = useRef("");
+  if(pathname.split("/")[1] === "timeline") title.current = "timeline"
+  else if (pathname.split("/")[1] === "hashtag") title.current = `# ${pathname.split("/")[2]}`
+  else if (pathname.split("/")[1] === "user") title.current = `${usernameSearched}'s posts`
+  
   return (
     <Container onClick={() => handleHideLogout()}>
       <Content>
-        <TitleOfSection>{title}</TitleOfSection>
+        <TitleOfSection>{title.current}</TitleOfSection>
         <PublishPost />
         <AllPosts />
       </Content>

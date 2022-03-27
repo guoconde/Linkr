@@ -7,7 +7,7 @@ export default function ListUsers({ users, setUsers }) {
 
     function handleNavigate(user) {
 
-        setUsers(null)
+        setUsers([])
         navigate(`${user}`)
 
     }

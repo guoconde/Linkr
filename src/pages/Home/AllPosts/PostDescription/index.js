@@ -2,30 +2,37 @@ import { useEffect, useState } from "react";
 import PostInput from "./PostInput";
 import PostParagraph from "./PostParagraph";
 
-export default function PostDescription({ postId, edit, setEdit, url, description, index }) {
-  const [showAction, setShowAction] = useState(<PostParagraph description={description} index={index} />);
+export default function PostDescription({
+  postId,
+  edit,
+  setEdit,
+  url,
+  description,
+  index,
+}) {
+  const [showAction, setShowAction] = useState(false);
   useEffect(() => {
     if (edit === postId) {
-      setShowAction(
-        <PostInput
-          postId={postId}
-          url={url}
-          setEdit={setEdit}
-          description={description}
-          setShowAction={setShowAction}
-          index={index}
-        />
-      );
+      setShowAction(true);
     }
 
     if (edit === null || edit !== postId) {
-      setShowAction(<PostParagraph description={description} index={index} />);
+      setShowAction(false);
     }
 
     // eslint-disable-next-line
-  }, [edit])
+  }, [edit]);
 
-  return (
-    showAction
+  return !showAction ? (
+    <PostParagraph description={description} />
+  ) : (
+    <PostInput
+      postId={postId}
+      url={url}
+      setEdit={setEdit}
+      description={description}
+      setShowAction={setShowAction}
+      index={index}
+    />
   );
 }
