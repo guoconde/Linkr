@@ -57,6 +57,7 @@ export default function PostInput({ postId, url, description, setShowAction, set
 
       if (error.response.status === 400) {
         await fireAlert(error.response.data);
+        descriptionInputRef.current.focus();
         return;
       }
 
