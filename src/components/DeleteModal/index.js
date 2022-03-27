@@ -1,14 +1,13 @@
 import { useState } from "react";
+import { TailSpin } from "react-loader-spinner";
+import { fireToast } from "../../utils/alerts";
 import useApi from "../../hooks/useApi";
 import useAuth from "../../hooks/useAuth";
-
 import ReactModal from "react-modal";
-import { Watch } from "react-loader-spinner";
-import { Button, SectionButton, Title, Trash } from "./style";
-import { fireToast } from "../../utils/alerts";
 import usePost from "../../hooks/usePost";
+import { Button, Content, SectionButton, Title, Trash } from "./style";
 
-export default function DeleteModal({ id: postId, userId}) {
+export default function DeleteModal({ id: postId, userId }) {
   const [showModal, setShowModal] = useState(false);
   const [isProcessingRequest, setIsProcessingRequest] = useState(false);
   const api = useApi();
@@ -63,14 +62,17 @@ export default function DeleteModal({ id: postId, userId}) {
   }
   return (
     <>
-      <Trash onClick={handleModal} userid={userId} authid={auth?.userId}/>
+      <Trash onClick={handleModal} userid={userId} authid={auth?.userId} />
       <ReactModal
         isOpen={showModal}
         style={{ overlay, content }}
         appElement={document.querySelector(".root")}
       >
         {isProcessingRequest ? (
-          <Watch color="white" message="Teste" ariaLabel="loading-indicator" />
+          <Content>
+            <TailSpin color="white" ariaLabel="loading-indicator" />
+            <div>Loading...</div>
+          </Content>
         ) : (
           <ModalContent deletePost={deletePost} setShowModal={setShowModal} />
         )}

@@ -4,24 +4,30 @@ import { fireAlert } from "../../../../../utils/alerts";
 import PostParagraph from "../PostParagraph";
 import useApi from "../../../../../hooks/useApi";
 import useAuth from "../../../../../hooks/useAuth";
+import usePost from "../../../../../hooks/usePost";
 import Input from "./style";
 
 export default function PostInput({ postId, url, description, setShowAction, setEdit, index }) {
   const [descriptionReceived, setDescriptionReceived] = useState(description);
   const [isLoading, setIsLoading] = useState(false);
+  const { auth, logout } = useAuth();
+  const { reloadPage, setReloadPage } = usePost();
   const descriptionInputRef = useRef(null);
   const api = useApi();
   const navigate = useNavigate();
-  const { auth, logout } = useAuth();
+
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
       setEdit(null);
       setIsLoading(true);
+
       handleUpdatePost(postId, {
         url,
         description: descriptionReceived,
         originalDescription: description
       });
+
+      setReloadPage(!reloadPage);
     }
 
     if (event.key === 'Escape') {
@@ -35,11 +41,7 @@ export default function PostInput({ postId, url, description, setShowAction, set
   }, []);
 
   async function handleUpdatePost(postId, data) {
-    const headers = {
-      headers: {
-        Authorization: `Bearer ${auth?.token}`
-      }
-    }
+    const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
 
     try {
       await api.posts.updatePost(postId, data, headers);

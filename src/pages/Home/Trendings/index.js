@@ -1,37 +1,42 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { fireAlert } from "../../../utils/alerts";
+import { TailSpin } from "react-loader-spinner";
 import useApi from "../../../hooks/useApi";
 import useAuth from "../../../hooks/useAuth";
 import usePost from "../../../hooks/usePost";
-
-import { Container, Divider, TitleContainer, Title, HashtagsContainer, HashtagLink } from "./style";
+import { 
+  Container, 
+  Content,
+  Divider, 
+  TitleContainer, 
+  Title, 
+  HashtagsContainer, 
+  HashtagLink 
+} from "./style";
 
 export default function Trendings() {
   const api = useApi();
+  const [trendings, setTrendings] = useState(null);
   const { auth, logout } = useAuth();
-  const [trendings, setTrendings] = useState([]);
   const { reloadPage } = usePost();
   const navigate = useNavigate();
 
   useEffect(() => {
     handleTrendings();
-    //eslint-disable-next-line
+
+    // eslint-disable-next-line
   }, [reloadPage]);
 
   async function handleTrendings() {
-    const headers = {
-      headers: {
-        Authorization: `Bearer ${auth?.token}`
-      }
-    }
+    const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
 
     try {
       const { data } = await api.hashtags.getHashtags(headers);
 
       setTrendings(data);
     } catch (error) {
-      if(error.response?.status === 401) {
+      if (error.response?.status === 401) {
         await fireAlert(error.response.data);
         logout();
         navigate("/");
@@ -49,7 +54,10 @@ export default function Trendings() {
         <Divider />
 
         <HashtagsContainer>
-          Loading...
+          <Content>
+            <TailSpin color="white" ariaLabel="loading-indicator" />
+            <div>Loading...</div>
+          </Content>
         </HashtagsContainer>
       </Container>
     );
