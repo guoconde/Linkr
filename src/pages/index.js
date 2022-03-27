@@ -9,7 +9,7 @@ export default function Pages() {
             <Route path="/sign-up" element={<Register />} />
             <Route path="/" element={<Login />} />
             <Route path="/timeline" element={<Home />} />
-            <Route path="/hashtag/:hashtag" element={<Home/>} />
+            <Route path="/hashtag/:hashtag" element={<Home />} />
             <Route path="/user/:id" element={<Home/>} />
         </Routes>
     )

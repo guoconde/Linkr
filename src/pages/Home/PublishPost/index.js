@@ -43,7 +43,7 @@ export default function PublishPost() {
 
       await api.posts.publish(formData, headers);
       setFormData({ url: "", description: "", });
-
+      setReloadPage(!reloadPage);
     } catch (error) {
       await fireAlert(error.response.data);
       if(error.response.status === 401) {

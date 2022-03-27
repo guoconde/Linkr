@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fireAlert } from "../../../../../utils/alerts";
-import PostParagraph from "../PostParagraph";
+
 import useApi from "../../../../../hooks/useApi";
 import useAuth from "../../../../../hooks/useAuth";
 import usePost from "../../../../../hooks/usePost";
@@ -32,7 +32,7 @@ export default function PostInput({ postId, url, description, setShowAction, set
 
     if (event.key === 'Escape') {
       setEdit(null);
-      setShowAction(<PostParagraph description={description} index={index} />);
+      setShowAction(false);
     }
   }
 
@@ -46,7 +46,7 @@ export default function PostInput({ postId, url, description, setShowAction, set
     try {
       await api.posts.updatePost(postId, data, headers);
 
-      setShowAction(<PostParagraph description={descriptionReceived} index={index} />);
+      setShowAction(false);
     } catch (error) {
       if (error.response.status === 401) {
         await fireAlert(error.response.data);

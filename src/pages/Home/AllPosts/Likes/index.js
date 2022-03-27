@@ -16,7 +16,6 @@ export default function Likes({ postId, isLike, postLikes, likeNames }) {
     const api = useApi()
     const { auth } = useAuth()
     const { reloadPage, setReloadPage } = usePost();
-    
     let message = ''
 
     function handleMessage() {

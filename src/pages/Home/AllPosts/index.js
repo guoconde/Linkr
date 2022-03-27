@@ -26,7 +26,7 @@ import {
 } from "./style";
 
 export default function AllPosts() {
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
   const [edit, setEdit] = useState(null);
   const { pathname } = useLocation();
   const { auth, logout } = useAuth();
@@ -68,7 +68,7 @@ export default function AllPosts() {
       );
     }
   }
-
+  console.log(data);
   useEffect(() => {
     handleGetAllPosts();
 
