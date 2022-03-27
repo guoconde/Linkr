@@ -73,7 +73,6 @@ export default function AllPosts() {
 
     // eslint-disable-next-line
   }, [pathname, reloadPage]);
-  console.log(data);
 
   if (!data)
     return (

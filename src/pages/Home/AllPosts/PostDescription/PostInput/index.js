@@ -7,7 +7,7 @@ import useAuth from "../../../../../hooks/useAuth";
 import usePost from "../../../../../hooks/usePost";
 import Input from "./style";
 
-export default function PostInput({ postId, url, description, setShowAction, setEdit, index }) {
+export default function PostInput({ postId, url, description, setShowAction, setEdit }) {
   const [descriptionReceived, setDescriptionReceived] = useState(description);
   const [isLoading, setIsLoading] = useState(false);
   const { auth, logout } = useAuth();
@@ -18,7 +18,6 @@ export default function PostInput({ postId, url, description, setShowAction, set
 
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
-      setEdit(null);
       setIsLoading(true);
 
       handleUpdatePost(postId, {
@@ -46,16 +45,23 @@ export default function PostInput({ postId, url, description, setShowAction, set
     try {
       await api.posts.updatePost(postId, data, headers);
 
+      setEdit(null);
       setShowAction(false);
     } catch (error) {
+      setIsLoading(false);
+      
       if (error.response.status === 401) {
         await fireAlert(error.response.data);
         logout();
         return navigate("/");
       }
 
-      alert("Unable to edit the post! Try again!");
-      setIsLoading(false);
+      if (error.response.status === 400) {
+        await fireAlert(error.response.data);
+        return;
+      }
+
+      fireAlert("Unable to edit the post! Try again!");
     }
   }
 
