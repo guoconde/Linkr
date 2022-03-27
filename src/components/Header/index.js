@@ -29,16 +29,15 @@ export default function Header() {
 
     let findAllUsers = event.target.value
 
-    if (event.target.value.length < 3) findAllUsers = null
+    if (!event.target.value) return setUsers([]);
 
     const { data } = await api.user.getAllUsers(findAllUsers)
 
-    setUsers(data)
+    setUsers(data);
   }
 
 
   useEffect(() => {
-    // handleFindUsers()
     if (!auth) {
       handleHideLogout();
       navigate("/");
@@ -64,7 +63,7 @@ export default function Header() {
         <InputFindUser>
           <DebounceInput
             className="debounce-input"
-            minLength={3}
+            //minLength={3}
             debounceTimeout={300}
             placeholder="Search for people"
             onChange={event => handleFindUsers(event)}
