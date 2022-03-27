@@ -4,6 +4,7 @@ import { fireAlert } from "../../../utils/alerts";
 import useApi from "../../../hooks/useApi";
 import useMenu from "../../../hooks/useMenu";
 import useAuth from "../../../hooks/useAuth";
+import usePost from "../../../hooks/usePost";
 import ProfilePicture from "../../../components/ProfilePicture";
 import { 
   Button, 
@@ -14,15 +15,15 @@ import {
   TextArea 
 } from "./style";
 
-
 export default function PublishPost() {
   const [formData, setFormData] = useState({ url: "", description: "", });
   const [isLoading, setIsLoading] = useState(false);
   const { pathname } = useLocation();
-  const { auth, logout } = useAuth()
-  const api = useApi();
+  const { auth, logout } = useAuth();
+  const { reloadPage, setReloadPage } = usePost();
   const { handleHideLogout } = useMenu();
-  const navigate = useNavigate()
+  const api = useApi();
+  const navigate = useNavigate();
 
   function handleInputChange({ target }) {
     setFormData({ ...formData, [target.name]: target.value });
@@ -85,7 +86,7 @@ export default function PublishPost() {
           disabled={isLoading}
         />
 
-        <Button disabled={isLoading}>
+        <Button disabled={isLoading} onClick={() => setReloadPage(!reloadPage)}>
           {isLoading ? "Publishing..." : "Publish"}
         </Button>
       </form>

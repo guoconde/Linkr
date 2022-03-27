@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { Watch } from "react-loader-spinner";
+import { TailSpin } from "react-loader-spinner";
 import { fireAlert } from "../../../utils/alerts";
 import useAuth from "../../../hooks/useAuth";
 import useApi from "../../../hooks/useApi";
@@ -28,21 +28,23 @@ import {
 export default function AllPosts() {
   const [data, setData] = useState();
   const [edit, setEdit] = useState(null);
+  const { pathname } = useLocation();
+  const { auth, logout } = useAuth();
+  const { setUsernameSearched } = useSearchedUser();
+  const { reloadPage } = usePost();
   const api = useApi();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const { auth, logout } = useAuth()
-  const { setUsernameSearched } = useSearchedUser()
-  const { reloadPage } = usePost();
 
   async function handleGetAllPosts() {
     try {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
       let promisse;
 
-      if (pathname.includes("timeline")) promisse = await api.feed.listAll(headers);
-      else if (pathname.includes("hashtag")) promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
-      else if (pathname.includes("user")) {
+      if (pathname.includes("timeline")) {
+        promisse = await api.feed.listAll(headers);
+      } else if (pathname.includes("hashtag")) {
+        promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
+      } else if (pathname.includes("user")) {
         promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
         if (!promisse.data) {
           fireAlert("User doesn't exists");
@@ -71,12 +73,12 @@ export default function AllPosts() {
     handleGetAllPosts();
 
     // eslint-disable-next-line
-  }, [pathname, reloadPage, edit]);
+  }, [pathname, reloadPage]);
 
   if (!data)
     return (
       <Content>
-        <Watch color="white" ariaLabel="loading-indicator" />
+        <TailSpin color="white" ariaLabel="loading-indicator" />
         <div>Loading...</div>
       </Content>
     );

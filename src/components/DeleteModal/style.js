@@ -15,6 +15,7 @@ const Title = styled.p`
     line-height: 25px;
   }
 `;
+
 const SectionButton = styled.div`
   display: flex;
   gap: 25px;
@@ -23,6 +24,7 @@ const SectionButton = styled.div`
     flex-direction: column;
   }
 `;
+
 const Button = styled.button`
   width: 134px;
   height: 37px;
@@ -61,9 +63,27 @@ const Trash = styled(BsFillTrashFill)`
   display: ${(props) => props.authid === props.userid ? "block": "none"};
 `;
 
+const Content = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #fff;
+
+    font-family: Lato;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 20px;
+
+    margin-top: 30px;
+`;
+
 export {
   Trash,
   Title,
   Button,
-  SectionButton
+  SectionButton,
+  Content
 };
