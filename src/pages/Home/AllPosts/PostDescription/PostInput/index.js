@@ -25,8 +25,6 @@ export default function PostInput({ postId, url, description, setShowAction, set
         description: descriptionReceived,
         originalDescription: description
       });
-
-      setReloadPage(!reloadPage);
     }
 
     if (event.key === 'Escape') {
@@ -47,9 +45,10 @@ export default function PostInput({ postId, url, description, setShowAction, set
 
       setEdit(null);
       setShowAction(false);
+      setReloadPage(!reloadPage);
     } catch (error) {
       setIsLoading(false);
-      
+
       if (error.response.status === 401) {
         await fireAlert(error.response.data);
         logout();
