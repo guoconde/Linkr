@@ -1,4 +1,4 @@
-import { useState, } from "react";
+import { useRef, useState, } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { fireAlert } from "../../../utils/alerts";
 import useApi from "../../../hooks/useApi";
@@ -14,6 +14,7 @@ import {
   Input, 
   TextArea 
 } from "./style";
+import { findHashtags } from "../../../utils/findHastags";
 
 export default function PublishPost() {
   const [formData, setFormData] = useState({ url: "", description: "", });
@@ -24,15 +25,28 @@ export default function PublishPost() {
   const { handleHideLogout } = useMenu();
   const api = useApi();
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+
+  const input = useRef();
 
   function handleInputChange({ target }) {
     setFormData({ ...formData, [target.name]: target.value });
   }
 
   async function handleSubmit(e) {
+    input.current.style.outlineColor ="#efefef";
     e.preventDefault();
 
     if (!formData.url) {
+      return;
+    }
+
+    const isHashtagsValid = findHashtags(formData.description);
+    
+    if (!isHashtagsValid){
+      setError("Invalid Hashtags");
+      input.current.focus();
+      input.current.style.outlineColor = "#dc3545";
       return;
     }
 
@@ -51,7 +65,7 @@ export default function PublishPost() {
         return navigate("/");
       }
     }
-    
+    setError("");
     setIsLoading(false);
   }
 
@@ -79,12 +93,14 @@ export default function PublishPost() {
         />
 
         <TextArea
+          ref={input}
           name="description"
           value={formData.description}
           placeholder="Awesome article about #javascript"
           onChange={handleInputChange}
           disabled={isLoading}
         />
+        <span className="error-message">{error}</span>
 
         <Button disabled={isLoading} onClick={() => setReloadPage(!reloadPage)}>
           {isLoading ? "Publishing..." : "Publish"}

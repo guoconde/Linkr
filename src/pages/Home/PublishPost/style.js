@@ -21,6 +21,12 @@ const Container = styled.div`
     flex-direction: column;
     gap: 8px;
   }
+  
+  .error-message {
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #dc3545;
+  }
 
   @media screen and (max-width: 650px) {
     width: 100%;
