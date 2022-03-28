@@ -1,9 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import useMenu from "../../hooks/useMenu";
 import ProfilePicture from "../ProfilePicture";
 import { DebounceInput } from "react-debounce-input";
+import useApi from "../../hooks/useApi";
+import ListUsers from "./findUsers";
+import useContexts from "../../hooks/useContexts";
 import {
   Container,
   ContentMobile,
@@ -18,16 +19,15 @@ import {
   ContainerMobile,
   ContainerInputFindUserMobile
 } from "./style";
-import useApi from "../../hooks/useApi";
-import ListUsers from "./findUsers";
 
 export default function Header() {
+  const api = useApi()
+  const contexts = useContexts()
+  const { auth, logout } = contexts.auth
+  const { toggleLogout, handleToggleLogout, handleHideLogout } = contexts.menu
   const navigate = useNavigate();
-  const { auth, logout } = useAuth();
-  const { toggleLogout, handleToggleLogout, handleHideLogout } = useMenu();
   const { pathname } = useLocation();
   const [users, setUsers] = useState([])
-  const api = useApi()
 
   async function handleFindUsers(event) {
 

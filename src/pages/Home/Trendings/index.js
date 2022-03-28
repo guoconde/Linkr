@@ -3,8 +3,7 @@ import { useNavigate } from "react-router";
 import { fireAlert } from "../../../utils/alerts";
 import { TailSpin } from "react-loader-spinner";
 import useApi from "../../../hooks/useApi";
-import useAuth from "../../../hooks/useAuth";
-import usePost from "../../../hooks/usePost";
+import useContexts from "../../../hooks/useContexts";
 import { 
   Container, 
   Content,
@@ -17,9 +16,10 @@ import {
 
 export default function Trendings() {
   const api = useApi();
+  const contexts = useContexts();
+  const { auth, logout } = contexts.auth
+  const { reloadPage } = contexts.post
   const [trendings, setTrendings] = useState(null);
-  const { auth, logout } = useAuth();
-  const { reloadPage } = usePost();
   const navigate = useNavigate();
 
   useEffect(() => {

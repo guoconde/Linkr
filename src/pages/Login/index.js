@@ -3,8 +3,8 @@ import { useNavigate } from "react-router";
 import { ThreeDots } from 'react-loader-spinner';
 import { fireAlert } from "../../utils/alerts";
 import useApi from "../../hooks/useApi";
-import useAuth from "../../hooks/useAuth";
 import { Form, Input, Button, StyledLink } from "../../components/FormComponents";
+import useContexts from "../../hooks/useContexts";
 import { 
   AuthContainer, 
   SloganSide, 
@@ -14,9 +14,10 @@ import {
 } from "../../components/AuthScreenComponents";
 
 export default function Login() {
-  const navigate = useNavigate();
   const api = useApi();
-  const { auth, login } = useAuth();
+  const contexts = useContexts()
+  const { auth, login } = contexts.auth
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
 

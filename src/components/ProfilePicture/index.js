@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import useAuth from "../../hooks/useAuth";
-import useMenu from "../../hooks/useMenu";
+import useContexts from "../../hooks/useContexts";
 
 export default function ProfilePicture({ photo, titleMargin, displayControl, cursorControl }) {
-  const { auth } = useAuth();
-  const { handleToggleLogout } = useMenu();
+  const contexts = useContexts()
+  const { auth } = contexts.auth
+  const { handleToggleLogout } = contexts.menu
 
   return (
     <Image

@@ -2,17 +2,17 @@ import { useState } from "react";
 import { TailSpin } from "react-loader-spinner";
 import { fireToast } from "../../utils/alerts";
 import useApi from "../../hooks/useApi";
-import useAuth from "../../hooks/useAuth";
 import ReactModal from "react-modal";
-import usePost from "../../hooks/usePost";
 import { Button, Content, SectionButton, Title, Trash } from "./style";
+import useContexts from "../../hooks/useContexts";
 
 export default function DeleteModal({ id: postId, userId }) {
+  const api = useApi();
+  const contexts = useContexts()
+  const { auth } = contexts.auth
+  const { reloadPage, setReloadPage } = contexts.post
   const [showModal, setShowModal] = useState(false);
   const [isProcessingRequest, setIsProcessingRequest] = useState(false);
-  const api = useApi();
-  const { auth } = useAuth();
-  const { reloadPage, setReloadPage } = usePost();
 
   const headers = {
     headers: {
