@@ -21,6 +21,10 @@ const Container = styled.header`
 
   color: #ffffff;
   font-weight: 700;
+
+  @media screen and (max-width: 650px) {
+    padding: 10px 18px;
+  }
 `;
 
 const ContainerMobile = styled.div`
@@ -126,7 +130,7 @@ const ContainerInputFindUserMobile = styled.div`
   justify-content: center;
 
   @media screen and (max-width: 650px) {
-    width: 90%;
+    width: 92%;
   }
 `;
 
@@ -176,7 +180,6 @@ const InputFindUser = styled.div`
     top: 0;
     z-index: -1;
 
-    
     div:first-child{
       margin-top: 30px;
     }

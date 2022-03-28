@@ -10,9 +10,9 @@ export default function Likes({ postId, isLike, postLikes, likeNames }) {
   if (isLike === null) isLike = false;
   if (postLikes === null) postLikes = 0;
 
-  let liked = useRef();
+  const liked = useRef();
   liked.current = isLike;
-  let countLikes = useRef();
+  const countLikes = useRef();
   countLikes.current = parseInt(postLikes);
   const api = useApi();
   const contexts = useContexts();

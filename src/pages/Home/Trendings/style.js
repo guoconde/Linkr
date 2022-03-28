@@ -9,6 +9,9 @@ const Container = styled.div`
   background: #171717;
   border-radius: 16px;
   
+  position: sticky;
+  top: 100px;
+  
   @media screen and (max-width: 1000px) {
     display: none;
   }

@@ -97,7 +97,6 @@ export default function Header() {
             <InputFindUserMobile>
               <DebounceInput
                 className="debounce-input-mobile"
-                //minLength={3}
                 debounceTimeout={300}
                 placeholder="Search for people and friends"
                 onChange={event => handleFindUsers(event)}

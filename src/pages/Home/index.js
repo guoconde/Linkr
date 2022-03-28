@@ -20,8 +20,9 @@ export default function Home() {
 
   useEffect(() => {
     handleUserById();
+    window.scroll(0, 0);
     // eslint-disable-next-line
-  }, [id]);
+  }, [id, pathname]);
 
   async function handleUserById() {
     if (!id) {
@@ -42,7 +43,7 @@ export default function Home() {
     }
   }
 
-  let title = useRef("");
+  let title = useRef();
   if(pathname.split("/")[1] === "timeline") title.current = "timeline"
   else if (pathname.split("/")[1] === "hashtag") title.current = `# ${pathname.split("/")[2]}`
   else if (pathname.split("/")[1] === "user") title.current = `${usernameSearched}'s posts`
