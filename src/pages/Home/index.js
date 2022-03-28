@@ -5,16 +5,16 @@ import PublishPost from "./PublishPost";
 import Trendings from "./Trendings";
 import AllPosts from "./AllPosts";
 import useApi from "../../hooks/useApi";
-import useMenu from "../../hooks/useMenu";
-import useSearchedUser from "../../hooks/useSearchedUser";
+import useContexts from "../../hooks/useContexts";
 import ProfilePicture from "../../components/ProfilePicture";
 import { Container, ContainerTitleProfile, Content, TitleOfSection } from "./style";
 
 export default function Home() {
   const api = useApi();
-  const { handleHideLogout } = useMenu();
+  const contexts = useContexts()
+  const { usernameSearched } = contexts.searchedUser
+  const { handleHideLogout } = contexts.menu
   const { pathname } = useLocation();
-  const { usernameSearched } = useSearchedUser();
   const { id } = useParams();
   const [userPhoto, setUserPhoto] = useState(null);
 

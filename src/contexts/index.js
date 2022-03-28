@@ -8,11 +8,11 @@ export default function GlobalContext({ children }){
   return (
     <AuthProvider>
       <MenuProvider>
-        <SearchedUserProvider>
-          <PostProvider>
+        <PostProvider>
+          <SearchedUserProvider>
             {children}
-          </PostProvider>
-        </SearchedUserProvider>
+          </SearchedUserProvider>
+        </PostProvider>
       </MenuProvider>
     </AuthProvider>
   )

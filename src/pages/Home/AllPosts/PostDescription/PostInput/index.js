@@ -3,17 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { fireAlert } from "../../../../../utils/alerts";
 
 import useApi from "../../../../../hooks/useApi";
-import useAuth from "../../../../../hooks/useAuth";
-import usePost from "../../../../../hooks/usePost";
 import Input from "./style";
+import useContexts from "../../../../../hooks/useContexts";
 
 export default function PostInput({ postId, url, description, setShowAction, setEdit }) {
+  const api = useApi();
+  const contexts = useContexts()
+  const { auth, logout } = contexts.auth
+  const { reloadPage, setReloadPage } = contexts.post
   const [descriptionReceived, setDescriptionReceived] = useState(description);
   const [isLoading, setIsLoading] = useState(false);
-  const { auth, logout } = useAuth();
-  const { reloadPage, setReloadPage } = usePost();
   const descriptionInputRef = useRef(null);
-  const api = useApi();
   const navigate = useNavigate();
 
   const handleKeyDown = async (event) => {

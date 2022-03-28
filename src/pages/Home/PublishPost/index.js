@@ -2,10 +2,8 @@ import { useState, } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { fireAlert } from "../../../utils/alerts";
 import useApi from "../../../hooks/useApi";
-import useMenu from "../../../hooks/useMenu";
-import useAuth from "../../../hooks/useAuth";
-import usePost from "../../../hooks/usePost";
 import ProfilePicture from "../../../components/ProfilePicture";
+import useContexts from "../../../hooks/useContexts";
 import { 
   Button, 
   Container, 
@@ -16,13 +14,14 @@ import {
 } from "./style";
 
 export default function PublishPost() {
+  const api = useApi();
+  const contexts = useContexts()
+  const { auth, logout } = contexts.auth
+  const { reloadPage, setReloadPage } = contexts.post
+  const { handleHideLogout } = contexts.menu
   const [formData, setFormData] = useState({ url: "", description: "", });
   const [isLoading, setIsLoading] = useState(false);
   const { pathname } = useLocation();
-  const { auth, logout } = useAuth();
-  const { reloadPage, setReloadPage } = usePost();
-  const { handleHideLogout } = useMenu();
-  const api = useApi();
   const navigate = useNavigate();
 
   function handleInputChange({ target }) {

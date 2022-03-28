@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { TailSpin } from "react-loader-spinner";
 import { fireAlert } from "../../../utils/alerts";
-import useAuth from "../../../hooks/useAuth";
 import useApi from "../../../hooks/useApi";
-import useSearchedUser from "../../../hooks/useSearchedUser";
-import usePost from "../../../hooks/usePost";
 import PostDescription from "./PostDescription";
 import DeleteModal from "../../../components/DeleteModal";
 import Likes from "./Likes";
+import useContexts from "../../../hooks/useContexts";
 import {
   Container,
   ContainerPost,
@@ -26,13 +24,14 @@ import {
 } from "./style";
 
 export default function AllPosts() {
+  const api = useApi();
+  const contexts = useContexts()
+  const { auth, logout } = contexts.auth
+  const { setUsernameSearched } = contexts.searchedUser
+  const { reloadPage } = contexts.post
   const [data, setData] = useState(null);
   const [edit, setEdit] = useState(null);
   const { pathname } = useLocation();
-  const { auth, logout } = useAuth();
-  const { setUsernameSearched } = useSearchedUser();
-  const { reloadPage } = usePost();
-  const api = useApi();
   const navigate = useNavigate();
 
   async function handleGetAllPosts() {
