@@ -14,8 +14,8 @@ export default function ListUsers({ users, setUsers }) {
 
     return (
         <>
-            {users.map(el =>
-                <div onClick={() => handleNavigate(`/user/${el.id}`)}>
+            {users.map((el, i) =>
+                <div key={i} onClick={() => handleNavigate(`/user/${el.id}`)}>
                     <Image src={el.photo} alt={el.name} />
                     <div>{el.name}</div>
                 </div>

@@ -1,18 +1,22 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useMenu from "../../hooks/useMenu";
 import ProfilePicture from "../ProfilePicture";
 import { DebounceInput } from "react-debounce-input";
-import { 
-  Container, 
-  DownArrow, 
+import {
+  Container,
+  ContentMobile,
+  DownArrow,
   ContainerInputFindUser,
-  InputFindUser, 
-  Logout, 
-  SearchIcon, 
-  Title, 
-  UserIcon 
+  InputFindUser,
+  InputFindUserMobile,
+  Logout,
+  SearchIcon,
+  Title,
+  UserIcon,
+  ContainerMobile,
+  ContainerInputFindUserMobile
 } from "./style";
 import useApi from "../../hooks/useApi";
 import ListUsers from "./findUsers";
@@ -56,34 +60,57 @@ export default function Header() {
   }
 
   return (
-    <Container>
-      <Title onClick={() => handleClickTitle()}>linkr</Title>
+    <Fragment>
+      <Container>
+        <Title onClick={() => handleClickTitle()}>linkr</Title>
 
-      <ContainerInputFindUser onClick={() => handleHideLogout()}>
-        <InputFindUser>
-          <DebounceInput
-            className="debounce-input"
-            //minLength={3}
-            debounceTimeout={300}
-            placeholder="Search for people"
-            onChange={event => handleFindUsers(event)}
-            onSubmit={event => event.preventDefault()}
+        <ContainerInputFindUser onClick={() => handleHideLogout()}>
+          <InputFindUser>
+            <DebounceInput
+              className="debounce-input"
+              //minLength={3}
+              debounceTimeout={300}
+              placeholder="Search for people"
+              onChange={event => handleFindUsers(event)}
+              onSubmit={event => event.preventDefault()}
+            />
+            <SearchIcon />
+            <div className="list-users">
+              <ListUsers users={users} setUsers={setUsers} />
+            </div>
+          </InputFindUser>
+        </ContainerInputFindUser>
+
+        <UserIcon>
+          <DownArrow
+            show={toggleLogout ? 1 : undefined}
+            onClick={() => handleToggleLogout()}
           />
-          <SearchIcon />
-          <div className="list-users">
-            <ListUsers users={users} setUsers={setUsers} />
-          </div>
-        </InputFindUser>
-      </ContainerInputFindUser>
+          <Logout onClick={() => logout()} show={toggleLogout ? 1 : undefined}>Logout</Logout>
+          <ProfilePicture cursorControl={true}/>
+        </UserIcon>
+      </Container>
 
-      <UserIcon>
-        <DownArrow
-          show={toggleLogout ? 1 : undefined}
-          onClick={() => handleToggleLogout()}
-        />
-        <Logout onClick={() => logout()} show={toggleLogout ? 1 : undefined}>Logout</Logout>
-        <ProfilePicture />
-      </UserIcon>
-    </Container>
+      <ContainerMobile>
+        <ContentMobile>
+          <ContainerInputFindUserMobile onClick={() => handleHideLogout()}>
+            <InputFindUserMobile>
+              <DebounceInput
+                className="debounce-input-mobile"
+                //minLength={3}
+                debounceTimeout={300}
+                placeholder="Search for people and friends"
+                onChange={event => handleFindUsers(event)}
+                onSubmit={event => event.preventDefault()}
+              />
+              <SearchIcon />
+              <div className="list-users-mobile">
+                <ListUsers users={users} setUsers={setUsers} />
+              </div>
+            </InputFindUserMobile>
+          </ContainerInputFindUserMobile>
+        </ContentMobile>
+      </ContainerMobile>
+    </Fragment>
   );
 }

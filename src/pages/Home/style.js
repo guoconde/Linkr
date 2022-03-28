@@ -9,6 +9,10 @@ const Container = styled.div`
   justify-content: center;
 
   font-family: "Lato", sans-serif;
+
+  @media screen and (max-width: 900px) {
+    margin-top: 15px;
+  }
 `;
 
 const Content = styled.div`
@@ -20,7 +24,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 900px) {
     margin-right: 0px;
   }
   @media screen and (max-width: 650px) {
@@ -35,17 +39,32 @@ const TitleOfSection = styled.h2`
   font-size: 43px;
   line-height: 64px;
 
-  margin-bottom: 40px;
   align-self: flex-start;
 
+  @media screen and (max-width: 900px) {
+    font-size: 33px;
+  }
+
   @media screen and (max-width: 650px) {
-    margin-top: 19px;
     margin-left: 18px;
+  }
+`;
+
+const ContainerTitleProfile = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+  margin-bottom: 40px;
+
+  @media screen and (max-width: 900px) {
+    margin-bottom: 5px;
   }
 `;
 
 export { 
   Container, 
+  ContainerTitleProfile,
   Content, 
   TitleOfSection
 };

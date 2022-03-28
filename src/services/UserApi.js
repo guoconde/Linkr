@@ -6,6 +6,10 @@ export default class UserApi {
   }
 
   getAllUsers(data) {
-    return api.get(`/users?find=${data}`)
+    return api.get(`/users?find=${data}`);
+  }
+
+  getUserById(id){
+    return api.get(`/users/${id}`);
   }
 }

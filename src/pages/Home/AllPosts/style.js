@@ -20,6 +20,10 @@ const Container = styled.li`
 
   display: flex;
   gap: 18px;
+
+  @media screen and (max-width: 900px) {
+    border-radius: 0;
+  }
 `;
 
 const ContainerImage = styled.div`
@@ -42,8 +46,6 @@ const Image = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-
-  cursor: pointer;
 `;
 
 const Name = styled(Link)`
