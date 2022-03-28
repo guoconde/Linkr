@@ -91,6 +91,10 @@ const MetaLink = styled.div`
 
     overflow: hidden;
     position: relative;
+
+    @media screen and (max-width: 900px) {
+        min-height: 115px;
+    }
     
     .infoPost {
         width: 65%;
@@ -104,6 +108,10 @@ const MetaLink = styled.div`
         flex-direction: column;
         gap: 10px;
 
+        @media screen and (max-width: 900px) {
+            padding: 10px;
+        }
+
         .title {
             font-size: 16px;
             font-weight: 400;
@@ -115,6 +123,11 @@ const MetaLink = styled.div`
             font-weight: 400;
             line-height: 13px;
             color: #9B9595;
+
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
         }
     }
 `;
@@ -125,6 +138,10 @@ const ExternalLink = styled.a`
     font-weight: 400;
     line-height: 13px;
     cursor: pointer;
+
+    &:hover{
+        color: #FFFFFF;
+    }
 `;
 
 const ImagePost = styled.div`
@@ -137,6 +154,11 @@ const ImagePost = styled.div`
     position: absolute;
     right: 0;
     top: 0;
+
+    @media screen and (max-width: 900px) {
+        width: 95px;
+        background-size: 95px 100%;
+    }
 `;
 
 const ContainerAction = styled.div`
