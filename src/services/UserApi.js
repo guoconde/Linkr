@@ -12,4 +12,8 @@ export default class UserApi {
   getUserById(id){
     return api.get(`/users/${id}`);
   }
+  
+  follow(body, headers) {
+    return api.post("/users/follow", body, headers);
+  }
 }

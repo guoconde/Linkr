@@ -23,7 +23,7 @@ import {
   Feed
 } from "./style";
 
-export default function AllPosts() {
+export default function AllPosts({ setIsFollowing }) {
   const api = useApi();
   const contexts = useContexts()
   const { auth, logout } = contexts.auth
@@ -52,6 +52,7 @@ export default function AllPosts() {
         
         setData(promisse.data.posts);
         setUsernameSearched(promisse.data.name);
+        setIsFollowing(promisse.data.isFollowing);
         return;
       }
 
