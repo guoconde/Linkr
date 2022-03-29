@@ -5,14 +5,14 @@ export default class UserApi {
     return api.post("/sign-up", data);
   }
 
-  getAllUsers(data) {
-    return api.get(`/users?find=${data}`);
+  getAllUsers(data, headers) {
+    return api.get(`/users?find=${data}`, headers);
   }
 
   getUserById(id){
     return api.get(`/users/${id}`);
   }
-  
+
   follow(body, headers) {
     return api.post("/users/follow", body, headers);
   }
