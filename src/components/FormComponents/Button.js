@@ -23,6 +23,13 @@ const Button = styled.button`
   
   background: #1877F2;
   color: #FFFFFF;
+
+  @media screen and (max-width: 900px) {
+    width: 90%;
+    height: 55px;
+    font-size: 22px;
+    line-height: 33px;
+  }
 `;
 
 export default Button;

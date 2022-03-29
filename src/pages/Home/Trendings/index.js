@@ -78,7 +78,7 @@ export default function Trendings() {
       <Divider />
 
       <HashtagsContainer>
-        {trendingsReader}
+        {trendingsReader.length ? trendingsReader : "There are no posts yet!" }
       </HashtagsContainer>
     </Container>
   );

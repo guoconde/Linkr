@@ -22,6 +22,12 @@ const Input = styled.input`
   &::placeholder{
     color: #9F9F9F;
   }
+
+  @media screen and (max-width: 900px) {
+    width: 90%;
+    height: 55px;
+    font-size: 22px;
+  }
 `;
 
 export default Input;
