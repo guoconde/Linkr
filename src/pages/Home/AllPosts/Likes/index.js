@@ -19,7 +19,7 @@ export default function Likes({ postId, isLike, postLikes, likeNames }) {
   const { auth } = contexts.auth
   const { reloadPage, setReloadPage } = contexts.post
 
-  const message = handleMessage(likeNames, auth.userName);
+  const message = handleMessage(likeNames, auth?.userName);
 
   async function handleLikes(postId, value) {
     const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
