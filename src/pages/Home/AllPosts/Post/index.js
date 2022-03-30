@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PostDescription from "./PostDescription";
 import DeleteModal from "../../../../components/DeleteModal";
 import Likes from "../Likes";
@@ -29,6 +30,7 @@ export default function Post({
   edit,
   setEdit,
   comments,
+  setComments,
   url,
   description,
   i,
@@ -42,7 +44,8 @@ export default function Post({
 
   const contexts = useContexts();
   const { auth } = contexts.auth;
-  
+  const [loadPostComments, setLoadPostComments] = useState([]);
+
   return (
     <div>
       <Container>
@@ -56,9 +59,10 @@ export default function Post({
             likeNames={likeNames}
             handleGetAllPosts={handleGetAllPosts}
           />
-          <CommentIcon 
+          <CommentIcon
             postId={id}
             handleComments={handleComments}
+            setLoadPostComments={setLoadPostComments}
           />
         </ContainerImage>
 
@@ -95,7 +99,14 @@ export default function Post({
         }
       </Container>
 
-      {comments === id && <Comments comments={comments} />}
+      {comments === id &&
+        <Comments 
+          postId={id} 
+          setComments={setComments} 
+          loadPostComments={loadPostComments}
+          setLoadPostComments={setLoadPostComments}
+        />
+      }
     </div>
   );
 }

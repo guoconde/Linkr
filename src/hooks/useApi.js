@@ -1,4 +1,5 @@
 import AuthApi from "../services/AuthApi";
+import CommentsApi from "../services/CommentsApi";
 import FeedApi from "../services/FeedApi";
 import HashtagsApi from "../services/HashtagsApi";
 import PostsApi from "../services/PostsApi";
@@ -9,6 +10,7 @@ export default function useApi() {
         auth: new AuthApi(),
         user: new UserApi(),
         posts: new PostsApi(),
+        comments: new CommentsApi(),
         feed: new FeedApi(),
         hashtags: new HashtagsApi()
     };

@@ -1,5 +1,30 @@
 import styled from "styled-components";
 
+const LoadCommentsContainer = styled.div`
+  height: 250px;
+  overflow-y: scroll;
+
+  @media screen and (min-width: 1000px){
+    /* width */
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+  
+    /* Track */
+    ::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background-color: transparent;
+    }
+  
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background-color:rgba(128,128,128,0.4);
+      border-radius: 10px;
+    }
+  }
+
+`;
+
 const ContentComments = styled.div`
   width: 100%;
 
@@ -101,8 +126,66 @@ const CommentInput = styled.input`
   }
 `;
 
+const ContainerCommentInputExtends = styled.div`
+  position: relative;
+  width: 100%;
+
+  margin-top: 19px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+
+  @media screen and (max-width: 650px){
+    border-radius: 0;
+  }
+
+  .fisend-icon-extends{
+    position: absolute;
+    top: 11px;
+    right: 15px;
+  }
+`;
+
+const CommentInputExtends = styled.input`
+  width: 90%;
+  height: 39px;
+
+  position: relative;
+
+  background: #252525;
+  border: 0;
+  border-radius: 8px;
+
+  padding: 11px 45px 11px 15px;
+
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+
+  color: #ACACAC;
+
+  &::placeholder{
+    font-family: 'Lato';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+
+    color: #575757;
+  }
+`;
+
 export {
   ContentComments,
   ContainerCommentInput,
-  CommentInput
+  CommentInput,
+  ContainerCommentInputExtends,
+  CommentInputExtends,
+  LoadCommentsContainer
 }
