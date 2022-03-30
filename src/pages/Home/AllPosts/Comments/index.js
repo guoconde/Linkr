@@ -52,6 +52,7 @@ export default function Comments({
     try {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
 
+      console.log({ userId: auth.userId, postId, comment });
       await api.comments.insertComment({ userId: auth.userId, postId, comment }, headers);
     } catch (error) {
       await fireAlert(error.response.data);
@@ -78,10 +79,13 @@ export default function Comments({
     commentInputRef.current.focus();
   }, []);
 
-  const loadPostCommentsReader = loadPostComments.map((comment, i) => {
+  const loadPostCommentsReader = loadPostComments.map((comment) => {
     return (
       <CommentLine
         key={comment.id}
+        userId={comment.userId}
+        authorId={comment.authorId}
+        followedId={comment.followedId}
         name={comment.name}
         photo={comment.photo}
         comment={comment.comment}

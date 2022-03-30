@@ -6,13 +6,13 @@ import {
   MessageCommentLine
 } from "./style";
 
-export default function CommentLine({ name, photo, comment }) {
+export default function CommentLine({ followedId, authorId, userId, name, photo, comment }) {
   return (
     <ContainerCommentLine>
       <ProfilePicture photo={photo} sizeControl={true} />
 
       <DescriptionCommentLine>
-        <NameCommentLine>{name}</NameCommentLine>
+        <NameCommentLine>{`${name} ${followedId ? "• following" : ""} ${authorId === userId ? "• post’s author" : ""}`}</NameCommentLine>
         <MessageCommentLine>{comment}</MessageCommentLine>
       </DescriptionCommentLine>
     </ContainerCommentLine>
