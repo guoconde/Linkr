@@ -77,8 +77,6 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
         return;
       }
 
-      console.log(data, 'data')
-      console.log(newData)
       setNewData(promisse.data);
     } catch (error) {
       if (error.response?.status === 401 || error.response?.status === 404) {
@@ -166,7 +164,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
       setEdit(postId);
     }
   }
-  console.log(data)
+  
   return (
     <Feed>
       {newPosts &&
