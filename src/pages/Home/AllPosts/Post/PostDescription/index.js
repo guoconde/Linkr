@@ -15,12 +15,10 @@ export default function PostDescription({
 
   useEffect(() => {
     if (edit === postIndex) {
-      console.log("teste 1")
       setShowAction(true);
     }
 
     if (edit === null || edit !== postIndex) {
-      console.log("teste 2")
       setShowAction(false);
     }
 
