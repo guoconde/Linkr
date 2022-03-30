@@ -197,6 +197,32 @@ const GrEditCustom = styled(GrEdit)`
     }
 `;
 
+const FullPost = styled.div`
+`;
+
+const RepostedBy = styled.div`
+    display:flex;
+    align-items:center;
+    gap:5px;
+
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 13px;
+    color: #fff;
+
+    background: #1E1E1E;
+    margin-bottom:-12px;
+    padding: 6px 0 15px 10px;
+    border-top-left-radius:16px;
+    border-top-right-radius:16px;
+
+    span{
+        font-weight:bold;
+    }
+`;
+
 export {
     Feed,
     Container,
@@ -211,5 +237,7 @@ export {
     ImagePost,
     ContainerAction,
     GrEditCustom,
+    FullPost,
+    RepostedBy,
     ContainerNewPosts
 }
