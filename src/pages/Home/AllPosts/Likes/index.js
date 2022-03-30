@@ -16,7 +16,7 @@ export default function Likes({ postId, isLike, postLikes, likeNames }) {
   countLikes.current = parseInt(postLikes);
   const api = useApi();
   const contexts = useContexts();
-  const { auth } = contexts.auth
+  const { auth } = contexts.auth;
   const { reloadPage, setReloadPage } = contexts.post
 
   const message = handleMessage(likeNames, auth?.userName);

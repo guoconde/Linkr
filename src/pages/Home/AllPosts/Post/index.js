@@ -30,6 +30,8 @@ export default function Post({
   edit,
   setEdit,
   comments,
+  commentsCount,
+  postIndex,
   setComments,
   url,
   description,
@@ -61,6 +63,8 @@ export default function Post({
           />
           <CommentIcon
             postId={id}
+            postIndex={postIndex}
+            commentsCount={commentsCount}
             handleComments={handleComments}
             setLoadPostComments={setLoadPostComments}
           />
@@ -71,6 +75,7 @@ export default function Post({
           <Description>
             <PostDescription
               postId={id}
+              postIndex={postIndex}
               edit={edit}
               setEdit={setEdit}
               url={url}
@@ -94,15 +99,15 @@ export default function Post({
 
         {auth?.userId === userId &&
           <ContainerAction>
-            <GrEditCustom onClick={() => handleEdit(id)} size={20} />
+            <GrEditCustom onClick={() => handleEdit(postIndex)} size={20} />
           </ContainerAction>
         }
       </Container>
 
-      {comments === id &&
-        <Comments 
-          postId={id} 
-          setComments={setComments} 
+      {comments === postIndex &&
+        <Comments
+          postId={id}
+          setComments={setComments}
           loadPostComments={loadPostComments}
           setLoadPostComments={setLoadPostComments}
         />

@@ -74,19 +74,19 @@ export default function AllPosts() {
       </Content>
     );
 
-  function handleEdit(postId) {
-    if (edit !== null && edit === postId) {
+  function handleEdit(postIndex) {
+    if (edit !== null && edit === postIndex) {
       setEdit(null);
     } else {
-      setEdit(postId);
+      setEdit(postIndex);
     }
   }
 
-  function handleComments(postId) {
-    if (comments !== null && comments === postId) {
+  function handleComments(postIndex) {
+    if (comments !== null && comments === postIndex) {
       setComments(null);
     } else {
-      setComments(postId);
+      setComments(postIndex);
     }
   }
 
@@ -96,6 +96,7 @@ export default function AllPosts() {
         return (
           <Post
             key={i}
+            postIndex={i}
             {...el}
             edit={edit}
             setEdit={setEdit}

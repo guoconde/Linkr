@@ -24,6 +24,7 @@ export default function Comments({
   const api = useApi();
   const contexts = useContexts();
   const { auth } = contexts.auth;
+  const { reloadPage, setReloadPage } = contexts.post
   const [commentInput, setCommentInput] = useState("");
   const commentInputRef = useRef(null);
 
@@ -32,6 +33,7 @@ export default function Comments({
       handleCreateComment(postId, commentInput);
       handleListComments(postId);
       setCommentInput("");
+      setReloadPage(!reloadPage);
     }
 
     if (event.key === 'Escape') {
@@ -40,10 +42,10 @@ export default function Comments({
   }
 
   function handleFiSend() {
-    console.log("entrei");
     handleCreateComment(postId, commentInput);
     handleListComments(postId);
     setCommentInput("");
+    setReloadPage(!reloadPage);
   }
 
   async function handleCreateComment(postId, comment) {
