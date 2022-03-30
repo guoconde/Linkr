@@ -7,6 +7,8 @@ import PostDescription from "./PostDescription";
 import DeleteModal from "../../../components/DeleteModal";
 import Likes from "./Likes";
 import useContexts from "../../../hooks/useContexts";
+import useInterval from "use-interval";
+import { RiRefreshLine } from 'react-icons/ri'
 import {
   Container,
   ContainerPost,
@@ -20,7 +22,8 @@ import {
   ImagePost,
   ContainerAction,
   GrEditCustom,
-  Feed
+  Feed,
+  ContainerNewPosts
 } from "./style";
 
 export default function AllPosts() {
@@ -28,11 +31,63 @@ export default function AllPosts() {
   const contexts = useContexts()
   const { auth, logout } = contexts.auth
   const { setUsernameSearched } = contexts.searchedUser
-  const { reloadPage } = contexts.post
+  const { reloadPage, setReloadPage } = contexts.post
   const [data, setData] = useState(null);
+  const [newData, setNewData] = useState([]);
+  const [newPosts, setNewPosts] = useState(false)
+  const [numberNewPosts, setNumberNewPosts] = useState(null)
   const [edit, setEdit] = useState(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  function handleReloadPage() {
+    setReloadPage(true)
+    setNewPosts(false)
+  }
+
+  useInterval(async () => {
+
+    if (newData.length > data.length) {
+      const dif = newData.length - data.length
+      setNumberNewPosts(dif)
+      setNewPosts(true)
+    }
+
+    try {
+      const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
+      let promisse;
+
+      if (pathname.includes("timeline")) {
+        promisse = await api.feed.listAll(headers);
+      } else if (pathname.includes("hashtag")) {
+        promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
+      } else if (pathname.includes("user")) {
+        promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
+        if (!promisse.data) {
+          fireAlert("User doesn't exists");
+          navigate("/timeline");
+        }
+
+        setNewData(promisse.data.posts);
+        setUsernameSearched(promisse.data.name);
+        return;
+      }
+
+      console.log(data, 'data')
+      console.log(newData)
+      setNewData(promisse.data);
+    } catch (error) {
+      if (error.response?.status === 401 || error.response?.status === 404) {
+        await fireAlert(error.response.data);
+        logout();
+        return navigate("/");
+      }
+      return fireAlert(
+        "An error occured while trying to fetch the posts, Plese refresh the page!"
+      );
+    }
+  }, 15000)
+
 
   async function handleGetAllPosts() {
     try {
@@ -49,7 +104,7 @@ export default function AllPosts() {
           fireAlert("User doesn't exists");
           navigate("/timeline");
         }
-        
+
         setData(promisse.data.posts);
         setUsernameSearched(promisse.data.name);
         return;
@@ -98,6 +153,12 @@ export default function AllPosts() {
 
   return (
     <Feed>
+      {newPosts &&
+        <ContainerNewPosts onClick={handleReloadPage}>
+          <div>{numberNewPosts} new posts, load more! </div>
+          <RiRefreshLine />
+        </ContainerNewPosts>
+      }
       {data.map((el, i) => {
         return (
           <Container key={i}>

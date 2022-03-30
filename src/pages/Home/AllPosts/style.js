@@ -26,6 +26,28 @@ const Container = styled.li`
   }
 `;
 
+const ContainerNewPosts = styled.div`
+    width: 100%;
+    height: 61px;
+
+    background: #1877F2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    color: white;
+
+    cursor: pointer;
+
+    @media screen and (max-width: 900px) {
+        border-radius: 0;
+}
+`
+
 const ContainerImage = styled.div`
     width: 10%;
 
@@ -188,5 +210,6 @@ export {
     MetaLink,
     ImagePost,
     ContainerAction,
-    GrEditCustom
+    GrEditCustom,
+    ContainerNewPosts
 }
