@@ -182,7 +182,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
                 size={27}
                 color="white"
               />
-              Re-posted by <span>{el.sharerId === auth.userId ? "you" : el.sharerName}</span>
+              Re-posted by <span>{el.sharerId === auth?.userId ? "you" : el.sharerName}</span>
             </RepostedBy>
             }
             <Container>
