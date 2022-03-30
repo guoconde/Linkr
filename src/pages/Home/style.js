@@ -5,13 +5,26 @@ const Container = styled.div`
 
   margin-top: 120px;
 
+  font-family: "Lato", sans-serif;
+
   display: flex;
   justify-content: center;
 
-  font-family: "Lato", sans-serif;
+  .main {
+    display: flex;
+  }
 
   @media screen and (max-width: 900px) {
     margin-top: 15px;
+  }
+  @media screen and (max-width: 650px){
+    .all {
+      width: 100%;
+    }
+    .main {
+      justify-content: center;
+      width: 100%;
+    }
   }
 `;
 
@@ -24,7 +37,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1000px) {
     margin-right: 0px;
   }
   @media screen and (max-width: 650px) {
@@ -39,6 +52,7 @@ const TitleOfSection = styled.h2`
   font-size: 43px;
   line-height: 64px;
 
+  margin-bottom: 15px;
   align-self: flex-start;
 
   @media screen and (max-width: 900px) {
@@ -47,24 +61,61 @@ const TitleOfSection = styled.h2`
 
   @media screen and (max-width: 650px) {
     margin-left: 18px;
+    line-height: 44px;
   }
 `;
 
 const ContainerTitleProfile = styled.div`
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: space-between;
 
+  .info {
+    display: flex;
+    align-items: center;
+  }
   margin-bottom: 40px;
 
   @media screen and (max-width: 900px) {
     margin-bottom: 5px;
   }
+  @media screen and (max-width: 650px) {
+    padding-right: 18px;
+  }
 `;
+
+const FollowButton = styled.button`
+  width: 112px;
+  height: 31px;
+  margin-left: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: ${(props) => props.isFollowing ? "#FFF": "#1877F2"};
+  border-radius: 5px;
+  border: none;
+
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17px;
+  text-align: center;
+  color: ${(props) => props.isFollowing ? "#1877F2": "#FFF"};
+
+  cursor: pointer;
+  ${(props) => props.isFollowing === null && "display: none;"}
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+`
 
 export { 
   Container, 
   ContainerTitleProfile,
   Content, 
-  TitleOfSection
+  TitleOfSection,
+  FollowButton
 };

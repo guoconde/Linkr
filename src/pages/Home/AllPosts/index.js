@@ -27,16 +27,18 @@ import {
 import Repost from "./Repost";
 import { BiRepost } from "react-icons/bi";
 
-export default function AllPosts() {
+export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   const api = useApi();
-  const contexts = useContexts()
-  const { auth, logout } = contexts.auth
-  const { setUsernameSearched } = contexts.searchedUser
-  const { reloadPage } = contexts.post
+  const contexts = useContexts();
+  const { auth, logout } = contexts.auth;
+  const { setUsernameSearched } = contexts.searchedUser;
+  const { reloadPage } = contexts.post;
   const [data, setData] = useState(null);
   const [edit, setEdit] = useState(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
 
   async function handleGetAllPosts() {
     try {
@@ -46,20 +48,26 @@ export default function AllPosts() {
       if (pathname.includes("timeline")) {
         promisse = await api.feed.listAll(headers);
       } else if (pathname.includes("hashtag")) {
-        promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
+        promisse = await api.feed.listByHashtag(
+          pathname.split("/")[2],
+          headers
+        );
       } else if (pathname.includes("user")) {
         promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
         if (!promisse.data) {
           fireAlert("User doesn't exists");
           navigate("/timeline");
         }
-        
+
         setData(promisse.data.posts);
         setUsernameSearched(promisse.data.name);
+        setIsFollowing(promisse.data.isFollowing);
+        setUserPhoto(promisse.data.photo);
         return;
       }
 
-      setData(promisse.data);
+      setData(promisse.data.posts);
+      setIsFollowingSomeone(promisse.data.isFollowingSomeone);
     } catch (error) {
       if (error.response?.status === 401 || error.response?.status === 404) {
         await fireAlert(error.response.data);
@@ -73,6 +81,7 @@ export default function AllPosts() {
   }
   useEffect(() => {
     handleGetAllPosts();
+    window.scroll(0, 0);
 
     // eslint-disable-next-line
   }, [pathname, reloadPage]);
@@ -88,7 +97,11 @@ export default function AllPosts() {
   if (data.length === 0)
     return (
       <Content>
-        <div>There are no posts yet!</div>
+        <div>
+          {isFollowingSomeone
+            ? "No posts found from your friends"
+            : "You don't follow anyone yet. Search for new friends!"}
+        </div>
       </Content>
     );
 
@@ -105,13 +118,13 @@ export default function AllPosts() {
       {data.map((el, i) => {
         return (
           <FullPost key={i}>
-            {el.repostedBy && 
+            {el.sharerName && 
             <RepostedBy>
               <BiRepost
                 size={27}
                 color="white"
               />
-              Re-posted by <span>{el.repostedBy}</span>
+              Re-posted by <span>{el.sharerId === auth.userId ? "you" : el.sharerName}</span>
             </RepostedBy>
             }
             <Container>
