@@ -12,6 +12,18 @@ const ContainerCommentLine = styled.div`
   border-bottom: 1px solid #353535;
 `;
 
+const InfoTag = styled.span`
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+
+  color: #565656;
+
+  margin-left: 4px;
+`;
+
 const DescriptionCommentLine = styled.div`
   margin-left: 18px;
 `;
@@ -42,5 +54,6 @@ export {
   ContainerCommentLine,
   DescriptionCommentLine,
   NameCommentLine,
-  MessageCommentLine
+  MessageCommentLine,
+  InfoTag
 }

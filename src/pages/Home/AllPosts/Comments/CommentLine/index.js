@@ -3,7 +3,8 @@ import {
   ContainerCommentLine,
   DescriptionCommentLine,
   NameCommentLine,
-  MessageCommentLine
+  MessageCommentLine,
+  InfoTag
 } from "./style";
 
 export default function CommentLine({ followedId, authorId, userId, name, photo, comment }) {
@@ -12,7 +13,18 @@ export default function CommentLine({ followedId, authorId, userId, name, photo,
       <ProfilePicture photo={photo} sizeControl={true} />
 
       <DescriptionCommentLine>
-        <NameCommentLine>{`${name} ${followedId ? "• following" : ""} ${authorId === userId ? "• post’s author" : ""}`}</NameCommentLine>
+        <NameCommentLine>
+          {`${name}`}
+          
+          {authorId === userId &&
+            <InfoTag>• post’s author</InfoTag>
+          }
+
+          {followedId &&
+            <InfoTag>• following</InfoTag>
+          }
+        </NameCommentLine>
+
         <MessageCommentLine>{comment}</MessageCommentLine>
       </DescriptionCommentLine>
     </ContainerCommentLine>
