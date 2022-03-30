@@ -1,4 +1,4 @@
-import HighlightHashtag from "../../HighlightHashtags";
+import HighlightHashtag from "../../../HighlightHashtags";
 
 export default function PostParagraph({ description, index }) {
   return (

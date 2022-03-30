@@ -3,34 +3,19 @@ import { useLocation, useNavigate } from "react-router";
 import { TailSpin } from "react-loader-spinner";
 import { fireAlert } from "../../../utils/alerts";
 import useApi from "../../../hooks/useApi";
-import PostDescription from "./PostDescription";
-import DeleteModal from "../../../components/DeleteModal";
-import Likes from "./Likes";
 import useContexts from "../../../hooks/useContexts";
-import {
-  Container,
-  ContainerPost,
-  ContainerImage,
-  Name,
-  Image,
-  Description,
-  ExternalLink,
-  Content,
-  MetaLink,
-  ImagePost,
-  ContainerAction,
-  GrEditCustom,
-  Feed
-} from "./style";
+import Post from "./Post";
+import { Content, Feed } from "./style";
 
 export default function AllPosts() {
   const api = useApi();
-  const contexts = useContexts()
-  const { auth, logout } = contexts.auth
-  const { setUsernameSearched } = contexts.searchedUser
-  const { reloadPage } = contexts.post
+  const contexts = useContexts();
+  const { auth, logout } = contexts.auth;
+  const { setUsernameSearched } = contexts.searchedUser;
+  const { reloadPage } = contexts.post;
   const [data, setData] = useState(null);
   const [edit, setEdit] = useState(null);
+  const [comments, setComments] = useState(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -49,7 +34,7 @@ export default function AllPosts() {
           fireAlert("User doesn't exists");
           navigate("/timeline");
         }
-        
+
         setData(promisse.data.posts);
         setUsernameSearched(promisse.data.name);
         return;
@@ -67,6 +52,7 @@ export default function AllPosts() {
       );
     }
   }
+
   useEffect(() => {
     handleGetAllPosts();
 
@@ -96,55 +82,29 @@ export default function AllPosts() {
     }
   }
 
+  function handleComments(postId) {
+    if (comments !== null && comments === postId) {
+      setComments(null);
+    } else {
+      setComments(postId);
+    }
+  }
+
   return (
     <Feed>
       {data.map((el, i) => {
         return (
-          <Container key={i}>
-            <DeleteModal {...el} />
-            <ContainerImage>
-              <Image src={el.photo} />
-              <Likes
-                postId={el.id}
-                postLikes={el.postLikes}
-                isLike={el.isLike}
-                likeNames={el.likeNames}
-                handleGetAllPosts={handleGetAllPosts}
-              />
-            </ContainerImage>
-
-            <ContainerPost>
-              <Name to={`/user/${el.userId}`}>{el.name}</Name>
-              <Description>
-                <PostDescription
-                  postId={el.id}
-                  edit={edit}
-                  setEdit={setEdit}
-                  url={el.url}
-                  description={el.description}
-                  index={i}
-                />
-              </Description>
-
-              <MetaLink>
-                <div className="infoPost">
-                  <p className="title">{el.metadataTitle}</p>
-                  <p className="description">{el.metadataDescription}</p>
-                  <ExternalLink href={el.url} target="_blank">
-                    {el.url}
-                  </ExternalLink>
-                </div>
-
-                <ImagePost backgroundImage={el.metadataImage} />
-              </MetaLink>
-            </ContainerPost>
-
-            {auth?.userId === el.userId &&
-              <ContainerAction>
-                <GrEditCustom onClick={() => handleEdit(el.id)} size={20} />
-              </ContainerAction>
-            }
-          </Container>
+          <Post
+            key={i}
+            {...el}
+            edit={edit}
+            setEdit={setEdit}
+            comments={comments}
+            setComments={setComments}
+            handleEdit={handleEdit}
+            handleComments={handleComments}
+            handleGetAllPosts={handleGetAllPosts}
+          />
         )
       })}
     </Feed>

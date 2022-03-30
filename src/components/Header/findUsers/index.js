@@ -1,5 +1,5 @@
-import {  useNavigate } from "react-router";
-import { Image } from "../../../pages/Home/AllPosts/style";
+import { useNavigate } from "react-router";
+import { Image } from "../../../pages/Home/AllPosts/Post/style";
 
 export default function ListUsers({ users, setUsers }) {
 
