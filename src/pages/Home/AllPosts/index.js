@@ -20,8 +20,12 @@ import {
   ImagePost,
   ContainerAction,
   GrEditCustom,
-  Feed
+  Feed,
+  RepostedBy,
+  FullPost
 } from "./style";
+import Repost from "./Repost";
+import { BiRepost } from "react-icons/bi";
 
 export default function AllPosts() {
   const api = useApi();
@@ -95,56 +99,71 @@ export default function AllPosts() {
       setEdit(postId);
     }
   }
-
+  console.log(data)
   return (
     <Feed>
       {data.map((el, i) => {
         return (
-          <Container key={i}>
-            <DeleteModal {...el} />
-            <ContainerImage>
-              <Image src={el.photo} />
-              <Likes
-                postId={el.id}
-                postLikes={el.postLikes}
-                isLike={el.isLike}
-                likeNames={el.likeNames}
-                handleGetAllPosts={handleGetAllPosts}
+          <FullPost key={i}>
+            {el.repostedBy && 
+            <RepostedBy>
+              <BiRepost
+                size={27}
+                color="white"
               />
-            </ContainerImage>
-
-            <ContainerPost>
-              <Name to={`/user/${el.userId}`}>{el.name}</Name>
-              <Description>
-                <PostDescription
-                  postId={el.id}
-                  edit={edit}
-                  setEdit={setEdit}
-                  url={el.url}
-                  description={el.description}
-                  index={i}
-                />
-              </Description>
-
-              <MetaLink>
-                <div className="infoPost">
-                  <p className="title">{el.metadataTitle}</p>
-                  <p className="description">{el.metadataDescription}</p>
-                  <ExternalLink href={el.url} target="_blank">
-                    {el.url}
-                  </ExternalLink>
-                </div>
-
-                <ImagePost backgroundImage={el.metadataImage} />
-              </MetaLink>
-            </ContainerPost>
-
-            {auth?.userId === el.userId &&
-              <ContainerAction>
-                <GrEditCustom onClick={() => handleEdit(el.id)} size={20} />
-              </ContainerAction>
+              Re-posted by <span>{el.repostedBy}</span>
+            </RepostedBy>
             }
-          </Container>
+            <Container>
+              <DeleteModal {...el} />
+              <ContainerImage>
+                <Image src={el.photo} />
+                <Likes
+                  postId={el.id}
+                  postLikes={el.postLikes}
+                  isLike={el.isLike}
+                  likeNames={el.likeNames}
+                />
+                <Repost
+                  postId={el.id}
+                  reposts={el.reposts}
+                  reposted={el.reposted}
+                />
+              </ContainerImage>
+
+              <ContainerPost>
+                <Name to={`/user/${el.userId}`}>{el.name}</Name>
+                <Description>
+                  <PostDescription
+                    postId={el.id}
+                    edit={edit}
+                    setEdit={setEdit}
+                    url={el.url}
+                    description={el.description}
+                    index={i}
+                  />
+                </Description>
+
+                <MetaLink>
+                  <div className="infoPost">
+                    <p className="title">{el.metadataTitle}</p>
+                    <p className="description">{el.metadataDescription}</p>
+                    <ExternalLink href={el.url} target="_blank">
+                      {el.url}
+                    </ExternalLink>
+                  </div>
+
+                  <ImagePost backgroundImage={el.metadataImage} />
+                </MetaLink>
+              </ContainerPost>
+
+              {auth?.userId === el.userId &&
+                <ContainerAction>
+                  <GrEditCustom onClick={() => handleEdit(el.id)} size={20} />
+                </ContainerAction>
+              }
+            </Container>
+          </FullPost>
         )
       })}
     </Feed>

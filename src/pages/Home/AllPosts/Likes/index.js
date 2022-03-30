@@ -7,19 +7,16 @@ import useContexts from "../../../../hooks/useContexts";
 import handleMessage from "../../../../utils/handleMessage";
 
 export default function Likes({ postId, isLike, postLikes, likeNames }) {
-  if (isLike === null) isLike = false;
-  if (postLikes === null) postLikes = 0;
-
-  const liked = useRef();
-  liked.current = isLike;
-  const countLikes = useRef();
-  countLikes.current = parseInt(postLikes);
   const api = useApi();
   const contexts = useContexts();
   const { auth } = contexts.auth
   const { reloadPage, setReloadPage } = contexts.post
-
-  const message = handleMessage(likeNames, auth.userName);
+  const liked = useRef();
+  const countLikes = useRef();
+  liked.current = isLike;
+  countLikes.current = parseInt(postLikes);
+  
+  const message = handleMessage(likeNames, auth?.userName);
 
   async function handleLikes(postId, value) {
     const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
