@@ -39,6 +39,13 @@ export default function Comments({
     }
   }
 
+  function handleFiSend() {
+    console.log("entrei");
+    handleCreateComment(postId, commentInput);
+    handleListComments(postId);
+    setCommentInput("");
+  }
+
   async function handleCreateComment(postId, comment) {
     try {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
@@ -101,7 +108,12 @@ export default function Comments({
               ref={commentInputRef}
               positionControl={loadPostCommentsReader.length}
             />
-            <FiSend className="fisend-icon" size={20} color="white" />
+            <FiSend 
+              className="fisend-icon" 
+              size={20} 
+              color="white" 
+              onClick={() => handleFiSend()}
+            />
           </ContainerCommentInput>
         </>
         :
@@ -120,7 +132,12 @@ export default function Comments({
               ref={commentInputRef}
               positionControl={loadPostCommentsReader.length}
             />
-            <FiSend className="fisend-icon-extends" size={20} color="white" />
+            <FiSend 
+              className="fisend-icon-extends" 
+              size={20} 
+              color="white" 
+              onClick={() => handleFiSend()}
+            />
           </ContainerCommentInputExtends>
         </>
       }

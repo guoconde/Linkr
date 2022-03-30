@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const LoadCommentsContainer = styled.div`
-  height: 250px;
+  max-height: 250px;
   overflow-y: scroll;
 
   @media screen and (min-width: 1000px){
@@ -91,6 +91,8 @@ const ContainerCommentInput = styled.div`
     position: absolute;
     top: 11px;
     right: 15px;
+
+    cursor: pointer;
   }
 `;
 
@@ -146,6 +148,8 @@ const ContainerCommentInputExtends = styled.div`
     position: absolute;
     top: 11px;
     right: 15px;
+
+    cursor: pointer;
   }
 `;
 
