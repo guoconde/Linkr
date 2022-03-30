@@ -32,10 +32,11 @@ export default function Header() {
   async function handleFindUsers(event) {
 
     let findAllUsers = event.target.value
+    const headers = { headers: { Authorization: `Bearer ${auth?.token}`}};
 
     if (!event.target.value) return setUsers([]);
 
-    const { data } = await api.user.getAllUsers(findAllUsers)
+    const { data } = await api.user.getAllUsers(findAllUsers, headers);
 
     setUsers(data);
   }
@@ -68,7 +69,6 @@ export default function Header() {
           <InputFindUser>
             <DebounceInput
               className="debounce-input"
-              //minLength={3}
               debounceTimeout={300}
               placeholder="Search for people"
               onChange={event => handleFindUsers(event)}
