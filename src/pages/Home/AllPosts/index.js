@@ -20,19 +20,21 @@ import {
   ImagePost,
   ContainerAction,
   GrEditCustom,
-  Feed
+  Feed,
 } from "./style";
 
-export default function AllPosts({ setIsFollowing }) {
+export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   const api = useApi();
-  const contexts = useContexts()
-  const { auth, logout } = contexts.auth
-  const { setUsernameSearched } = contexts.searchedUser
-  const { reloadPage } = contexts.post
+  const contexts = useContexts();
+  const { auth, logout } = contexts.auth;
+  const { setUsernameSearched } = contexts.searchedUser;
+  const { reloadPage } = contexts.post;
   const [data, setData] = useState(null);
   const [edit, setEdit] = useState(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
 
   async function handleGetAllPosts() {
     try {
@@ -42,21 +44,26 @@ export default function AllPosts({ setIsFollowing }) {
       if (pathname.includes("timeline")) {
         promisse = await api.feed.listAll(headers);
       } else if (pathname.includes("hashtag")) {
-        promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
+        promisse = await api.feed.listByHashtag(
+          pathname.split("/")[2],
+          headers
+        );
       } else if (pathname.includes("user")) {
         promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
         if (!promisse.data) {
           fireAlert("User doesn't exists");
           navigate("/timeline");
         }
-        
+
         setData(promisse.data.posts);
         setUsernameSearched(promisse.data.name);
         setIsFollowing(promisse.data.isFollowing);
+        setUserPhoto(promisse.data.photo);
         return;
       }
 
-      setData(promisse.data);
+      setData(promisse.data.posts);
+      setIsFollowingSomeone(promisse.data.isFollowingSomeone);
     } catch (error) {
       if (error.response?.status === 401 || error.response?.status === 404) {
         await fireAlert(error.response.data);
@@ -70,6 +77,7 @@ export default function AllPosts({ setIsFollowing }) {
   }
   useEffect(() => {
     handleGetAllPosts();
+    window.scroll(0, 0);
 
     // eslint-disable-next-line
   }, [pathname, reloadPage]);
@@ -85,7 +93,11 @@ export default function AllPosts({ setIsFollowing }) {
   if (data.length === 0)
     return (
       <Content>
-        <div>There are no posts yet!</div>
+        <div>
+          {isFollowingSomeone
+            ? "No posts found from your friends"
+            : "You don't follow anyone yet. Search for new friends!"}
+        </div>
       </Content>
     );
 
@@ -140,13 +152,13 @@ export default function AllPosts({ setIsFollowing }) {
               </MetaLink>
             </ContainerPost>
 
-            {auth?.userId === el.userId &&
+            {auth?.userId === el.userId && (
               <ContainerAction>
                 <GrEditCustom onClick={() => handleEdit(el.id)} size={20} />
               </ContainerAction>
-            }
+            )}
           </Container>
-        )
+        );
       })}
     </Feed>
   );

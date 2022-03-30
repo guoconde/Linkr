@@ -1,6 +1,5 @@
-import { useRef, useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router";
-import { fireAlert } from "../../utils/alerts";
+import { useRef, useState} from "react";
+import { useLocation } from "react-router";
 import PublishPost from "./PublishPost";
 import Trendings from "./Trendings";
 import AllPosts from "./AllPosts";
@@ -17,39 +16,12 @@ import {
 import { ThreeDots } from "react-loader-spinner";
 
 export default function Home() {
-  const api = useApi();
   const contexts = useContexts();
   const { usernameSearched } = contexts.searchedUser;
   const { handleHideLogout } = contexts.menu;
   const { pathname } = useLocation();
-  const { id } = useParams();
   const [userPhoto, setUserPhoto] = useState(null);
   const [isFollowing, setIsFollowing] = useState(null);
-
-  useEffect(() => {
-    handleUserById();
-    window.scroll(0, 0);
-    // eslint-disable-next-line
-  }, [id, pathname]);
-
-  async function handleUserById() {
-    if (!id) {
-      return;
-    }
-
-    try {
-      const { data } = await api.user.getUserById(id);
-      setUserPhoto(data);
-    } catch (error) {
-      if (error.response?.status === 400) {
-        fireAlert(error.response.data);
-      }
-
-      if (error.response?.status === 404) {
-        fireAlert(error.response.data);
-      }
-    }
-  }
 
   let title = useRef();
   if (pathname.split("/")[1] === "timeline") title.current = "timeline";
@@ -65,7 +37,7 @@ export default function Home() {
         <div className="main">
           <Content>
             <PublishPost />
-            <AllPosts setIsFollowing={setIsFollowing} />
+            <AllPosts setIsFollowing={setIsFollowing} setUserPhoto={setUserPhoto} />
           </Content>
           <Trendings />
         </div>
@@ -76,11 +48,12 @@ export default function Home() {
 
 function Title({ userPhoto, title, isFollowing }) {
   const { pathname } = useLocation();
-  const [isLoading, setIsLoading] = useState(false);
-  const api = useApi();
   const contexts = useContexts();
   const { auth } = contexts.auth;
   const { reloadPage, setReloadPage } = contexts.post;
+
+  const api = useApi();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleFollow(followedId) {
     setIsLoading(true);
