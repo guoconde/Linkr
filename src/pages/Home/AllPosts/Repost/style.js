@@ -1,19 +1,17 @@
 import styled from "styled-components";
 
 export const RepostArea = styled.div`
-    font-size: 40px;
-    text-align: center;
-    margin-top: 20px;
-    cursor: pointer;
+  text-align: center;
+  cursor: pointer;
 `;
 
 export const Count = styled.div`
-    color: white;
-        font-family: Lato;
-        font-size: 11px;
-        font-weight: 400;
-        line-height: 13px;
-`
+  color: white;
+  font-family: Lato;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+`;
 
 export const Title = styled.p`
   color: #ffffff;

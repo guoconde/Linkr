@@ -4,6 +4,7 @@ import PostParagraph from "./PostParagraph";
 
 export default function PostDescription({
   postId,
+  postIndex,
   edit,
   setEdit,
   url,
@@ -11,12 +12,13 @@ export default function PostDescription({
   index,
 }) {
   const [showAction, setShowAction] = useState(false);
+
   useEffect(() => {
-    if (edit === postId) {
+    if (edit === postIndex) {
       setShowAction(true);
     }
 
-    if (edit === null || edit !== postId) {
+    if (edit === null || edit !== postIndex) {
       setShowAction(false);
     }
 

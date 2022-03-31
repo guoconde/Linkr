@@ -9,7 +9,7 @@ import handleMessage from "../../../../utils/handleMessage";
 export default function Likes({ postId, isLike, postLikes, likeNames }) {
   const api = useApi();
   const contexts = useContexts();
-  const { auth } = contexts.auth
+  const { auth } = contexts.auth;
   const { reloadPage, setReloadPage } = contexts.post
   const liked = useRef();
   const countLikes = useRef();
