@@ -15,12 +15,14 @@ export default function CommentLine({ followedId, authorId, userId, name, photo,
       <DescriptionCommentLine>
         <NameCommentLine>
           {`${name}`}
-          
-          {authorId === userId &&
-            <InfoTag>• post’s author</InfoTag>
-          }
 
-          {followedId &&
+          {(authorId === userId && followedId) ?
+            <InfoTag>• post’s author</InfoTag>
+           :
+            authorId === userId ?
+            <InfoTag>• post’s author</InfoTag>
+            :
+            followedId &&
             <InfoTag>• following</InfoTag>
           }
         </NameCommentLine>

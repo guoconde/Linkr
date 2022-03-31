@@ -36,14 +36,17 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scroll(0, 0);
+  }, [pathname]);
+
+  useEffect(() => {
     setNewData([]);
     setOffset(10);
     handleGetAllPosts();
 
-    window.scroll(0, 0);
-
     // eslint-disable-next-line
   }, [pathname, reloadPage]);
+
 
   useInterval(async () => {
     try {

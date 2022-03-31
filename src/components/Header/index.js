@@ -28,9 +28,9 @@ export default function Header() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [users, setUsers] = useState([])
+  const [value, setValue] = useState("");
 
   async function handleFindUsers(event) {
-
     let findAllUsers = event.target.value
     const headers = { headers: { Authorization: `Bearer ${auth?.token}`}};
 
@@ -51,6 +51,11 @@ export default function Header() {
     //eslint-disable-next-line
   }, [auth]);
 
+  useEffect(() =>{
+    console.log("entrei")
+    setValue("");
+  }, [pathname]);
+
   if (pathname === "/" || pathname === "/sign-up") {
     return null;
   }
@@ -59,6 +64,13 @@ export default function Header() {
     handleHideLogout();
     navigate("/timeline");
   }
+
+  function handleDebounceInput(event, value) {
+    handleFindUsers(event);
+    setValue(event.target.value);
+  }
+
+  console.log(value);
 
   return (
     <Fragment>
@@ -71,7 +83,8 @@ export default function Header() {
               className="debounce-input"
               debounceTimeout={300}
               placeholder="Search for people"
-              onChange={event => handleFindUsers(event)}
+              value={value}
+              onChange={event => handleDebounceInput(event)}
               onSubmit={event => event.preventDefault()}
             />
             <SearchIcon />

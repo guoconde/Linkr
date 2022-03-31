@@ -66,7 +66,7 @@ const ContainerNewPosts = styled.div`
 
     cursor: pointer;
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 650px) {
         border-radius: 0;
     }
 `;
