@@ -66,7 +66,6 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
       setNewData(promisse.data.posts);
 
       if (data.length === newData.length) {
-        console.log('sou igual')
         return setHasmore(false)
       }
     } catch (error) {
@@ -79,7 +78,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
         "An error occured while trying to fetch the posts, Plese refresh the page!"
       );
     }
-  }, 5000)
+  }, 15000)
 
   const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
 
