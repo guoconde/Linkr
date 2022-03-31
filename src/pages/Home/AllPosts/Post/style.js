@@ -23,14 +23,16 @@ const Container = styled.li`
 `;
 
 const ContainerImage = styled.div`
-  width: 10%;
+  width: 11%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
+  gap: 10px;
+
   @media screen and (max-width: 900px){
-    width: 15%;
+    width: 16%;
   }
 `;
 
@@ -41,14 +43,14 @@ const Image = styled.img`
 `;
 
 const ContainerPost = styled.div`
-  width: 90%;
+  width: 89%;
 
   display: flex;
   flex-direction: column;
   gap: 10px;
 
   @media screen and (max-width: 900px){
-    width: 85%;
+    width: 84%;
   }
 `;
 
@@ -103,6 +105,11 @@ const MetaLink = styled.div`
       font-size: 16px;
       font-weight: 400;
       line-height: 19px;
+
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
     }
 
     .description {
@@ -124,6 +131,12 @@ const ExternalLink = styled.a`
   font-size: 11px;
   font-weight: 400;
   line-height: 13px;
+
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
   cursor: pointer;
 
   &:hover{

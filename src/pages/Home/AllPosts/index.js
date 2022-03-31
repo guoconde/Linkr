@@ -5,21 +5,49 @@ import { fireAlert } from "../../../utils/alerts";
 import useApi from "../../../hooks/useApi";
 import useContexts from "../../../hooks/useContexts";
 import Post from "./Post";
-import { Content, Feed } from "./style";
+import useInterval from "use-interval";
+import { RiRefreshLine } from 'react-icons/ri';
+import { BiRepost } from "react-icons/bi";
+import {
+  Feed,
+  Content,
+  FullPost,
+  RepostedBy,
+  ContainerNewPosts
+} from "./style";
 
-export default function AllPosts() {
+export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   const api = useApi();
   const contexts = useContexts();
   const { auth, logout } = contexts.auth;
   const { setUsernameSearched } = contexts.searchedUser;
-  const { reloadPage } = contexts.post;
+  const { reloadPage, setReloadPage } = contexts.post;
   const [data, setData] = useState(null);
+  const [newData, setNewData] = useState([]);
+  const [newPosts, setNewPosts] = useState(false);
+  const [numberNewPosts, setNumberNewPosts] = useState(null);
   const [edit, setEdit] = useState(null);
   const [comments, setComments] = useState(null);
+  const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  async function handleGetAllPosts() {
+  useEffect(() => {
+
+  }, [pathname]);
+
+  function handleReloadPage() {
+    setReloadPage(true)
+    setNewPosts(false)
+  }
+
+  useInterval(async () => {
+    if (newData.length > data?.length) {
+      const dif = newData.length - data.length
+      setNumberNewPosts(dif)
+      setNewPosts(true)
+    }
+
     try {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
       let promisse;
@@ -35,12 +63,52 @@ export default function AllPosts() {
           navigate("/timeline");
         }
 
-        setData(promisse.data.posts);
+        setNewData(promisse.data.posts);
         setUsernameSearched(promisse.data.name);
         return;
       }
 
-      setData(promisse.data);
+      setNewData(promisse.data);
+    } catch (error) {
+      if (error.response?.status === 401 || error.response?.status === 404) {
+        await fireAlert(error.response.data);
+        logout();
+        return navigate("/");
+      }
+      return fireAlert(
+        "An error occured while trying to fetch the posts, Plese refresh the page!"
+      );
+    }
+  }, 15000);
+
+  async function handleGetAllPosts() {
+    try {
+      const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
+      let promisse;
+
+      if (pathname.includes("timeline")) {
+        promisse = await api.feed.listAll(headers);
+      } else if (pathname.includes("hashtag")) {
+        promisse = await api.feed.listByHashtag(
+          pathname.split("/")[2],
+          headers
+        );
+      } else if (pathname.includes("user")) {
+        promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
+        if (!promisse.data) {
+          fireAlert("User doesn't exists");
+          navigate("/timeline");
+        }
+
+        setData(promisse.data.posts);
+        setUsernameSearched(promisse.data.name);
+        setIsFollowing(promisse.data.isFollowing);
+        setUserPhoto(promisse.data.photo);
+        return;
+      }
+
+      setData(promisse.data.posts);
+      setIsFollowingSomeone(promisse.data.isFollowingSomeone);
     } catch (error) {
       if (error.response?.status === 401 || error.response?.status === 404) {
         await fireAlert(error.response.data);
@@ -59,6 +127,8 @@ export default function AllPosts() {
     // eslint-disable-next-line
   }, [pathname, reloadPage]);
 
+  console.log(data);
+
   if (!data)
     return (
       <Content>
@@ -70,7 +140,11 @@ export default function AllPosts() {
   if (data.length === 0)
     return (
       <Content>
-        <div>There are no posts yet!</div>
+        <div>
+          {isFollowingSomeone
+            ? "No posts found from your friends"
+            : "You don't follow anyone yet. Search for new friends!"}
+        </div>
       </Content>
     );
 
@@ -92,20 +166,39 @@ export default function AllPosts() {
 
   return (
     <Feed>
+      {newPosts &&
+        <ContainerNewPosts onClick={handleReloadPage}>
+          <div>{numberNewPosts} new posts, load more! </div>
+          <RiRefreshLine />
+        </ContainerNewPosts>
+      }
+
       {data.map((el, i) => {
         return (
-          <Post
-            key={i}
-            postIndex={i}
-            {...el}
-            edit={edit}
-            setEdit={setEdit}
-            comments={comments}
-            setComments={setComments}
-            handleEdit={handleEdit}
-            handleComments={handleComments}
-            handleGetAllPosts={handleGetAllPosts}
-          />
+          <FullPost key={i}>
+            {el.sharerName &&
+              <RepostedBy>
+                <BiRepost
+                  size={27}
+                  color="white"
+                />
+                Re-posted by <span>{el.sharerId === auth?.userId ? "you" : el.sharerName}</span>
+              </RepostedBy>
+            }
+
+            <Post
+              key={i}
+              postIndex={i}
+              {...el}
+              edit={edit}
+              setEdit={setEdit}
+              comments={comments}
+              setComments={setComments}
+              handleEdit={handleEdit}
+              handleComments={handleComments}
+              handleGetAllPosts={handleGetAllPosts}
+            />
+          </FullPost>
         )
       })}
     </Feed>

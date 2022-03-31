@@ -16,4 +16,7 @@ export default class PostsApi {
     insertLike(postId, userId, isLiked, headers) {
         return api.post(`/posts/${postId}/like`, {isLiked, userId}, headers);
     }
+    repost(postId, headers) {
+        return api.post(`/posts/${postId}/repost`, {}, headers)
+    }
 }

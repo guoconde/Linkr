@@ -3,6 +3,7 @@ import PostDescription from "./PostDescription";
 import DeleteModal from "../../../../components/DeleteModal";
 import Likes from "../Likes";
 import Comments from "../Comments";
+import Repost from "../Repost";
 import CommentIcon from "../Comments/CommentIcon";
 import useContexts from "../../../../hooks/useContexts";
 import {
@@ -36,6 +37,8 @@ export default function Post({
   url,
   description,
   i,
+  reposts,
+  reposted,
   metadataTitle,
   metadataDescription,
   metadataImage,
@@ -67,6 +70,11 @@ export default function Post({
             commentsCount={commentsCount}
             handleComments={handleComments}
             setLoadPostComments={setLoadPostComments}
+          />
+          <Repost
+            postId={id}
+            reposts={reposts}
+            reposted={reposted}
           />
         </ContainerImage>
 

@@ -3,7 +3,7 @@ import styled from "styled-components";
 const LikeOrDislike = styled.div`
     font-size: 25px;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 10px;
     cursor: pointer;
     
     .number-of-likes {

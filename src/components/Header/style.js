@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { BiChevronDown } from "react-icons/bi"
-import { AiOutlineSearch } from "react-icons/ai"
+import { BiChevronDown } from "react-icons/bi";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const Container = styled.header`
   position: fixed;
@@ -90,8 +90,9 @@ const Logout = styled.div`
   font-size: 15px;
   line-height: 18px;
 
-  transform: ${(props) => props.show ? "translateY(0px)" : "translateY(-45px)"};
-  opacity: ${(props) => props.show ? "1" : "0"};
+  transform: ${(props) =>
+    props.show ? "translateY(0px)" : "translateY(-45px)"};
+  opacity: ${(props) => (props.show ? "1" : "0")};
   transition: all 0.3s ease-in-out;
 
   &:hover {
@@ -143,36 +144,36 @@ const InputFindUser = styled.div`
     width: 563px;
     height: 45px;
     padding-left: 17px;
-    
+
     background-color: white;
-    
+
     border-radius: 8px;
     border: none;
-    
+
     font-family: Lato;
     font-size: 19px;
     font-weight: 400;
     line-height: 23px;
     color: #515151;
-    
+
     z-index: 2;
-    
+
     ::placeholder {
-      color: #C6C6C6;
+      color: #c6c6c6;
     }
   }
-  
+
   .list-users {
     width: 100%;
     min-height: 45px;
 
     padding-top: 30px;
     padding-bottom: 15px;
-    
+
     border-radius: 8px;
     border: none;
 
-    background-color: #E7E7E7;
+    background-color: #e7e7e7;
     font-weight: regular;
     color: red;
 
@@ -180,18 +181,41 @@ const InputFindUser = styled.div`
     top: 0;
     z-index: -1;
 
-    div:first-child{
+    div:first-child {
       margin-top: 30px;
     }
-    
+
     div {
       padding: 3px 17px;
-      
+
       display: flex;
       align-items: center;
-      
+
       color: #515151;
       cursor: pointer;
+    }
+
+    .name {
+      padding-right: 10px;
+    }
+
+    .status {
+      padding: 0px;
+      font-family: "Lato";
+      font-weight: 400;
+      font-size: 19px;
+      line-height: 23px;
+      color: #c5c5c5;
+
+      .circle {
+        padding: 0px;
+        margin: 0px;
+        margin-right: 5px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #c5c5c5;
+      }
     }
   }
 `;
@@ -220,7 +244,7 @@ const InputFindUserMobile = styled.div`
     z-index: 2;
 
     ::placeholder {
-      color: #C6C6C6;
+      color: #c6c6c6;
     }
   }
 
@@ -235,22 +259,45 @@ const InputFindUserMobile = styled.div`
     border-radius: 8px;
     border: none;
 
-    background-color: #E7E7E7;
+    background-color: #e7e7e7;
     font-weight: regular;
     color: red;
 
-    div:first-child{
+    div:first-child {
       margin-top: 30px;
     }
 
     div {
       padding: 3px 17px;
-      
+
       display: flex;
       align-items: center;
-      
+
       color: #515151;
       cursor: pointer;
+    }
+    
+    .name {
+      padding-right: 10px;
+    }
+
+    .status {
+      padding: 0px;
+      font-family: "Lato";
+      font-weight: 400;
+      font-size: 19px;
+      line-height: 23px;
+      color: #c5c5c5;
+
+      .circle {
+        padding: 0px;
+        margin: 0px;
+        margin-right: 5px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #c5c5c5;
+      }
     }
   }
 `;
@@ -260,20 +307,20 @@ const SearchIcon = styled(AiOutlineSearch)`
   right: 10px;
   font-size: 25px;
   position: absolute;
-  color: #C6C6C6;
+  color: #c6c6c6;
 `;
 
-export { 
-  Container, 
+export {
+  Container,
   ContentMobile,
-  UserIcon, 
-  Title, 
-  DownArrow, 
-  Logout, 
+  UserIcon,
+  Title,
+  DownArrow,
+  Logout,
   ContainerInputFindUser,
-  InputFindUser, 
+  InputFindUser,
   InputFindUserMobile,
   SearchIcon,
   ContainerMobile,
-  ContainerInputFindUserMobile
+  ContainerInputFindUserMobile,
 };
