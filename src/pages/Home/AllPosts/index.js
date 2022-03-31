@@ -24,13 +24,14 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   const { setUsernameSearched } = contexts.searchedUser;
   const { reloadPage, setReloadPage } = contexts.post;
   const [data, setData] = useState(null);
-  const [newData, setNewData] = useState([]);
+  const [newData, setNewData] = useState();
   const [newPosts, setNewPosts] = useState(false);
   const [numberNewPosts, setNumberNewPosts] = useState(null);
-  const [offset, setOffset] = useState(10);
+  const [limit, setLimit] = useState(10);
   const [hasMore, setHasmore] = useState(false);
   const [edit, setEdit] = useState(null);
   const [comments, setComments] = useState(null);
+  const [countPromisse, setCountPromisse] = useState()
   const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -40,10 +41,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   }, [pathname]);
 
   useEffect(() => {
-    setNewData([]);
-    setOffset(10);
     handleGetAllPosts();
-
     // eslint-disable-next-line
   }, [pathname, reloadPage]);
 
@@ -52,23 +50,20 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
       let promisse;
 
-      promisse = await api.feed.listAll(headers, offset);
+      promisse = await api.feed.listAll(headers, limit);
 
-      if (
-        pathname.includes("timeline") &&
-        newData.length > data.length &&
-        newData[0].id !== data[0].id
-      ) {
-        const dif = newData.length - data.length;
+      setCountPromisse(promisse.data.getCountPosts);
+
+      if (newData && newData < promisse.data.getCountPosts) {
+        const dif = promisse.data.getCountPosts - newData;
         setNumberNewPosts(dif);
         setNewPosts(true);
       }
 
-      setNewData(promisse.data.posts);
-
       if (data.length === promisse.data.posts.length) {
         return setHasmore(false);
       }
+
     } catch (error) {
       if (error.response?.status === 401 || error.response?.status === 404) {
         await fireAlert(error.response.data);
@@ -79,7 +74,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
         "An error occured while trying to fetch the posts, Plese refresh the page!"
       );
     }
-  }, 15000);
+  }, 5000);
 
   async function handleGetAllPosts() {
     try {
@@ -87,18 +82,18 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
       let promisse;
 
       if (pathname.includes("timeline")) {
-        promisse = await api.feed.listAll(headers, offset);
+        promisse = await api.feed.listAll(headers, limit);
       } else if (pathname.includes("hashtag")) {
         promisse = await api.feed.listByHashtag(
           pathname.split("/")[2],
           headers,
-          offset
+          limit
         );
       } else if (pathname.includes("user")) {
         promisse = await api.feed.listByUser(
           pathname.split("/")[2],
           headers,
-          offset
+          limit
         );
         if (!promisse.data) {
           fireAlert("User doesn't exists");
@@ -120,6 +115,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
         setHasmore(false);
       }
 
+      setNewData(promisse.data.getCountPosts)
       setData(promisse.data.posts);
       setIsFollowingSomeone(promisse.data.isFollowingSomeone);
     } catch (error) {
@@ -135,8 +131,10 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   }
 
   function handleReloadPage() {
+    setNewData(countPromisse)
     setReloadPage(true);
     setNewPosts(false);
+    window.location.reload()
   }
 
   function handleEdit(postIndex) {
@@ -162,9 +160,9 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
         <div>Loading...</div>
       </Content>
     );
-  } else if (data.length === offset) {
+  } else if (data.length === limit) {
+    setLimit(limit + 10);
     setHasmore(true);
-    setOffset(offset + 10);
   }
 
   if (data.length === 0) {
