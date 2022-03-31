@@ -37,11 +37,13 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setComments(null);
     window.scroll(0, 0);
   }, [pathname]);
 
   useEffect(() => {
     handleFeed();
+
     // eslint-disable-next-line
   }, [pathname, reloadPage]);
 

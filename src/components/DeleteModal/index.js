@@ -6,7 +6,7 @@ import ReactModal from "react-modal";
 import { Button, Content, SectionButton, Title, Trash } from "./style";
 import useContexts from "../../hooks/useContexts";
 
-export default function DeleteModal({ id: postId, userId }) {
+export default function DeleteModal({ id: postId, userId, setComments }) {
   const api = useApi();
   const contexts = useContexts()
   const { auth } = contexts.auth
@@ -43,6 +43,7 @@ export default function DeleteModal({ id: postId, userId }) {
     justifyContent: "center",
     color: "#FFF",
   };
+
   function handleModal() {
     setShowModal(true);
   }
@@ -52,6 +53,7 @@ export default function DeleteModal({ id: postId, userId }) {
     try {
       await api.posts.deletePost(postId, headers);
 
+      setComments(null);
       fireToast("success", "The post was deleted!");
       setReloadPage(!reloadPage);
     } catch (error) {

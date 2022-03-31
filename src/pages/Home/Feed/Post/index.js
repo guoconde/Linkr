@@ -54,7 +54,7 @@ export default function Post({
   return (
     <div>
       <Container>
-        <DeleteModal id={id} userId={userId} />
+        <DeleteModal id={id} userId={userId} setComments={setComments} />
         <ContainerImage>
           <Image src={photo} />
           <Likes
