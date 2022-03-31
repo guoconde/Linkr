@@ -9,6 +9,7 @@ import Likes from "./Likes";
 import useContexts from "../../../hooks/useContexts";
 import useInterval from "use-interval";
 import { RiRefreshLine } from 'react-icons/ri'
+import InfiniteScrooll from "react-infinite-scroller"
 import {
   Container,
   ContainerPost,
@@ -36,6 +37,8 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   const [newData, setNewData] = useState([]);
   const [newPosts, setNewPosts] = useState(false)
   const [numberNewPosts, setNumberNewPosts] = useState(null)
+  const [offset, setOffset] = useState(10)
+  const [hasMore, setHasmore] = useState(false)
   const [edit, setEdit] = useState(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -47,35 +50,25 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
 
   useInterval(async () => {
 
-    if (newData.length > data.length) {
-      const dif = newData.length - data.length
-      setNumberNewPosts(dif)
-      setNewPosts(true)
-    }
-
     try {
+
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
       let promisse;
 
-      if (pathname.includes("timeline")) {
-        promisse = await api.feed.listAll(headers);
-      } else if (pathname.includes("hashtag")) {
-        promisse = await api.feed.listByHashtag(pathname.split("/")[2], headers);
-      } else if (pathname.includes("user")) {
-        promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
-        if (!promisse.data) {
-          fireAlert("User doesn't exists");
-          navigate("/timeline");
-        }
+      promisse = await api.feed.listAll(headers, offset);
 
-        setNewData(promisse.data.posts);
-        setUsernameSearched(promisse.data.name);
-        return;
+      if (pathname.includes("timeline") && newData.length > data.length && newData[0].id !== data[0].id) {
+        const dif = newData.length - data.length
+        setNumberNewPosts(dif)
+        setNewPosts(true)
       }
 
-      console.log(data, 'data')
-      console.log(newData)
-      setNewData(promisse.data);
+      setNewData(promisse.data.posts);
+
+      if (data.length === newData.length) {
+        console.log('sou igual')
+        return setHasmore(false)
+      }
     } catch (error) {
       if (error.response?.status === 401 || error.response?.status === 404) {
         await fireAlert(error.response.data);
@@ -86,7 +79,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
         "An error occured while trying to fetch the posts, Plese refresh the page!"
       );
     }
-  }, 15000)
+  }, 5000)
 
   const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
 
@@ -96,14 +89,14 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
       let promisse;
 
       if (pathname.includes("timeline")) {
-        promisse = await api.feed.listAll(headers);
+        promisse = await api.feed.listAll(headers, offset);
       } else if (pathname.includes("hashtag")) {
         promisse = await api.feed.listByHashtag(
           pathname.split("/")[2],
-          headers
+          headers, offset
         );
       } else if (pathname.includes("user")) {
-        promisse = await api.feed.listByUser(pathname.split("/")[2], headers);
+        promisse = await api.feed.listByUser(pathname.split("/")[2], headers, offset);
         if (!promisse.data) {
           fireAlert("User doesn't exists");
           navigate("/timeline");
@@ -118,6 +111,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
 
       setData(promisse.data.posts);
       setIsFollowingSomeone(promisse.data.isFollowingSomeone);
+
     } catch (error) {
       if (error.response?.status === 401 || error.response?.status === 404) {
         await fireAlert(error.response.data);
@@ -130,19 +124,27 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
     }
   }
   useEffect(() => {
+    setNewData([])
+    setOffset(10)
     handleGetAllPosts();
+    console.log(offset)
+
     window.scroll(0, 0);
 
     // eslint-disable-next-line
   }, [pathname, reloadPage]);
 
-  if (!data)
+  if (!data) {
     return (
       <Content>
         <TailSpin color="white" ariaLabel="loading-indicator" />
         <div>Loading...</div>
       </Content>
     );
+  } else if (data.length === offset) {
+    setHasmore(true)
+    setOffset(offset + 10)
+  }
 
   if (data.length === 0)
     return (
@@ -164,62 +166,73 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   }
 
   return (
-    <Feed>
-      {newPosts &&
-        <ContainerNewPosts onClick={handleReloadPage}>
-          <div>{numberNewPosts} new posts, load more! </div>
-          <RiRefreshLine />
-        </ContainerNewPosts>
-      }
-      {data.map((el, i) => {
-        return (
-          <Container key={i}>
-            <DeleteModal {...el} />
-            <ContainerImage>
-              <Image src={el.photo} />
-              <Likes
-                postId={el.id}
-                postLikes={el.postLikes}
-                isLike={el.isLike}
-                likeNames={el.likeNames}
-                handleGetAllPosts={handleGetAllPosts}
-              />
-            </ContainerImage>
-
-            <ContainerPost>
-              <Name to={`/user/${el.userId}`}>{el.name}</Name>
-              <Description>
-                <PostDescription
+    <InfiniteScrooll
+      pageStart={0}
+      loadMore={handleGetAllPosts}
+      hasMore={hasMore}
+      loader={
+        <Content>
+          <TailSpin color="white" ariaLabel="loading-indicator" />
+          <div>Loading...</div>
+        </Content>}
+    >
+      <Feed>
+        {newPosts &&
+          <ContainerNewPosts onClick={handleReloadPage}>
+            <div>{numberNewPosts} new posts, load more! </div>
+            <RiRefreshLine />
+          </ContainerNewPosts>
+        }
+        {data.map((el, i) => {
+          return (
+            <Container key={i}>
+              <DeleteModal {...el} />
+              <ContainerImage>
+                <Image src={el.photo} />
+                <Likes
                   postId={el.id}
-                  edit={edit}
-                  setEdit={setEdit}
-                  url={el.url}
-                  description={el.description}
-                  index={i}
+                  postLikes={el.postLikes}
+                  isLike={el.isLike}
+                  likeNames={el.likeNames}
+                  handleGetAllPosts={handleGetAllPosts}
                 />
-              </Description>
+              </ContainerImage>
 
-              <MetaLink>
-                <div className="infoPost">
-                  <p className="title">{el.metadataTitle}</p>
-                  <p className="description">{el.metadataDescription}</p>
-                  <ExternalLink href={el.url} target="_blank">
-                    {el.url}
-                  </ExternalLink>
-                </div>
+              <ContainerPost>
+                <Name to={`/user/${el.userId}`}>{el.name}</Name>
+                <Description>
+                  <PostDescription
+                    postId={el.id}
+                    edit={edit}
+                    setEdit={setEdit}
+                    url={el.url}
+                    description={el.description}
+                    index={i}
+                  />
+                </Description>
 
-                <ImagePost backgroundImage={el.metadataImage} />
-              </MetaLink>
-            </ContainerPost>
+                <MetaLink>
+                  <div className="infoPost">
+                    <p className="title">{el.metadataTitle}</p>
+                    <p className="description">{el.metadataDescription}</p>
+                    <ExternalLink href={el.url} target="_blank">
+                      {el.url}
+                    </ExternalLink>
+                  </div>
 
-            {auth?.userId === el.userId && (
-              <ContainerAction>
-                <GrEditCustom onClick={() => handleEdit(el.id)} size={20} />
-              </ContainerAction>
-            )}
-          </Container>
-        );
-      })}
-    </Feed>
+                  <ImagePost backgroundImage={el.metadataImage} />
+                </MetaLink>
+              </ContainerPost>
+
+              {auth?.userId === el.userId && (
+                <ContainerAction>
+                  <GrEditCustom onClick={() => handleEdit(el.id)} size={20} />
+                </ContainerAction>
+              )}
+            </Container>
+          );
+        })}
+      </Feed>
+    </InfiniteScrooll>
   );
 }
