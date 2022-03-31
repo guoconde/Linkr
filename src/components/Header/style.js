@@ -6,7 +6,7 @@ const Container = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 3;
 
   width: 100%;
   height: 72px;

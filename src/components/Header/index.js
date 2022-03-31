@@ -28,9 +28,9 @@ export default function Header() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [users, setUsers] = useState([])
+  const [value, setValue] = useState("");
 
   async function handleFindUsers(event) {
-
     let findAllUsers = event.target.value
     const headers = { headers: { Authorization: `Bearer ${auth?.token}`}};
 
@@ -41,7 +41,6 @@ export default function Header() {
     setUsers(data);
   }
 
-
   useEffect(() => {
     if (!auth) {
       handleHideLogout();
@@ -51,6 +50,10 @@ export default function Header() {
     //eslint-disable-next-line
   }, [auth]);
 
+  useEffect(() =>{
+    setValue("");
+  }, [pathname]);
+
   if (pathname === "/" || pathname === "/sign-up") {
     return null;
   }
@@ -58,6 +61,12 @@ export default function Header() {
   function handleClickTitle() {
     handleHideLogout();
     navigate("/timeline");
+    window.scroll(0,0)
+  }
+
+  function handleDebounceInput(event, value) {
+    handleFindUsers(event);
+    setValue(event.target.value);
   }
 
   return (
@@ -71,7 +80,8 @@ export default function Header() {
               className="debounce-input"
               debounceTimeout={300}
               placeholder="Search for people"
-              onChange={event => handleFindUsers(event)}
+              value={value}
+              onChange={event => handleDebounceInput(event)}
               onSubmit={event => event.preventDefault()}
             />
             <SearchIcon />

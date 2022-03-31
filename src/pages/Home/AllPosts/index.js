@@ -3,71 +3,67 @@ import { useLocation, useNavigate } from "react-router";
 import { TailSpin } from "react-loader-spinner";
 import { fireAlert } from "../../../utils/alerts";
 import useApi from "../../../hooks/useApi";
-import PostDescription from "./PostDescription";
-import DeleteModal from "../../../components/DeleteModal";
-import Likes from "./Likes";
 import useContexts from "../../../hooks/useContexts";
+import Post from "./Post";
 import useInterval from "use-interval";
-import { RiRefreshLine } from 'react-icons/ri'
-import InfiniteScrooll from "react-infinite-scroller"
+import { RiRefreshLine } from "react-icons/ri";
+import { BiRepost } from "react-icons/bi";
+import InfiniteScrooll from "react-infinite-scroller";
 import {
-  Container,
-  ContainerPost,
-  ContainerImage,
-  Name,
-  Image,
-  Description,
-  ExternalLink,
-  Content,
-  MetaLink,
-  ImagePost,
-  ContainerAction,
-  GrEditCustom,
   Feed,
-  ContainerNewPosts
+  Content,
+  FullPost,
+  RepostedBy,
+  ContainerNewPosts,
 } from "./style";
 
 export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   const api = useApi();
-  const contexts = useContexts()
-  const { auth, logout } = contexts.auth
-  const { setUsernameSearched } = contexts.searchedUser
-  const { reloadPage, setReloadPage } = contexts.post
+  const contexts = useContexts();
+  const { auth, logout } = contexts.auth;
+  const { setUsernameSearched } = contexts.searchedUser;
+  const { reloadPage, setReloadPage } = contexts.post;
   const [data, setData] = useState(null);
-  const [newData, setNewData] = useState([]);
-  const [newPosts, setNewPosts] = useState(false)
-  const [numberNewPosts, setNumberNewPosts] = useState(null)
-  const [offset, setOffset] = useState(10)
-  const [hasMore, setHasmore] = useState(false)
+  const [newData, setNewData] = useState();
+  const [newPosts, setNewPosts] = useState(false);
+  const [numberNewPosts, setNumberNewPosts] = useState(null);
+  const [limit, setLimit] = useState(10);
+  const [hasMore, setHasmore] = useState(false);
   const [edit, setEdit] = useState(null);
+  const [comments, setComments] = useState(null);
+  const [countPromisse, setCountPromisse] = useState()
+  const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  function handleReloadPage() {
-    setReloadPage(true)
-    setNewPosts(false)
-  }
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [pathname]);
+
+  useEffect(() => {
+    handleGetAllPosts();
+    // eslint-disable-next-line
+  }, [pathname, reloadPage]);
 
   useInterval(async () => {
-
     try {
-
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
       let promisse;
 
-      promisse = await api.feed.listAll(headers, offset);
+      promisse = await api.feed.listAll(headers, limit);
 
-      if (pathname.includes("timeline") && newData.length > data.length && newData[0].id !== data[0].id) {
-        const dif = newData.length - data.length
-        setNumberNewPosts(dif)
-        setNewPosts(true)
+      setCountPromisse(promisse.data.getCountPosts);
+
+      if (newData && newData < promisse.data.getCountPosts) {
+        const dif = promisse.data.getCountPosts - newData;
+        setNumberNewPosts(dif);
+        setNewPosts(true);
       }
 
-      setNewData(promisse.data.posts);
-
-      if (data.length === newData.length) {
-        return setHasmore(false)
+      if (data.length === promisse.data.posts.length) {
+        return setHasmore(false);
       }
+
     } catch (error) {
       if (error.response?.status === 401 || error.response?.status === 404) {
         await fireAlert(error.response.data);
@@ -78,9 +74,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
         "An error occured while trying to fetch the posts, Plese refresh the page!"
       );
     }
-  }, 15000)
-
-  const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
+  }, 5000);
 
   async function handleGetAllPosts() {
     try {
@@ -88,17 +82,26 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
       let promisse;
 
       if (pathname.includes("timeline")) {
-        promisse = await api.feed.listAll(headers, offset);
+        promisse = await api.feed.listAll(headers, limit);
       } else if (pathname.includes("hashtag")) {
         promisse = await api.feed.listByHashtag(
           pathname.split("/")[2],
-          headers, offset
+          headers,
+          limit
         );
       } else if (pathname.includes("user")) {
-        promisse = await api.feed.listByUser(pathname.split("/")[2], headers, offset);
+        promisse = await api.feed.listByUser(
+          pathname.split("/")[2],
+          headers,
+          limit
+        );
         if (!promisse.data) {
           fireAlert("User doesn't exists");
           navigate("/timeline");
+        }
+
+        if (data?.length === promisse.data.posts.length) {
+          setHasmore(false);
         }
 
         setData(promisse.data.posts);
@@ -108,9 +111,13 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
         return;
       }
 
+      if (data?.length === promisse.data.posts.length) {
+        setHasmore(false);
+      }
+
+      setNewData(promisse.data.getCountPosts)
       setData(promisse.data.posts);
       setIsFollowingSomeone(promisse.data.isFollowingSomeone);
-
     } catch (error) {
       if (error.response?.status === 401 || error.response?.status === 404) {
         await fireAlert(error.response.data);
@@ -122,16 +129,29 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
       );
     }
   }
-  useEffect(() => {
-    setNewData([])
-    setOffset(10)
-    handleGetAllPosts();
-    console.log(offset)
 
-    window.scroll(0, 0);
+  function handleReloadPage() {
+    setNewData(countPromisse)
+    setReloadPage(true);
+    setNewPosts(false);
+    window.location.reload()
+  }
 
-    // eslint-disable-next-line
-  }, [pathname, reloadPage]);
+  function handleEdit(postIndex) {
+    if (edit !== null && edit === postIndex) {
+      setEdit(null);
+    } else {
+      setEdit(postIndex);
+    }
+  }
+
+  function handleComments(postIndex) {
+    if (comments !== null && comments === postIndex) {
+      setComments(null);
+    } else {
+      setComments(postIndex);
+    }
+  }
 
   if (!data) {
     return (
@@ -140,28 +160,23 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
         <div>Loading...</div>
       </Content>
     );
-  } else if (data.length === offset) {
-    setHasmore(true)
-    setOffset(offset + 10)
+  } else if (data.length === limit) {
+    setLimit(limit + 10);
+    setHasmore(true);
   }
 
-  if (data.length === 0)
+  if (data.length === 0) {
     return (
       <Content>
         <div>
-          {isFollowingSomeone
-            ? "No posts found from your friends"
-            : "You don't follow anyone yet. Search for new friends!"}
+          {pathname.includes("timeline")
+            ? isFollowingSomeone
+              ? "No posts found from your friends"
+              : "You don't follow anyone yet. Search for new friends!"
+            : "This user has no posts"}
         </div>
       </Content>
     );
-
-  function handleEdit(postId) {
-    if (edit !== null && edit === postId) {
-      setEdit(null);
-    } else {
-      setEdit(postId);
-    }
   }
 
   return (
@@ -170,65 +185,46 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
       loadMore={handleGetAllPosts}
       hasMore={hasMore}
       loader={
-        <Content>
+        <Content key={0}>
           <TailSpin color="white" ariaLabel="loading-indicator" />
           <div>Loading...</div>
-        </Content>}
+        </Content>
+      }
     >
       <Feed>
-        {newPosts &&
+        {newPosts && (
           <ContainerNewPosts onClick={handleReloadPage}>
             <div>{numberNewPosts} new posts, load more! </div>
             <RiRefreshLine />
           </ContainerNewPosts>
-        }
+        )}
+
         {data.map((el, i) => {
           return (
-            <Container key={i}>
-              <DeleteModal {...el} />
-              <ContainerImage>
-                <Image src={el.photo} />
-                <Likes
-                  postId={el.id}
-                  postLikes={el.postLikes}
-                  isLike={el.isLike}
-                  likeNames={el.likeNames}
-                  handleGetAllPosts={handleGetAllPosts}
-                />
-              </ContainerImage>
-
-              <ContainerPost>
-                <Name to={`/user/${el.userId}`}>{el.name}</Name>
-                <Description>
-                  <PostDescription
-                    postId={el.id}
-                    edit={edit}
-                    setEdit={setEdit}
-                    url={el.url}
-                    description={el.description}
-                    index={i}
-                  />
-                </Description>
-
-                <MetaLink>
-                  <div className="infoPost">
-                    <p className="title">{el.metadataTitle}</p>
-                    <p className="description">{el.metadataDescription}</p>
-                    <ExternalLink href={el.url} target="_blank">
-                      {el.url}
-                    </ExternalLink>
-                  </div>
-
-                  <ImagePost backgroundImage={el.metadataImage} />
-                </MetaLink>
-              </ContainerPost>
-
-              {auth?.userId === el.userId && (
-                <ContainerAction>
-                  <GrEditCustom onClick={() => handleEdit(el.id)} size={20} />
-                </ContainerAction>
+            <FullPost key={i}>
+              {el.sharerName && (
+                <RepostedBy>
+                  <BiRepost size={27} color="white" />
+                  Re-posted by{" "}
+                  <span>
+                    {el.sharerId === auth?.userId ? "you" : el.sharerName}
+                  </span>
+                </RepostedBy>
               )}
-            </Container>
+
+              <Post
+                key={i}
+                postIndex={i}
+                {...el}
+                edit={edit}
+                setEdit={setEdit}
+                comments={comments}
+                setComments={setComments}
+                handleEdit={handleEdit}
+                handleComments={handleComments}
+                handleGetAllPosts={handleGetAllPosts}
+              />
+            </FullPost>
           );
         })}
       </Feed>

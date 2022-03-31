@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fireAlert } from "../../../../../utils/alerts";
-
-import useApi from "../../../../../hooks/useApi";
+import { fireAlert } from "../../../../../../utils/alerts";
+import useApi from "../../../../../../hooks/useApi";
 import Input from "./style";
-import useContexts from "../../../../../hooks/useContexts";
+import useContexts from "../../../../../../hooks/useContexts";
 
 export default function PostInput({ postId, url, description, setShowAction, setEdit }) {
   const api = useApi();

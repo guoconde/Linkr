@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { Image } from "../../../pages/Home/AllPosts/style";
+import { Image } from "../../../pages/Home/AllPosts/Post/style";
 
 export default function ListUsers({ users, setUsers }) {
   const navigate = useNavigate();
@@ -16,8 +16,7 @@ export default function ListUsers({ users, setUsers }) {
           <Image src={el.photo} alt={el.name} />
           <div className="name">{el.name}</div>
           <div className="status">
-            <div className="circle"></div>
-            {el.isFollowing && "following"}
+            {el.isFollowing && <><div className="circle"></div> following</>}
           </div>
         </div>
       ))}

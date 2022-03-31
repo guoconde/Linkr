@@ -13,10 +13,11 @@ const Container = styled.div`
   border-radius: 16px;
 
   display: flex;
-  gap: 8px;
+  align-items: stretch;
+  justify-content: space-between;
 
   form {
-    width: 90%;
+    width: 86%;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -44,7 +45,11 @@ const Container = styled.div`
 `;
 
 const ContainerProfilePicture = styled.div`
-  width: 10%;
+  width: 11%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
   @media screen  and (max-width: 650px) {
     display: none;
   }

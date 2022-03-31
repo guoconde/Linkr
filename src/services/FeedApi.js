@@ -1,13 +1,13 @@
 import api from "./api"
 
 export default class FeedApi {
-    listAll(headers, offset) {
-        return api.get(`/posts?offset=${offset}`, headers)
+    listAll(headers, limit) {
+        return api.get(`/posts?limit=${limit}`, headers)
     }
-    listByHashtag(hashtag, headers, offset) {
-        return api.get(`/hashtag/${hashtag}?offset=${offset}`, headers);
+    listByHashtag(hashtag, headers, limit) {
+        return api.get(`/hashtag/${hashtag}?limit=${limit}`, headers);
     }
-    listByUser(userId, headers, offset) {
-        return api.get(`/user/${userId}?offset=${offset}`, headers);
+    listByUser(userId, headers, limit) {
+        return api.get(`/user/${userId}?limit=${limit}`, headers);
     }
 }

@@ -11,9 +11,12 @@ export default class PostsApi {
         return api.put(`/posts/${postId}`, data, headers);
     }
     deleteLike(postId, userId, isLiked, headers) {
-        return api.put(`/posts/${postId}/like`, {isLiked, userId}, headers)
+        return api.put(`/posts/${postId}/like`, {isLiked, userId}, headers);
     }
     insertLike(postId, userId, isLiked, headers) {
-        return api.post(`/posts/${postId}/like`, {isLiked, userId}, headers)
+        return api.post(`/posts/${postId}/like`, {isLiked, userId}, headers);
+    }
+    repost(postId, headers) {
+        return api.post(`/posts/${postId}/repost`, {}, headers)
     }
 }

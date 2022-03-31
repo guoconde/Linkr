@@ -1,53 +1,8 @@
 import styled from "styled-components";
 
-const Container = styled.div`
-  width: 100%;
-
-  margin-top: 120px;
-
-  font-family: "Lato", sans-serif;
-
-  display: flex;
-  justify-content: center;
-
-  .main {
-    display: flex;
-  }
-
-  @media screen and (max-width: 900px) {
-    margin-top: 15px;
-  }
-  @media screen and (max-width: 650px){
-    .all {
-      width: 100%;
-    }
-    .main {
-      justify-content: center;
-      width: 100%;
-    }
-  }
-`;
-
-const Content = styled.div`
-  width: 610px;
-
-  margin-right: 25px;
-  margin-bottom: 60px;
-
-  display: flex;
-  flex-direction: column;
-
-  @media screen and (max-width: 1000px) {
-    margin-right: 0px;
-  }
-  @media screen and (max-width: 650px) {
-    width: 100%;
-  }
-`;
-
 const TitleOfSection = styled.h2`
-  color: #FFFFFF;
-  font-family: 'Oswald';
+  color: #ffffff;
+  font-family: "Oswald";
   font-weight: 700;
   font-size: 43px;
   line-height: 64px;
@@ -93,7 +48,7 @@ const FollowButton = styled.button`
   align-items: center;
   justify-content: center;
 
-  background: ${(props) => props.isFollowing ? "#FFF": "#1877F2"};
+  background: ${(props) => (props.isFollowing ? "#FFF" : "#1877F2")};
   border-radius: 5px;
   border: none;
 
@@ -101,21 +56,16 @@ const FollowButton = styled.button`
   font-weight: 700;
   line-height: 17px;
   text-align: center;
-  color: ${(props) => props.isFollowing ? "#1877F2": "#FFF"};
+  color: ${(props) => (props.isFollowing ? "#1877F2" : "#FFF")};
 
   cursor: pointer;
   ${(props) => props.isFollowing === null && "display: none;"}
   transition: all 0.3s ease;
+  opacity: ${(props) => props.disabled ? "0.7": "1"};
 
   &:hover {
     transform: scale(1.2);
   }
-`
+`;
 
-export { 
-  Container, 
-  ContainerTitleProfile,
-  Content, 
-  TitleOfSection,
-  FollowButton
-};
+export { ContainerTitleProfile, TitleOfSection, FollowButton };
