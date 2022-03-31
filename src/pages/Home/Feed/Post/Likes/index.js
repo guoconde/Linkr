@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import LikeOrDislike from "./style";
-import useApi from "../../../../hooks/useApi";
+import useApi from "../../../../../hooks/useApi";
 import ReactTooltip from "react-tooltip";
-import useContexts from "../../../../hooks/useContexts";
-import handleMessage from "../../../../utils/handleMessage";
+import useContexts from "../../../../../hooks/useContexts";
+import handleMessage from "../../../../../utils/handleMessage";
 
 export default function Likes({ postId, isLike, postLikes, likeNames }) {
   const api = useApi();

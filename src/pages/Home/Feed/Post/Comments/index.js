@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import ProfilePicture from "../../../../components/ProfilePicture";
-import useApi from "../../../../hooks/useApi";
-import useContexts from "../../../../hooks/useContexts";
+import ProfilePicture from "../../../../../components/ProfilePicture";
+import useApi from "../../../../../hooks/useApi";
+import useContexts from "../../../../../hooks/useContexts";
 import CommentLine from "./CommentLine";
 import { FiSend } from 'react-icons/fi';
-import { fireAlert } from "../../../../utils/alerts";
+import { fireAlert } from "../../../../../utils/alerts";
 import {
   ContentComments,
   ContainerCommentInput,

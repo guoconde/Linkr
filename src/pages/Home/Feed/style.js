@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Feed = styled.ul`
+const TimeLine = styled.ul`
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -72,7 +72,7 @@ const ContainerNewPosts = styled.div`
 `;
 
 export {
-    Feed,
+    TimeLine,
     Content,
     FullPost,
     RepostedBy,

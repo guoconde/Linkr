@@ -1,12 +1,11 @@
-import { BiRepost } from "react-icons/bi"
-import useApi from "../../../../hooks/useApi";
-import useContexts from "../../../../hooks/useContexts";
-import ReactModal from "react-modal";
-import { Button, Content, Count, RepostArea, SectionButton, Title } from "./style"
 import { useState } from "react";
+import useApi from "../../../../../hooks/useApi";
+import useContexts from "../../../../../hooks/useContexts";
+import ReactModal from "react-modal";
+import { BiRepost } from "react-icons/bi";
 import { TailSpin } from "react-loader-spinner";
-import { fireToast } from "../../../../utils/alerts";
-import { } from "./style";
+import { fireToast } from "../../../../../utils/alerts";
+import { Button, Content, Count, RepostArea, SectionButton, Title } from "./style";
 
 export const overlay = {
   position: "fixed",
@@ -15,7 +14,7 @@ export const overlay = {
   right: 0,
   bottom: 0,
   backgroundColor: "rgba(255, 255, 255, 0.9)",
-  zIndex: "2",
+  zIndex: "3",
 };
 
 export const content = {

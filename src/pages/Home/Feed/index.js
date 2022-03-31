@@ -10,14 +10,14 @@ import { RiRefreshLine } from "react-icons/ri";
 import { BiRepost } from "react-icons/bi";
 import InfiniteScrooll from "react-infinite-scroller";
 import {
-  Feed,
+  TimeLine,
   Content,
   FullPost,
   RepostedBy,
   ContainerNewPosts,
 } from "./style";
 
-export default function AllPosts({ setIsFollowing, setUserPhoto }) {
+export default function Feed({ setIsFollowing, setUserPhoto }) {
   const api = useApi();
   const contexts = useContexts();
   const { auth, logout } = contexts.auth;
@@ -41,7 +41,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   }, [pathname]);
 
   useEffect(() => {
-    handleGetAllPosts();
+    handleFeed();
     // eslint-disable-next-line
   }, [pathname, reloadPage]);
 
@@ -76,7 +76,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
     }
   }, 5000);
 
-  async function handleGetAllPosts() {
+  async function handleFeed() {
     try {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
       let promisse;
@@ -134,7 +134,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
     setNewData(countPromisse)
     setReloadPage(true);
     setNewPosts(false);
-    window.location.reload()
+    window.location.reload();
   }
 
   function handleEdit(postIndex) {
@@ -182,7 +182,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   return (
     <InfiniteScrooll
       pageStart={0}
-      loadMore={handleGetAllPosts}
+      loadMore={handleFeed}
       hasMore={hasMore}
       loader={
         <Content key={0}>
@@ -191,7 +191,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
         </Content>
       }
     >
-      <Feed>
+      <TimeLine>
         {newPosts && (
           <ContainerNewPosts onClick={handleReloadPage}>
             <div>{numberNewPosts} new posts, load more! </div>
@@ -222,12 +222,12 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
                 setComments={setComments}
                 handleEdit={handleEdit}
                 handleComments={handleComments}
-                handleGetAllPosts={handleGetAllPosts}
+                handleFeed={handleFeed}
               />
             </FullPost>
           );
         })}
-      </Feed>
+      </TimeLine>
     </InfiniteScrooll>
   );
 }

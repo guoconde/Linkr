@@ -21,6 +21,10 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 8px;
+
+    @media screen and (max-width: 900px){
+      width: 81%;
+    }
   }
   
   .error-message {
@@ -49,6 +53,10 @@ const ContainerProfilePicture = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: center;
+
+  @media screen and (max-width: 900px) {
+    width: 17%;
+  }
 
   @media screen  and (max-width: 650px) {
     display: none;

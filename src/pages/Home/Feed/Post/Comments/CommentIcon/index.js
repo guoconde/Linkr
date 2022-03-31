@@ -1,8 +1,8 @@
 import { AiOutlineComment } from "react-icons/ai";
 import { CommentsContainer, CommentsCounter } from "./style";
-import useApi from "../../../../../hooks/useApi";
-import useContexts from "../../../../../hooks/useContexts";
-import { fireAlert } from "../../../../../utils/alerts";
+import useApi from "../../../../../../hooks/useApi";
+import useContexts from "../../../../../../hooks/useContexts";
+import { fireAlert } from "../../../../../../utils/alerts";
 
 export default function CommentIcon({ postIndex, postId, handleComments, setLoadPostComments, commentsCount }) {
   const api = useApi();

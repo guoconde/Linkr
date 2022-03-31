@@ -1,10 +1,10 @@
 import { useState } from "react";
 import PostDescription from "./PostDescription";
 import DeleteModal from "../../../../components/DeleteModal";
-import Likes from "../Likes";
-import Comments from "../Comments";
-import Repost from "../Repost";
-import CommentIcon from "../Comments/CommentIcon";
+import Likes from "./Likes";
+import Comments from "./Comments";
+import CommentIcon from "./Comments/CommentIcon";
+import Repost from "./Repost";
 import useContexts from "../../../../hooks/useContexts";
 import {
   Container,
@@ -44,7 +44,7 @@ export default function Post({
   metadataImage,
   handleEdit,
   handleComments,
-  handleGetAllPosts
+  handleFeed
 }) {
 
   const contexts = useContexts();
@@ -62,7 +62,7 @@ export default function Post({
             postLikes={postLikes}
             isLike={isLike}
             likeNames={likeNames}
-            handleGetAllPosts={handleGetAllPosts}
+            handleFeed={handleFeed}
           />
           <CommentIcon
             postId={id}

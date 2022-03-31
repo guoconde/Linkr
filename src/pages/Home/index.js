@@ -4,7 +4,7 @@ import useContexts from "../../hooks/useContexts";
 
 import PublishPost from "./PublishPost";
 import Trendings from "./Trendings";
-import AllPosts from "./AllPosts";
+import Feed from "./Feed";
 import Title from "./Title";
 import { Container, Content } from "./style";
 
@@ -30,7 +30,7 @@ export default function Home() {
         <div className="main">
           <Content>
             <PublishPost />
-            <AllPosts
+            <Feed
               setIsFollowing={setIsFollowing}
               setUserPhoto={setUserPhoto}
             />
