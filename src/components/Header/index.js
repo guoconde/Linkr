@@ -61,6 +61,7 @@ export default function Header() {
   function handleClickTitle() {
     handleHideLogout();
     navigate("/timeline");
+    window.scroll(0,0)
   }
 
   function handleDebounceInput(event, value) {
