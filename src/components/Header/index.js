@@ -41,7 +41,6 @@ export default function Header() {
     setUsers(data);
   }
 
-
   useEffect(() => {
     if (!auth) {
       handleHideLogout();
@@ -52,7 +51,6 @@ export default function Header() {
   }, [auth]);
 
   useEffect(() =>{
-    console.log("entrei")
     setValue("");
   }, [pathname]);
 
@@ -69,8 +67,6 @@ export default function Header() {
     handleFindUsers(event);
     setValue(event.target.value);
   }
-
-  console.log(value);
 
   return (
     <Fragment>

@@ -16,8 +16,7 @@ export default function ListUsers({ users, setUsers }) {
           <Image src={el.photo} alt={el.name} />
           <div className="name">{el.name}</div>
           <div className="status">
-            <div className="circle"></div>
-            {el.isFollowing && "following"}
+            {el.isFollowing && <><div className="circle"></div> following</>}
           </div>
         </div>
       ))}

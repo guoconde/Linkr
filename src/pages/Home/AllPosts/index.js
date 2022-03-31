@@ -6,7 +6,7 @@ import useApi from "../../../hooks/useApi";
 import useContexts from "../../../hooks/useContexts";
 import Post from "./Post";
 import useInterval from "use-interval";
-import { RiRefreshLine } from 'react-icons/ri';
+import { RiRefreshLine } from "react-icons/ri";
 import { BiRepost } from "react-icons/bi";
 import InfiniteScrooll from "react-infinite-scroller";
 import {
@@ -14,7 +14,7 @@ import {
   Content,
   FullPost,
   RepostedBy,
-  ContainerNewPosts
+  ContainerNewPosts,
 } from "./style";
 
 export default function AllPosts({ setIsFollowing, setUserPhoto }) {
@@ -25,10 +25,10 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
   const { reloadPage, setReloadPage } = contexts.post;
   const [data, setData] = useState(null);
   const [newData, setNewData] = useState([]);
-  const [newPosts, setNewPosts] = useState(false)
-  const [numberNewPosts, setNumberNewPosts] = useState(null)
-  const [offset, setOffset] = useState(10)
-  const [hasMore, setHasmore] = useState(false)
+  const [newPosts, setNewPosts] = useState(false);
+  const [numberNewPosts, setNumberNewPosts] = useState(null);
+  const [offset, setOffset] = useState(10);
+  const [hasMore, setHasmore] = useState(false);
   const [edit, setEdit] = useState(null);
   const [comments, setComments] = useState(null);
   const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
@@ -47,7 +47,6 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
     // eslint-disable-next-line
   }, [pathname, reloadPage]);
 
-
   useInterval(async () => {
     try {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
@@ -55,15 +54,19 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
 
       promisse = await api.feed.listAll(headers, offset);
 
-      if (pathname.includes("timeline") && newData.length > data.length && newData[0].id !== data[0].id) {
-        const dif = newData.length - data.length
-        setNumberNewPosts(dif)
-        setNewPosts(true)
+      if (
+        pathname.includes("timeline") &&
+        newData.length > data.length &&
+        newData[0].id !== data[0].id
+      ) {
+        const dif = newData.length - data.length;
+        setNumberNewPosts(dif);
+        setNewPosts(true);
       }
 
       setNewData(promisse.data.posts);
 
-      if (data.length === newData.length) {
+      if (data.length === promisse.data.posts.length) {
         return setHasmore(false);
       }
     } catch (error) {
@@ -88,13 +91,22 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
       } else if (pathname.includes("hashtag")) {
         promisse = await api.feed.listByHashtag(
           pathname.split("/")[2],
-          headers, offset
+          headers,
+          offset
         );
       } else if (pathname.includes("user")) {
-        promisse = await api.feed.listByUser(pathname.split("/")[2], headers, offset);
+        promisse = await api.feed.listByUser(
+          pathname.split("/")[2],
+          headers,
+          offset
+        );
         if (!promisse.data) {
           fireAlert("User doesn't exists");
           navigate("/timeline");
+        }
+
+        if (data?.length === promisse.data.posts.length) {
+          setHasmore(false);
         }
 
         setData(promisse.data.posts);
@@ -104,9 +116,12 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
         return;
       }
 
+      if (data?.length === promisse.data.posts.length) {
+        setHasmore(false);
+      }
+
       setData(promisse.data.posts);
       setIsFollowingSomeone(promisse.data.isFollowingSomeone);
-
     } catch (error) {
       if (error.response?.status === 401 || error.response?.status === 404) {
         await fireAlert(error.response.data);
@@ -156,9 +171,11 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
     return (
       <Content>
         <div>
-          {isFollowingSomeone
-            ? "No posts found from your friends"
-            : "You don't follow anyone yet. Search for new friends!"}
+          {pathname.includes("timeline")
+            ? isFollowingSomeone
+              ? "No posts found from your friends"
+              : "You don't follow anyone yet. Search for new friends!"
+            : "This user has no posts"}
         </div>
       </Content>
     );
@@ -170,32 +187,32 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
       loadMore={handleGetAllPosts}
       hasMore={hasMore}
       loader={
-        <Content>
+        <Content key={0}>
           <TailSpin color="white" ariaLabel="loading-indicator" />
           <div>Loading...</div>
         </Content>
       }
     >
       <Feed>
-        {newPosts &&
+        {newPosts && (
           <ContainerNewPosts onClick={handleReloadPage}>
             <div>{numberNewPosts} new posts, load more! </div>
             <RiRefreshLine />
           </ContainerNewPosts>
-        }
+        )}
 
         {data.map((el, i) => {
           return (
             <FullPost key={i}>
-              {el.sharerName &&
+              {el.sharerName && (
                 <RepostedBy>
-                  <BiRepost
-                    size={27}
-                    color="white"
-                  />
-                  Re-posted by <span>{el.sharerId === auth?.userId ? "you" : el.sharerName}</span>
+                  <BiRepost size={27} color="white" />
+                  Re-posted by{" "}
+                  <span>
+                    {el.sharerId === auth?.userId ? "you" : el.sharerName}
+                  </span>
                 </RepostedBy>
-              }
+              )}
 
               <Post
                 key={i}
@@ -210,7 +227,7 @@ export default function AllPosts({ setIsFollowing, setUserPhoto }) {
                 handleGetAllPosts={handleGetAllPosts}
               />
             </FullPost>
-          )
+          );
         })}
       </Feed>
     </InfiniteScrooll>
