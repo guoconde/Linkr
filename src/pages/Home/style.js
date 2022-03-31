@@ -52,7 +52,6 @@ const TitleOfSection = styled.h2`
   font-size: 43px;
   line-height: 64px;
 
-  margin-bottom: 15px;
   align-self: flex-start;
 
   @media screen and (max-width: 900px) {
@@ -61,6 +60,7 @@ const TitleOfSection = styled.h2`
 
   @media screen and (max-width: 650px) {
     margin-left: 18px;
+    margin-bottom: 15px;
     line-height: 44px;
   }
 `;
