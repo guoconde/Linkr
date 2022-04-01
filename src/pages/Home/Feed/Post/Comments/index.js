@@ -30,10 +30,7 @@ export default function Comments({
 
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
-      handleCreateComment(postId, commentInput);
-      handleListComments(postId);
-      setCommentInput("");
-      setReloadPage(!reloadPage);
+      handleFiSend();
     }
 
     if (event.key === 'Escape') {
@@ -41,9 +38,10 @@ export default function Comments({
     }
   }
 
-  function handleFiSend() {
-    handleCreateComment(postId, commentInput);
-    handleListComments(postId);
+  async function handleFiSend() {
+    await handleCreateComment(postId, commentInput);
+    await handleListComments(postId);
+
     setCommentInput("");
     setReloadPage(!reloadPage);
   }
@@ -63,7 +61,6 @@ export default function Comments({
     try {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
 
-      await new Promise(resolve => setTimeout(resolve, 500));
       const { data } = await api.comments.listComments(postId, headers);
 
       setLoadPostComments(data);
