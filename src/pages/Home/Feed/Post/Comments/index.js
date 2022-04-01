@@ -24,9 +24,10 @@ export default function Comments({
   const api = useApi();
   const contexts = useContexts();
   const { auth } = contexts.auth;
-  const { reloadPage, setReloadPage } = contexts.post
+  const { reloadPage, setReloadPage } = contexts.post;
   const [commentInput, setCommentInput] = useState("");
   const commentInputRef = useRef(null);
+  const commentScroll = useRef(null);
 
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
@@ -44,6 +45,10 @@ export default function Comments({
 
     setCommentInput("");
     setReloadPage(!reloadPage);
+
+    commentScroll.current.scrollIntoView({
+      behavior: "smooth"
+    });
   }
 
   async function handleCreateComment(postId, comment) {
@@ -121,6 +126,8 @@ export default function Comments({
         <>
           <LoadCommentsContainer>
             {loadPostCommentsReader}
+            
+            <div ref={commentScroll}/>
           </LoadCommentsContainer>
           <ContainerCommentInputExtends>
             <ProfilePicture sizeControl={true} />
