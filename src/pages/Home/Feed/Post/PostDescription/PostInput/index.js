@@ -4,6 +4,7 @@ import { fireAlert } from "../../../../../../utils/alerts";
 import useApi from "../../../../../../hooks/useApi";
 import Input from "./style";
 import useContexts from "../../../../../../hooks/useContexts";
+import { findHashtags } from "../../../../../../utils/findHastags";
 
 export default function PostInput({ postId, url, description, setShowAction, setEdit }) {
   const api = useApi();
@@ -17,6 +18,14 @@ export default function PostInput({ postId, url, description, setShowAction, set
 
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
+      descriptionInputRef.current.style.outlineColor ="#efefef";
+      
+      const isHashtagsValid = findHashtags(descriptionReceived);
+      if (!isHashtagsValid){
+        descriptionInputRef.current.focus();
+        descriptionInputRef.current.style.outlineColor = "#dc3545";
+        return;
+      }
       setIsLoading(true);
 
       handleUpdatePost(postId, {

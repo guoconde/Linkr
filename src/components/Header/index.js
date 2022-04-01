@@ -47,13 +47,13 @@ export default function Header() {
       handleHideLogout();
       navigate("/");
     }
-
     //eslint-disable-next-line
   }, [auth]);
 
   useEffect(() =>{
     setValue("");
     setValueMobile("");
+    setUsers(null);
   }, [pathname]);
 
   if (pathname === "/" || pathname === "/sign-up") {

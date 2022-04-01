@@ -6,6 +6,6 @@ export function findHashtags(description) {
     .filter((str) => hashtagFormat.test(str.trim()));
   const validHashtags = description
   .split(" ")
-  .filter((str) => validateHashtags.test(str));
+  .filter((str) => validateHashtags.test(str.trim()));
   return hashtagsSent.length === validHashtags.length;
 }
