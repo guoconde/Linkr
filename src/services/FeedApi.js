@@ -8,6 +8,6 @@ export default class FeedApi {
         return api.get(`/hashtag/${hashtag}?limit=${limit}`, headers);
     }
     listByUser(userId, headers, limit) {
-        return api.get(`/user/${userId}?limit=${limit}`, headers);
+        return api.get(`/users/${userId}?limit=${limit}`, headers);
     }
 }
