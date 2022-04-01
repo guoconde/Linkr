@@ -44,6 +44,7 @@ const Title = styled.h2`
 
 const HashtagsContainer = styled.div`
   width: 100%;
+  height: 80%;
 
   font-family: 'Lato';
   font-style: normal;
@@ -52,12 +53,31 @@ const HashtagsContainer = styled.div`
   line-height: 23px;
   letter-spacing: 0.05em;
 
+  overflow-y: scroll;
+
   color: #FFFFFF;
 
   padding: 15px;
 
   display: flex;
   flex-direction: column;
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: transparent;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background-color:rgba(128,128,128,0.4);
+    border-radius: 10px;
+  }
 `;
 
 const HashtagLink = styled(Link)`
@@ -67,6 +87,7 @@ const HashtagLink = styled(Link)`
   font-size: 19px;
   line-height: 23px;
   letter-spacing: 0.05em;
+  word-break: break-all;
 
   margin-bottom: 8px;
   transition: all 0.15s ease;

@@ -7,6 +7,8 @@ const StyledLink = styled(Link)`
   color: #FFFFFF;
   transition: all 0.2s ease;
 
+  word-break: break-all;
+
   &:hover {
     color: #dbdbdb;
   }
