@@ -45,7 +45,6 @@ export default function Comments({
     await handleListComments(postId);
 
     setCommentInput("");
-    await new Promise(resolve => setTimeout(resolve, 1000));
     setDisableInput(false);
 
     setReloadPage(!reloadPage);
