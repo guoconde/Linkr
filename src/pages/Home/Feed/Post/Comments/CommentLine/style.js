@@ -36,6 +36,11 @@ const NameCommentLine = styled.h3`
   line-height: 17px;
 
   color: #F3F3F3;
+
+  .name-comentline-user-name{
+    color: #F3F3F3;
+    text-decoration: none;
+  }
 `;
 
 const MessageCommentLine = styled.p`

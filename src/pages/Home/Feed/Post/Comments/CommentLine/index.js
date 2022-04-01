@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ProfilePicture from "../../../../../../components/ProfilePicture";
 import {
   ContainerCommentLine,
@@ -14,7 +15,9 @@ export default function CommentLine({ followedId, authorId, userId, name, photo,
 
       <DescriptionCommentLine>
         <NameCommentLine>
-          {`${name}`}
+          <Link className="name-comentline-user-name" to={`/user/${userId}`}>
+            {`${name}`}
+          </Link>
 
           {(authorId === userId && followedId) ?
             <InfoTag>• post’s author</InfoTag>
