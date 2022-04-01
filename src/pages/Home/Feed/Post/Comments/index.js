@@ -28,9 +28,10 @@ export default function Comments({
   const [commentInput, setCommentInput] = useState("");
   const commentInputRef = useRef(null);
   const commentScroll = useRef(null);
+  const [disableInput, setDisableInput] = useState(false);
 
   const handleKeyDown = async (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && !disableInput) {
       handleFiSend();
     }
 
@@ -40,11 +41,14 @@ export default function Comments({
   }
 
   async function handleFiSend() {
+    setDisableInput(true);
     await handleCreateComment(postId, commentInput);
     await handleListComments(postId);
 
     setCommentInput("");
     setReloadPage(!reloadPage);
+    setDisableInput(false);
+    commentInputRef.current.focus();
   
     commentScroll.current.scrollTo({
       top: commentScroll.current.scrollHeight,
@@ -111,6 +115,7 @@ export default function Comments({
               type="text"
               placeholder="write a comment..."
               value={commentInput}
+              disabled={disableInput}
               onChange={(e) => setCommentInput(e.target.value)}
               onKeyDown={handleKeyDown}
               ref={commentInputRef}
@@ -136,6 +141,7 @@ export default function Comments({
               placeholder="write a comment..."
               value={commentInput}
               onChange={(e) => setCommentInput(e.target.value)}
+              disabled={disableInput}
               onKeyDown={handleKeyDown}
               ref={commentInputRef}
               positionControl={loadPostCommentsReader.length}

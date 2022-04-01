@@ -102,7 +102,6 @@ const CommentInput = styled.input`
 
   position: relative;
 
-  background: #252525;
   border: 0;
   border-radius: 8px;
 
@@ -114,7 +113,8 @@ const CommentInput = styled.input`
   font-size: 14px;
   line-height: 17px;
 
-  color: #ACACAC;
+  background-color: ${(props) => props.disabled ? "#F2F2F2" : "#252525"};
+  color: ${(props) => props.disabled ? "#AFAFAF" : " #ACACAC"};
 
   &::placeholder{
     font-family: 'Lato';

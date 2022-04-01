@@ -9,6 +9,7 @@ const Input = styled.input`
   padding: 10px;
 
   background-color: ${(props) => props.disabled ? "#F2F2F2" : "#FFFFFF"};
+  color: ${(props) => props.disabled ? "#AFAFAF" : "#4C4C4C"};
   border: none;
   border-radius: 7px;
 
@@ -18,7 +19,6 @@ const Input = styled.input`
   font-size: 14px;
   line-height: 17px;
 
-  color: ${(props) => props.disabled ? "#AFAFAF" : "#4C4C4C"};
 `;
 
 export default Input;
