@@ -25,11 +25,16 @@ const ContainerTitleProfile = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  max-width: 610px;
+
+  margin-bottom: 40px;
+
+  word-break: break-all;
+
   .info {
     display: flex;
     align-items: center;
   }
-  margin-bottom: 40px;
 
   @media screen and (max-width: 900px) {
     margin-bottom: 5px;

@@ -15,6 +15,7 @@ import {
   FullPost,
   RepostedBy,
   ContainerNewPosts,
+  ContentLoaderInfinitScroll
 } from "./style";
 
 export default function Feed({ setIsFollowing, setUserPhoto }) {
@@ -187,10 +188,10 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
       loadMore={handleFeed}
       hasMore={hasMore}
       loader={
-        <Content key={0}>
-          <TailSpin color="white" ariaLabel="loading-indicator" />
-          <div>Loading...</div>
-        </Content>
+        <ContentLoaderInfinitScroll key={0}>
+          <TailSpin color="#6D6D6D" ariaLabel="loading-indicator" heigth="40" width="40" />
+          <div className="loader-infinit-scroll-message">Loading more posts...</div>
+        </ContentLoaderInfinitScroll>
       }
     >
       <TimeLine>

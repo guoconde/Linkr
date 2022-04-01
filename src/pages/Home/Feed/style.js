@@ -13,7 +13,7 @@ const Content = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: #fff;
+  color: #FFFFFF;
 
   font-family: Lato;
   font-size: 17px;
@@ -24,6 +24,31 @@ const Content = styled.div`
 
   .message {
     text-align: center;
+  }
+`;
+
+const ContentLoaderInfinitScroll = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #6D6D6D;
+
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 26px;
+  letter-spacing: 0.05em;
+
+  padding-top: 50px 0 50px 0;
+  margin-top: 50px;
+
+  .loader-infinit-scroll-message{
+    text-align: center;
+    margin-top: -20px;
   }
 `;
 
@@ -74,4 +99,4 @@ const ContainerNewPosts = styled.div`
   }
 `;
 
-export { TimeLine, Content, FullPost, RepostedBy, ContainerNewPosts };
+export { TimeLine, Content, FullPost, RepostedBy, ContainerNewPosts, ContentLoaderInfinitScroll };

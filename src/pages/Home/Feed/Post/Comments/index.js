@@ -41,13 +41,14 @@ export default function Comments({
   }
 
   async function handleFiSend() {
-    setDisableInput(true);
     await handleCreateComment(postId, commentInput);
     await handleListComments(postId);
 
     setCommentInput("");
-    setReloadPage(!reloadPage);
+    await new Promise(resolve => setTimeout(resolve, 1000));
     setDisableInput(false);
+
+    setReloadPage(!reloadPage);
     commentInputRef.current.focus();
   
     commentScroll.current.scrollTo({
@@ -57,7 +58,11 @@ export default function Comments({
     });
   }
 
+  console.log(disableInput);
+
   async function handleCreateComment(postId, comment) {
+    setDisableInput(true);
+
     try {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
 
@@ -124,7 +129,9 @@ export default function Comments({
             <FiSend
               className="fisend-icon"
               size={20}
-              color="white"
+              color='#FFFFFF'
+              pointerEvents={disableInput ? 'none' : 'all'}
+              disabled={disableInput}
               onClick={() => handleFiSend()}
             />
           </ContainerCommentInput>
@@ -140,8 +147,8 @@ export default function Comments({
               type="text"
               placeholder="write a comment..."
               value={commentInput}
-              onChange={(e) => setCommentInput(e.target.value)}
               disabled={disableInput}
+              onChange={(e) => setCommentInput(e.target.value)}
               onKeyDown={handleKeyDown}
               ref={commentInputRef}
               positionControl={loadPostCommentsReader.length}
@@ -149,7 +156,8 @@ export default function Comments({
             <FiSend
               className="fisend-icon-extends"
               size={20}
-              color="white"
+              color='#FFFFFF'
+              pointerEvents={disableInput ? 'none' : 'all'}
               onClick={() => handleFiSend()}
             />
           </ContainerCommentInputExtends>

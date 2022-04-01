@@ -113,8 +113,11 @@ const CommentInput = styled.input`
   font-size: 14px;
   line-height: 17px;
 
-  background-color: ${(props) => props.disabled ? "#F2F2F2" : "#252525"};
-  color: ${(props) => props.disabled ? "#AFAFAF" : " #ACACAC"};
+  background-color: #252525;
+  opacity: ${(props) => props.disabled ? "0.7" : "1"};
+  color: ${(props) => props.disabled ? "#AFAFAF" : "#ACACAC"};
+
+  pointer-events: ${(props) => props.disabled ? "none" : "all"};
 
   &::placeholder{
     font-family: 'Lato';
@@ -150,6 +153,10 @@ const ContainerCommentInputExtends = styled.div`
     right: 15px;
 
     cursor: pointer;
+
+    &:active{
+      transform: scale(1.2);
+    }
   }
 `;
 
@@ -159,7 +166,12 @@ const CommentInputExtends = styled.input`
 
   position: relative;
 
-  background: #252525;
+  background-color: #252525;
+  opacity: ${(props) => props.disabled ? "0.7" : "1"};
+  color: ${(props) => props.disabled ? "#AFAFAF" : "#ACACAC"};
+
+  pointer-events: ${(props) => props.disabled ? "none" : "all"};
+
   border: 0;
   border-radius: 8px;
 
