@@ -45,8 +45,10 @@ export default function Comments({
 
     setCommentInput("");
     setReloadPage(!reloadPage);
-
-    commentScroll.current.scrollIntoView({
+  
+    commentScroll.current.scrollTo({
+      top: commentScroll.current.scrollHeight,
+      left: 0,
       behavior: "smooth"
     });
   }
@@ -124,10 +126,9 @@ export default function Comments({
         </>
         :
         <>
-          <LoadCommentsContainer>
+          <LoadCommentsContainer ref={commentScroll}>
             {loadPostCommentsReader}
           </LoadCommentsContainer>
-          <div ref={commentScroll} />
           <ContainerCommentInputExtends>
             <ProfilePicture sizeControl={true} />
             <CommentInputExtends

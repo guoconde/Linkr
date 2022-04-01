@@ -39,6 +39,7 @@ export default function Post({
   i,
   reposts,
   reposted,
+  sharerId,
   metadataTitle,
   metadataDescription,
   metadataImage,
@@ -54,7 +55,7 @@ export default function Post({
   return (
     <div>
       <Container>
-        <DeleteModal id={id} userId={userId} setComments={setComments} />
+        <DeleteModal id={id} userId={userId} setComments={setComments} sharerId={sharerId} />
         <ContainerImage>
           <Image src={photo} />
           <Likes
@@ -89,6 +90,7 @@ export default function Post({
               url={url}
               description={description}
               index={i}
+              reposted={reposted}
             />
           </Description>
 
@@ -105,7 +107,7 @@ export default function Post({
           </MetaLink>
         </ContainerPost>
 
-        {auth?.userId === userId &&
+        {auth?.userId === userId && !sharerId &&
           <ContainerAction>
             <GrEditCustom onClick={() => handleEdit(postIndex)} size={20} />
           </ContainerAction>

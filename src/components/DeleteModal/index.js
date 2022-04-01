@@ -6,11 +6,16 @@ import ReactModal from "react-modal";
 import { Button, Content, SectionButton, Title, Trash } from "./style";
 import useContexts from "../../hooks/useContexts";
 
-export default function DeleteModal({ id: postId, userId, setComments }) {
+export default function DeleteModal({
+  id: postId,
+  userId,
+  setComments,
+  sharerId,
+}) {
   const api = useApi();
-  const contexts = useContexts()
-  const { auth } = contexts.auth
-  const { reloadPage, setReloadPage } = contexts.post
+  const contexts = useContexts();
+  const { auth } = contexts.auth;
+  const { reloadPage, setReloadPage } = contexts.post;
   const [showModal, setShowModal] = useState(false);
   const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 
@@ -64,7 +69,12 @@ export default function DeleteModal({ id: postId, userId, setComments }) {
   }
   return (
     <>
-      <Trash onClick={handleModal} userid={userId} authid={auth?.userId} />
+      <Trash
+        onClick={handleModal}
+        userid={userId}
+        authid={auth?.userId}
+        sharerid={sharerId}
+      />
       <ReactModal
         isOpen={showModal}
         style={{ overlay, content }}

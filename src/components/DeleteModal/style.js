@@ -60,7 +60,7 @@ const Trash = styled(BsFillTrashFill)`
   font-size: 20px;
   color: #fff;
 
-  display: ${(props) => props.authid === props.userid ? "block": "none"};
+  display: ${(props) => (props.authid === props.userid) && !props.sharerid ? "block": "none"};
 `;
 
 const Content = styled.div`
