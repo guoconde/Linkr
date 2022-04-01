@@ -29,6 +29,7 @@ export default function Header() {
   const { pathname } = useLocation();
   const [users, setUsers] = useState([])
   const [value, setValue] = useState("");
+  const [valueMobile, setValueMobile] = useState("");
 
   async function handleFindUsers(event) {
     let findAllUsers = event.target.value
@@ -52,6 +53,7 @@ export default function Header() {
 
   useEffect(() =>{
     setValue("");
+    setValueMobile("");
   }, [pathname]);
 
   if (pathname === "/" || pathname === "/sign-up") {
@@ -64,9 +66,10 @@ export default function Header() {
     window.scroll(0,0)
   }
 
-  function handleDebounceInput(event, value) {
+  function handleDebounceInput(event) {
     handleFindUsers(event);
     setValue(event.target.value);
+    setValueMobile(event.target.value);
   }
 
   return (
@@ -109,7 +112,8 @@ export default function Header() {
                 className="debounce-input-mobile"
                 debounceTimeout={300}
                 placeholder="Search for people and friends"
-                onChange={event => handleFindUsers(event)}
+                value={valueMobile}
+                onChange={event => handleDebounceInput(event)}
                 onSubmit={event => event.preventDefault()}
               />
               <SearchIcon />

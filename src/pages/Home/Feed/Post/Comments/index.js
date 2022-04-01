@@ -52,7 +52,6 @@ export default function Comments({
     try {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
 
-      console.log({ userId: auth.userId, postId, comment });
       await api.comments.insertComment({ userId: auth.userId, postId, comment }, headers);
     } catch (error) {
       await fireAlert(error.response.data);
@@ -67,7 +66,6 @@ export default function Comments({
       await new Promise(resolve => setTimeout(resolve, 500));
       const { data } = await api.comments.listComments(postId, headers);
 
-      console.log(data);
       setLoadPostComments(data);
     } catch (error) {
       await fireAlert(error.response.data);
