@@ -5,6 +5,11 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   font-weight: 700;
   color: #FFFFFF;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #dbdbdb;
+  }
 `;
 
 export default StyledLink;

@@ -47,8 +47,30 @@ const Title = styled.h1`
   font-size: 49px;
   line-height: 54px;
   letter-spacing: 0.05em;
+  transition: all 0.3s ease;
 
   cursor: pointer;
+  &:hover {
+    color: #dbdbdb;
+  }
+
+  &:active {
+    animation: shake 1s;
+  }
+
+  @keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
 `;
 
 const UserIcon = styled.div`
@@ -90,8 +112,7 @@ const Logout = styled.div`
   font-size: 15px;
   line-height: 18px;
 
-  transform: ${(props) =>
-    props.show ? "translateY(0px)" : "translateY(-45px)"};
+  transform: ${(props) => props.show ? "translateY(0px)" : "translateY(-45px)"};
   opacity: ${(props) => (props.show ? "1" : "0")};
   transition: all 0.3s ease-in-out;
 

@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import LikeOrDislike from "./style";
+import { AiFillHeart } from "react-icons/ai";
+import { OutlineHeart, LikeOrDislike, } from "./style";
 import useApi from "../../../../../hooks/useApi";
 import ReactTooltip from "react-tooltip";
 import useContexts from "../../../../../hooks/useContexts";
@@ -44,17 +44,14 @@ export default function Likes({ postId, isLike, postLikes, likeNames }) {
     <>
       <LikeOrDislike>
         {liked.current === false ? (
-          <AiOutlineHeart
-            onClick={() => handleLikes(postId, true)}
-            color="white"
-          />
+          <OutlineHeart onClick={() => handleLikes(postId, true)} />
         ) : (
-          <AiFillHeart onClick={() => handleLikes(postId, false)} color="red" />
+          <AiFillHeart onClick={() => handleLikes(postId, false)} color=" #ac0000" />
         )}
-        <div data-tip={message}>
+        <div data-tip={message} >
           <div className="number-of-likes">{count}</div>
         </div>
-        <ReactTooltip />
+        <ReactTooltip place="bottom" type="light"/>
       </LikeOrDislike>
     </>
   );

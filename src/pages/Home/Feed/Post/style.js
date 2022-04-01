@@ -60,6 +60,11 @@ const Name = styled(Link)`
   font-weight: 400;
   line-height: 23px;
   color: #fff;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #dbdbdb;
+  }
 `;
 
 const Description = styled.div`
@@ -136,7 +141,8 @@ const ExternalLink = styled.a`
   overflow: hidden;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-
+  transition: all 0.3s ease;
+  
   cursor: pointer;
 
   &:hover{

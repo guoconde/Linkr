@@ -4,7 +4,6 @@ import styled from "styled-components";
 const Container = styled.div`
   width: 301px;
   height: 406px;
-  //margin-top: 100px;
 
   background: #171717;
   border-radius: 16px;
@@ -70,6 +69,11 @@ const HashtagLink = styled(Link)`
   letter-spacing: 0.05em;
 
   margin-bottom: 8px;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: #0082fc;
+  }
 
   color: #FFFFFF;
 `;
