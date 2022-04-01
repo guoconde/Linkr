@@ -27,7 +27,7 @@ export default function Header() {
   const { toggleLogout, handleToggleLogout, handleHideLogout } = contexts.menu
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState(null)
   const [value, setValue] = useState("");
   const [valueMobile, setValueMobile] = useState("");
 
@@ -35,7 +35,7 @@ export default function Header() {
     let findAllUsers = event.target.value
     const headers = { headers: { Authorization: `Bearer ${auth?.token}`}};
 
-    if (!event.target.value) return setUsers([]);
+    if (!event.target.value) return setUsers(null);
 
     const { data } = await api.user.getAllUsers(findAllUsers, headers);
 

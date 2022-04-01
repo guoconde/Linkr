@@ -9,6 +9,14 @@ export default function ListUsers({ users, setUsers }) {
     navigate(`${user}`);
   }
 
+  if (!users) {
+    return null;
+  }
+
+  if (users.length === 0) {
+    return <div className="name">User not found</div>;
+  }
+
   return (
     <>
       {users.map((el, i) => (
@@ -16,11 +24,14 @@ export default function ListUsers({ users, setUsers }) {
           <Image src={el.photo} alt={el.name} />
           <div className="name">{el.name}</div>
           <div className="status">
-            {el.isFollowing && <><div className="circle"></div> following</>}
+            {el.isFollowing && (
+              <>
+                <div className="circle"></div> following
+              </>
+            )}
           </div>
         </div>
       ))}
     </>
   );
 }
-
