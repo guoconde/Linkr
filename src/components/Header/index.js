@@ -32,10 +32,10 @@ export default function Header() {
   const [valueMobile, setValueMobile] = useState("");
 
   async function handleFindUsers(event) {
-    let findAllUsers = event.target.value
+    let findAllUsers = event.target.value;
     const headers = { headers: { Authorization: `Bearer ${auth?.token}`}};
 
-    if (!event.target.value) return setUsers(null);
+    if (event.target.value.length < 3) return setUsers(null);
 
     const { data } = await api.user.getAllUsers(findAllUsers, headers);
 
@@ -82,6 +82,7 @@ export default function Header() {
             <DebounceInput
               className="debounce-input"
               debounceTimeout={300}
+              min="3"
               placeholder="Search for people"
               value={value}
               onChange={event => handleDebounceInput(event)}
@@ -111,6 +112,7 @@ export default function Header() {
               <DebounceInput
                 className="debounce-input-mobile"
                 debounceTimeout={300}
+                min="3"
                 placeholder="Search for people and friends"
                 value={valueMobile}
                 onChange={event => handleDebounceInput(event)}
