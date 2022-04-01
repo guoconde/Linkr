@@ -170,7 +170,7 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
   if (data.length === 0) {
     return (
       <Content>
-        <div>
+        <div className="message">
           {pathname.includes("timeline")
             ? isFollowingSomeone
               ? "No posts found from your friends"
