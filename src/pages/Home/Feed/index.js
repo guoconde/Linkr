@@ -199,7 +199,7 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
       }
     >
       <TimeLine>
-        {newPosts && (
+        {(newPosts && pathname.includes("timeline")) && (
           <ContainerNewPosts onClick={handleReloadPage}>
             <div>{numberNewPosts} new posts, load more! </div>
             <RiRefreshLine />
