@@ -7,6 +7,12 @@ const CommentsContainer = styled.div`
   justify-content: center;
 
   cursor: pointer;
+
+  .comment-icon{
+    &:active{
+      transform: scale(1.2);
+    }
+  }
 `;
 
 const CommentsCounter = styled.p`

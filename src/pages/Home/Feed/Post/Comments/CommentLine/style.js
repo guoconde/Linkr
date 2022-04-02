@@ -26,6 +26,8 @@ const InfoTag = styled.span`
 
 const DescriptionCommentLine = styled.div`
   margin-left: 18px;
+
+  width: 90%;
 `;
 
 const NameCommentLine = styled.h3`
@@ -49,6 +51,7 @@ const MessageCommentLine = styled.p`
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+  word-break: break-word;
 
   color: #ACACAC;
 

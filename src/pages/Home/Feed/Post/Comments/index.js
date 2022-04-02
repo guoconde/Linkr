@@ -57,8 +57,6 @@ export default function Comments({
     });
   }
 
-  console.log(disableInput);
-
   async function handleCreateComment(postId, comment) {
     setDisableInput(true);
 

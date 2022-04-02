@@ -25,7 +25,7 @@ const ContainerTitleProfile = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  max-width: 610px;
+  max-width: ${(props) => props.titleValue === "user" ? "100%" : "610px"};
 
   margin-bottom: 40px;
 

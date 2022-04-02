@@ -44,9 +44,9 @@ export default function Likes({ postId, isLike, postLikes, likeNames }) {
     <>
       <LikeOrDislike>
         {liked.current === false ? (
-          <OutlineHeart onClick={() => handleLikes(postId, true)} />
+          <OutlineHeart className="heart-icon" onClick={() => handleLikes(postId, true)} />
         ) : (
-          <AiFillHeart onClick={() => handleLikes(postId, false)} color=" #ac0000" />
+          <AiFillHeart className="heart-icon" onClick={() => handleLikes(postId, false)} color=" #ac0000" />
         )}
         <div data-tip={message} >
           <div className="number-of-likes">{count}</div>

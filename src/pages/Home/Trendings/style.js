@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   width: 301px;
-  height: 406px;
+  height: 415px;
 
   background: #171717;
   border-radius: 16px;
@@ -45,6 +45,8 @@ const Title = styled.h2`
 const HashtagsContainer = styled.div`
   width: 100%;
   height: 80%;
+
+  gap: 8px;
 
   font-family: 'Lato';
   font-style: normal;
@@ -89,31 +91,34 @@ const HashtagLink = styled(Link)`
   letter-spacing: 0.05em;
   word-break: break-all;
 
-  margin-bottom: 8px;
   transition: all 0.15s ease;
 
   &:hover {
-    color: #0082fc;
+    color: #264057;
+  }
+
+  &:active{
+    transform: scale(1.05);
   }
 
   color: #FFFFFF;
 `;
 
 const Content = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    color: #fff;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #fff;
 
-    font-family: Lato;
-    font-size: 17px;
-    font-weight: 400;
-    line-height: 20px;
+  font-family: Lato;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 20px;
 
-    margin-top: 30px;
+  margin-top: 30px;
 `;
 
 export {

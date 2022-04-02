@@ -64,6 +64,7 @@ export default function Repost({ postId, reposts, reposted }) {
     <>
       <RepostArea>
         <BiRepost
+          className="repost-icon"
           onClick={() => setShowModal(true)}
           size={25}
           color={reposted ? "lightgreen" : "white"}

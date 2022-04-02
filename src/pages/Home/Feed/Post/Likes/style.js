@@ -5,7 +5,14 @@ const LikeOrDislike = styled.div`
   font-size: 25px;
   text-align: center;
   margin-top: 10px;
+
   cursor: pointer;
+
+  .heart-icon{
+    &:active{
+      transform: scale(1.2);
+    }
+  }
 
   .number-of-likes {
     color: white;
@@ -20,6 +27,12 @@ const OutlineHeart = styled(AiOutlineHeart)`
   font-size: 25px;
   color: #fff;
   transition: all 0.3s ease;
+
+  .heart-icon{
+    &:active{
+      transform: scale(1.2);
+    }
+  }
   
   &:hover {
     color: #ac0000;

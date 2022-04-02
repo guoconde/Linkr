@@ -24,7 +24,7 @@ export default function CommentIcon({ postIndex, postId, handleComments, setLoad
 
   return(
     <CommentsContainer onClick={() => handleListComments(postId, postIndex)}>
-      <AiOutlineComment size={25} color="white"/>
+      <AiOutlineComment className="comment-icon" size={25} color="white"/>
       <CommentsCounter>{`${commentsCount} comments`}</CommentsCounter>
     </CommentsContainer>
   );

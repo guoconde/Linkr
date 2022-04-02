@@ -3,6 +3,12 @@ import styled from "styled-components";
 export const RepostArea = styled.div`
   text-align: center;
   cursor: pointer;
+
+  .repost-icon{
+    &:active{
+      transform: scale(1.2);
+    }
+  }
 `;
 
 export const Count = styled.div`

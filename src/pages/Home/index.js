@@ -26,7 +26,12 @@ export default function Home() {
   return (
     <Container onClick={() => handleHideLogout()}>
       <div className="all">
-        <Title userPhoto={userPhoto} title={title} isFollowing={isFollowing} />
+        <Title 
+          userPhoto={userPhoto} 
+          title={title} 
+          isFollowing={isFollowing} 
+        />
+        
         <div className="main">
           <Content>
             <PublishPost />

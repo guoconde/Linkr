@@ -29,14 +29,14 @@ export default function Title({ userPhoto, title, isFollowing }) {
 
   if (pathname.split("/")[1] !== "user") {
     return (
-      <ContainerTitleProfile>
+      <ContainerTitleProfile titleValue={pathname.split("/")[1]}>
         <TitleOfSection>{title.current}</TitleOfSection>
       </ContainerTitleProfile>
     );
   }
 
   return (
-    <ContainerTitleProfile>
+    <ContainerTitleProfile titleValue={pathname.split("/")[1]}>
       <div className="info">
         <ProfilePicture
           photo={userPhoto}
