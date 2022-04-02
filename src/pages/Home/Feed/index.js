@@ -39,6 +39,7 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
 
   useEffect(() => {
     setComments(null);
+
     window.scroll(0, 0);
   }, [pathname]);
 
@@ -66,15 +67,15 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
       if (data.length === promisse.data.posts.length) {
         return setHasmore(false);
       }
-
     } catch (error) {
       if (error.response?.status === 401 || error.response?.status === 404) {
         await fireAlert(error.response.data);
         logout();
         return navigate("/");
       }
+
       return fireAlert(
-        "An error occured while trying to fetch the posts, Plese refresh the page!"
+        "An error occured while trying to fetch the posts. Plese refresh the page!"
       );
     }
   }, 5000);
@@ -98,6 +99,7 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
           headers,
           limit
         );
+
         if (!promisse.data) {
           fireAlert("User doesn't exists");
           navigate("/timeline");
@@ -118,7 +120,7 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
         setHasmore(false);
       }
 
-      setNewData(promisse.data.getCountPosts)
+      setNewData(promisse.data.getCountPosts);
       setData(promisse.data.posts);
       setIsFollowingSomeone(promisse.data.isFollowingSomeone);
     } catch (error) {
@@ -127,6 +129,7 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
         logout();
         return navigate("/");
       }
+
       return fireAlert(
         "An error occured while trying to fetch the posts, Plese refresh the page!"
       );
@@ -134,9 +137,10 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
   }
 
   function handleReloadPage() {
-    setNewData(countPromisse)
+    setNewData(countPromisse);
     setReloadPage(true);
     setNewPosts(false);
+
     window.location.reload();
   }
 

@@ -72,6 +72,7 @@ const Description = styled.div`
   font-size: 17px;
   font-weight: 400;
   line-height: 20px;
+  word-break: break-word;
 
   color: #B7B7B7;
 `;

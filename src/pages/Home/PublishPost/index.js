@@ -1,16 +1,16 @@
-import { useRef, useState, } from "react";
+import { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { fireAlert } from "../../../utils/alerts";
 import useApi from "../../../hooks/useApi";
 import ProfilePicture from "../../../components/ProfilePicture";
 import useContexts from "../../../hooks/useContexts";
-import { 
-  Button, 
-  Container, 
-  ContainerProfilePicture, 
-  Description, 
-  Input, 
-  TextArea 
+import {
+  Button,
+  Container,
+  ContainerProfilePicture,
+  Description,
+  Input,
+  TextArea
 } from "./style";
 import { findHashtags } from "../../../utils/findHastags";
 
@@ -25,7 +25,6 @@ export default function PublishPost() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [error, setError] = useState("");
-
   const input = useRef();
 
   function handleInputChange({ target }) {
@@ -33,7 +32,8 @@ export default function PublishPost() {
   }
 
   async function handleSubmit(e) {
-    input.current.style.outlineColor ="#efefef";
+    input.current.style.outlineColor = "#efefef";
+    input.current.style.border = "1px solid #efefef";
     e.preventDefault();
 
     if (!formData.url) {
@@ -41,11 +41,13 @@ export default function PublishPost() {
     }
 
     const isHashtagsValid = findHashtags(formData.description);
-    
-    if (!isHashtagsValid){
+
+    if (!isHashtagsValid) {
       setError("Invalid Hashtags");
-      input.current.focus();
       input.current.style.outlineColor = "#dc3545";
+      input.current.style.border = "1px solid #dc3545";
+      input.current.focus();
+
       return;
     }
 
@@ -56,15 +58,23 @@ export default function PublishPost() {
 
       await api.posts.publish(formData, headers);
       setFormData({ url: "", description: "", });
+      setError("");
       setReloadPage(!reloadPage);
     } catch (error) {
       await fireAlert(error.response.data);
-      if(error.response.status === 401) {
+      if (error.response.status === 401) {
         logout();
         return navigate("/");
       }
+
+      if (error.response.status === 400) {
+        setError("Repeted Hashtags");
+        input.current.style.outlineColor = "#dc3545";
+        input.current.style.border = "1px solid #dc3545";
+        input.current.focus();
+      }
     }
-    setError("");
+
     setIsLoading(false);
   }
 
