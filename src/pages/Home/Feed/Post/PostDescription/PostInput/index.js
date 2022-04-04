@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { findHashtags } from "../../../../../../utils/findHastags";
 import { fireAlert } from "../../../../../../utils/alerts";
 import useApi from "../../../../../../hooks/useApi";
-import Input from "./style";
 import useContexts from "../../../../../../hooks/useContexts";
-import { findHashtags } from "../../../../../../utils/findHastags";
+import Input from "./style";
 
 export default function PostInput({ postId, url, description, setShowAction, setEdit }) {
   const api = useApi();
@@ -18,10 +18,10 @@ export default function PostInput({ postId, url, description, setShowAction, set
 
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
-      descriptionInputRef.current.style.outlineColor ="#efefef";
-      
+      descriptionInputRef.current.style.outlineColor = "#efefef";
+
       const isHashtagsValid = findHashtags(descriptionReceived);
-      if (!isHashtagsValid){
+      if (!isHashtagsValid) {
         descriptionInputRef.current.focus();
         descriptionInputRef.current.style.outlineColor = "#dc3545";
         return;

@@ -2,17 +2,16 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { TailSpin } from "react-loader-spinner";
 import { fireAlert } from "../../../utils/alerts";
+import { RiRefreshLine } from "react-icons/ri";
+import { BiRepost } from "react-icons/bi";
 import useApi from "../../../hooks/useApi";
 import useContexts from "../../../hooks/useContexts";
 import Post from "./Post";
 import useInterval from "use-interval";
-import { RiRefreshLine } from "react-icons/ri";
-import { BiRepost } from "react-icons/bi";
 import InfiniteScrooll from "react-infinite-scroller";
 import {
   TimeLine,
   Content,
-  FullPost,
   RepostedBy,
   ContainerNewPosts,
   ContentLoaderInfinitScroll
@@ -20,7 +19,9 @@ import {
 
 export default function Feed({ setIsFollowing, setUserPhoto }) {
   const api = useApi();
+  const navigate = useNavigate();
   const contexts = useContexts();
+  const { pathname } = useLocation();
   const { auth, logout } = contexts.auth;
   const { setUsernameSearched } = contexts.searchedUser;
   const { reloadPage, setReloadPage } = contexts.post;
@@ -34,8 +35,6 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
   const [comments, setComments] = useState(null);
   const [countPromisse, setCountPromisse] = useState()
   const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     setComments(null);
@@ -208,7 +207,7 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
 
         {data.map((el, i) => {
           return (
-            <FullPost key={i}>
+            <div key={i}>
               {el.sharerName && (
                 <RepostedBy>
                   <BiRepost size={27} color="white" />
@@ -231,7 +230,7 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
                 handleComments={handleComments}
                 handleFeed={handleFeed}
               />
-            </FullPost>
+            </div>
           );
         })}
       </TimeLine>

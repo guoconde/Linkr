@@ -3,14 +3,14 @@ import { useNavigate } from "react-router";
 import { ThreeDots } from 'react-loader-spinner';
 import { fireAlert } from "../../utils/alerts";
 import useApi from "../../hooks/useApi";
-import { Form, Input, Button, StyledLink } from "../../components/FormComponents";
 import useContexts from "../../hooks/useContexts";
-import { 
-  AuthContainer, 
-  SloganSide, 
-  Logo, 
-  Slogan, 
-  FormSide 
+import { Form, Input, Button, StyledLink } from "../../components/FormComponents";
+import {
+  AuthContainer,
+  SloganSide,
+  Logo,
+  Slogan,
+  FormSide
 } from "../../components/AuthScreenComponents";
 
 export default function Login() {
@@ -23,6 +23,7 @@ export default function Login() {
 
   useEffect(() => {
     if (auth) navigate("/timeline");
+
     //eslint-disable-next-line
   }, [])
 

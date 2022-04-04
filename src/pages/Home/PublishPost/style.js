@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Image } from "../../../components/ProfilePicture";
+import ImageProfile from "../../../components/ProfilePicture/style";
 
 const Container = styled.div`
   width: 100%;
@@ -37,7 +37,7 @@ const Container = styled.div`
     width: 100%;
     border-radius: 0;
     
-    ${Image} {
+    ${ImageProfile} {
       display: none;
       border: 2px solid black;
     }
@@ -135,4 +135,4 @@ export {
   TextArea, 
   Button, 
   Input
- };
+}

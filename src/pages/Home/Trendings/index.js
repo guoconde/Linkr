@@ -4,26 +4,27 @@ import { fireAlert } from "../../../utils/alerts";
 import { TailSpin } from "react-loader-spinner";
 import useApi from "../../../hooks/useApi";
 import useContexts from "../../../hooks/useContexts";
-import { 
-  Container, 
+import {
+  Container,
   Content,
-  Divider, 
-  TitleContainer, 
-  Title, 
-  HashtagsContainer, 
-  HashtagLink 
+  Divider,
+  TitleContainer,
+  Title,
+  HashtagsContainer,
+  HashtagLink
 } from "./style";
 
 export default function Trendings() {
   const api = useApi();
   const contexts = useContexts();
-  const { auth, logout } = contexts.auth
-  const { reloadPage } = contexts.post
+  const { auth, logout } = contexts.auth;
+  const { reloadPage } = contexts.post;
   const [trendings, setTrendings] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     handleTrendings();
+    
     // eslint-disable-next-line
   }, [reloadPage]);
 
@@ -78,7 +79,7 @@ export default function Trendings() {
       <Divider />
 
       <HashtagsContainer>
-        {trendingsReader.length ? trendingsReader : "There are no posts yet!" }
+        {trendingsReader.length ? trendingsReader : "There are no posts yet!"}
       </HashtagsContainer>
     </Container>
   );

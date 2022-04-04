@@ -51,7 +51,7 @@ export default function Repost({ postId, reposts, reposted }) {
       } else {
         fireToast("success", "The link was deleted!");
       }
-      
+
       setReloadPage(!reloadPage);
     } catch (error) {
       fireToast("error", error.response.data);

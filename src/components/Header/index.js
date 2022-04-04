@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import ProfilePicture from "../ProfilePicture";
 import { DebounceInput } from "react-debounce-input";
+import ProfilePicture from "../ProfilePicture";
 import useApi from "../../hooks/useApi";
 import ListUsers from "./findUsers";
 import useContexts from "../../hooks/useContexts";
@@ -21,13 +21,13 @@ import {
 } from "./style";
 
 export default function Header() {
-  const api = useApi()
-  const contexts = useContexts()
-  const { auth, logout } = contexts.auth
-  const { toggleLogout, handleToggleLogout, handleHideLogout } = contexts.menu
+  const api = useApi();
+  const contexts = useContexts();
   const navigate = useNavigate();
+  const { auth, logout } = contexts.auth;
+  const { toggleLogout, handleToggleLogout, handleHideLogout } = contexts.menu;
   const { pathname } = useLocation();
-  const [users, setUsers] = useState(null)
+  const [users, setUsers] = useState(null);
   const [value, setValue] = useState("");
   const [valueMobile, setValueMobile] = useState("");
 
@@ -47,6 +47,7 @@ export default function Header() {
       handleHideLogout();
       navigate("/");
     }
+
     //eslint-disable-next-line
   }, [auth]);
 
@@ -89,6 +90,7 @@ export default function Header() {
               onSubmit={event => event.preventDefault()}
             />
             <SearchIcon />
+
             <div className="list-users">
               <ListUsers users={users} setUsers={setUsers} />
             </div>
@@ -119,6 +121,7 @@ export default function Header() {
                 onSubmit={event => event.preventDefault()}
               />
               <SearchIcon />
+              
               <div className="list-users-mobile">
                 <ListUsers users={users} setUsers={setUsers} />
               </div>

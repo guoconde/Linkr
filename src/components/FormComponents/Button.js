@@ -13,6 +13,7 @@ const Button = styled.button`
   border-radius: 5px;
   
   cursor: pointer;
+  
   pointer-events: ${(props) => props.disabled ? "none" : "all"};
   opacity: ${(props) => props.disabled ? 0.7 : 1};
   

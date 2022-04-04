@@ -15,7 +15,7 @@ export default function Likes({ postId, isLike, postLikes, likeNames }) {
   const countLikes = useRef();
   liked.current = isLike;
   countLikes.current = parseInt(postLikes);
-  
+
   const message = handleMessage(likeNames, auth?.userName);
 
   async function handleLikes(postId, value) {
@@ -27,7 +27,7 @@ export default function Likes({ postId, isLike, postLikes, likeNames }) {
     } else {
       await api.posts.deleteLike(postId, auth.userId, value, headers);
       setReloadPage(!reloadPage);
-    }    
+    }
   }
 
   let count;
@@ -51,7 +51,7 @@ export default function Likes({ postId, isLike, postLikes, likeNames }) {
         <div data-tip={message} >
           <div className="number-of-likes">{count}</div>
         </div>
-        <ReactTooltip place="bottom" type="light"/>
+        <ReactTooltip place="bottom" type="light" />
       </LikeOrDislike>
     </>
   );

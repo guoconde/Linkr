@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { FiSend } from 'react-icons/fi';
+import { fireAlert } from "../../../../../utils/alerts";
 import ProfilePicture from "../../../../../components/ProfilePicture";
 import useApi from "../../../../../hooks/useApi";
 import useContexts from "../../../../../hooks/useContexts";
 import CommentLine from "./CommentLine";
-import { FiSend } from 'react-icons/fi';
-import { fireAlert } from "../../../../../utils/alerts";
 import {
   ContentComments,
   ContainerCommentInput,
@@ -49,7 +49,7 @@ export default function Comments({
 
     setReloadPage(!reloadPage);
     commentInputRef.current.focus();
-  
+
     commentScroll.current.scrollTo({
       top: commentScroll.current.scrollHeight,
       left: 0,

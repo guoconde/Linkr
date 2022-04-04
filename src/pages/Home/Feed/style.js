@@ -52,8 +52,6 @@ const ContentLoaderInfinitScroll = styled.div`
   }
 `;
 
-const FullPost = styled.div``;
-
 const RepostedBy = styled.div`
   display: flex;
   align-items: center;
@@ -99,4 +97,10 @@ const ContainerNewPosts = styled.div`
   }
 `;
 
-export { TimeLine, Content, FullPost, RepostedBy, ContainerNewPosts, ContentLoaderInfinitScroll };
+export { 
+  TimeLine, 
+  Content,
+  RepostedBy, 
+  ContainerNewPosts, 
+  ContentLoaderInfinitScroll 
+}

@@ -1,7 +1,7 @@
-import api from "./api"
+import api from "./api";
 
 export default class AuthApi {
-    login(data) {
-        return api.post("/login", data);
-    }
+  login(data) {
+    return api.post("/login", data);
+  }
 }

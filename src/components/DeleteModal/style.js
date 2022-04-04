@@ -64,20 +64,20 @@ const Trash = styled(BsFillTrashFill)`
 `;
 
 const Content = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    color: #fff;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #fff;
 
-    font-family: Lato;
-    font-size: 17px;
-    font-weight: 400;
-    line-height: 20px;
+  font-family: Lato;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 20px;
 
-    margin-top: 30px;
+  margin-top: 30px;
 `;
 
 export {

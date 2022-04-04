@@ -4,13 +4,13 @@ import Login from "./Login";
 import Register from "./Register";
 
 export default function Pages() {
-    return(
-        <Routes>
-            <Route path="/sign-up" element={<Register />} />
-            <Route path="/" element={<Login />} />
-            <Route path="/timeline" element={<Home />} />
-            <Route path="/hashtag/:hashtag" element={<Home />} />
-            <Route path="/user/:id" element={<Home/>} />
-        </Routes>
-    )
+  return (
+    <Routes>
+      <Route path="/sign-up" element={<Register />} />
+      <Route path="/" element={<Login />} />
+      <Route path="/timeline" element={<Home />} />
+      <Route path="/hashtag/:hashtag" element={<Home />} />
+      <Route path="/user/:id" element={<Home />} />
+    </Routes>
+  )
 }

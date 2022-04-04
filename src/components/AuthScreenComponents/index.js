@@ -5,9 +5,9 @@ import Logo from "./Logo";
 import Slogan from "./Slogan";
 
 export {
-    AuthContainer,
-    SloganSide,
-    FormSide,
-    Logo,
-    Slogan
+  AuthContainer,
+  SloganSide,
+  FormSide,
+  Logo,
+  Slogan
 }

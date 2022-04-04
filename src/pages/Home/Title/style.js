@@ -73,4 +73,8 @@ const FollowButton = styled.button`
   }
 `;
 
-export { ContainerTitleProfile, TitleOfSection, FollowButton };
+export { 
+  ContainerTitleProfile, 
+  TitleOfSection, 
+  FollowButton 
+}

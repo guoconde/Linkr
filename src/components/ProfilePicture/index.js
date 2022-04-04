@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import useContexts from "../../hooks/useContexts";
+import ImageProfile from "./style";
 
 export default function ProfilePicture({ 
   photo, 
@@ -14,7 +14,7 @@ export default function ProfilePicture({
   const { handleToggleLogout } = contexts.menu
 
   return (
-    <Image
+    <ImageProfile
       onClick={() => handleToggleLogout()}
       src={photo ? photo : auth?.photo}
       alt="profile-picture"
@@ -25,17 +25,3 @@ export default function ProfilePicture({
     />
   );
 }
-
-export const Image = styled.img`
-  width: ${(props) => props.sizeControl ? "39px" : "50px"};
-  height: ${(props) => props.sizeControl ? "39px" : "50px"};
-  border-radius: 50%;
-
-  margin: ${(props) => props.titleMargin ? "0 18px 0 23px" : "0"};
-
-  cursor: ${(props) => props.cursorControl && "pointer"};
-
-  @media screen and (max-width: 900px) {
-    display: ${(props) => props.displayControl && "none"};
-  }
-`;

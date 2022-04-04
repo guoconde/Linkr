@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { useLocation } from "react-router";
 import useContexts from "../../hooks/useContexts";
-
 import PublishPost from "./PublishPost";
 import Trendings from "./Trendings";
 import Feed from "./Feed";
@@ -40,6 +39,7 @@ export default function Home() {
               setUserPhoto={setUserPhoto}
             />
           </Content>
+          
           <Trendings />
         </div>
       </div>

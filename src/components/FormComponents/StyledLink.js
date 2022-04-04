@@ -7,7 +7,7 @@ const StyledLink = styled(Link)`
   color: #FFF;
   text-decoration-line: underline;
   font-family: "Lato", cursive;
-  text-align:center;
+  text-align: center;
   padding: 0 15px;
 `;
 

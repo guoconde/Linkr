@@ -3,8 +3,8 @@ import { TailSpin } from "react-loader-spinner";
 import { fireToast } from "../../utils/alerts";
 import useApi from "../../hooks/useApi";
 import ReactModal from "react-modal";
-import { Button, Content, SectionButton, Title, Trash } from "./style";
 import useContexts from "../../hooks/useContexts";
+import { Button, Content, SectionButton, Title, Trash } from "./style";
 
 export default function DeleteModal({
   id: postId,
@@ -12,6 +12,7 @@ export default function DeleteModal({
   setComments,
   sharerId,
 }) {
+
   const api = useApi();
   const contexts = useContexts();
   const { auth } = contexts.auth;
@@ -64,9 +65,11 @@ export default function DeleteModal({
     } catch (error) {
       fireToast("error", error.response.data);
     }
+
     setShowModal(false);
     setIsProcessingRequest(false);
   }
+  
   return (
     <>
       <Trash

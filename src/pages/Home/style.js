@@ -110,7 +110,7 @@ const FollowButton = styled.button`
   &:hover {
     transform: scale(1.2);
   }
-`
+`;
 
 export { 
   Container, 
@@ -118,4 +118,4 @@ export {
   Content, 
   TitleOfSection,
   FollowButton
-};
+}

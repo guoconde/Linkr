@@ -6,12 +6,12 @@ import PostsApi from "../services/PostsApi";
 import UserApi from "../services/UserApi";
 
 export default function useApi() {
-    return {
-        auth: new AuthApi(),
-        user: new UserApi(),
-        posts: new PostsApi(),
-        comments: new CommentsApi(),
-        feed: new FeedApi(),
-        hashtags: new HashtagsApi()
-    };
+  return {
+    auth: new AuthApi(),
+    user: new UserApi(),
+    posts: new PostsApi(),
+    comments: new CommentsApi(),
+    feed: new FeedApi(),
+    hashtags: new HashtagsApi()
+  };
 } 

@@ -10,7 +10,7 @@ const Input = styled.input`
   
   font-size: 27px;
   line-height: 40px;
-  font-weight:bold;
+  font-weight: bold;
   font-family: "Oswald", cursive;
 
   pointer-events: ${(props) => props.disabled ? "none" : "all"};

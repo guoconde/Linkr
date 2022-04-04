@@ -22,7 +22,6 @@ const LoadCommentsContainer = styled.div`
       border-radius: 10px;
     }
   }
-
 `;
 
 const ContentComments = styled.div`
@@ -58,7 +57,6 @@ const ContentComments = styled.div`
       background-color: #484848;
       border: none;
     }
-
   }
 
   @media screen and (max-width: 650px){
