@@ -183,7 +183,14 @@ const GrEditCustom = styled(GrEdit)`
     fill: transparent;
     stroke: #FFFFFF;
     cursor: pointer;
+
+    transition: all 0.3s ease-in-out;
+
+    &:hover{
+      stroke: #856404;
+    }
   }
+
 `;
 
 export {

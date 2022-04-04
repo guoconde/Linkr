@@ -33,7 +33,7 @@ export default function DeleteModal({
     right: 0,
     bottom: 0,
     backgroundColor: "rgba(255, 255, 255, 0.9)",
-    zIndex: "3",
+    zIndex: "4",
   };
 
   const content = {

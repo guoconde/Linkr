@@ -109,7 +109,7 @@ export default function Post({
 
         {auth?.userId === userId && !sharerId &&
           <ContainerAction>
-            <GrEditCustom onClick={() => handleEdit(postIndex)} size={20} />
+            <GrEditCustom onClick={() => handleEdit(postIndex)} size={17.5} />
           </ContainerAction>
         }
       </Container>

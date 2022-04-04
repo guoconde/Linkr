@@ -1,5 +1,5 @@
-import { BsFillTrashFill } from "react-icons/bs";
 import styled from "styled-components";
+import { AiFillDelete } from "react-icons/ai";
 
 const Title = styled.p`
   color: #ffffff;
@@ -50,7 +50,7 @@ const Button = styled.button`
   }
 `;
 
-const Trash = styled(BsFillTrashFill)`
+const Trash = styled(AiFillDelete)`
   cursor: pointer;
   position: absolute;
   right: 20px;
@@ -60,7 +60,13 @@ const Trash = styled(BsFillTrashFill)`
   font-size: 20px;
   color: #fff;
 
+  transition: all 0.3s ease-in-out;
+
   display: ${(props) => (props.authid === props.userid) && !props.sharerid ? "block": "none"};
+
+  &:hover{
+    color: #dc3545;
+  }
 `;
 
 const Content = styled.div`
