@@ -77,8 +77,6 @@ export default function Header() {
     setValueMobile(event.target.value);
   }
 
-  console.log(users)
-
   return (
     <Fragment>
       <Container>

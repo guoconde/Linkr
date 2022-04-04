@@ -95,10 +95,11 @@ const HashtagLink = styled(Link)`
 
   &:hover {
     color: #264057;
+    transform: scale(1.02);
   }
 
   &:active{
-    transform: scale(1.05);
+    transform: scale(0.98);
   }
 
   color: #FFFFFF;
