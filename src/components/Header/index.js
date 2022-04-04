@@ -64,7 +64,11 @@ export default function Header() {
   function handleClickTitle() {
     handleHideLogout();
     navigate("/timeline");
-    window.scroll(0,0)
+    setValue("");
+    setValueMobile("");
+    setUsers(null);
+
+    window.scroll(0,0);
   }
 
   function handleDebounceInput(event) {
@@ -72,6 +76,8 @@ export default function Header() {
     setValue(event.target.value);
     setValueMobile(event.target.value);
   }
+
+  console.log(users)
 
   return (
     <Fragment>
@@ -84,7 +90,7 @@ export default function Header() {
               className="debounce-input"
               debounceTimeout={300}
               min="3"
-              placeholder="Search for people"
+              placeholder="Search for people and friends"
               value={value}
               onChange={event => handleDebounceInput(event)}
               onSubmit={event => event.preventDefault()}

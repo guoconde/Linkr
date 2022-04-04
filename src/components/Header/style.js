@@ -6,7 +6,7 @@ const Container = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 3;
+  z-index: 4;
 
   width: 100%;
   height: 72px;
@@ -147,6 +147,8 @@ const InputFindUser = styled.div`
   height: 45px;
   position: relative;
 
+  z-index: 3;
+
   .debounce-input {
     width: 563px;
     height: 45px;
@@ -171,6 +173,10 @@ const InputFindUser = styled.div`
   }
 
   .list-users {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
     width: 100%;
     min-height: 45px;
 
@@ -203,7 +209,7 @@ const InputFindUser = styled.div`
     }
 
     .name {
-      padding-right: 10px;
+      margin-left: 30px;
     }
 
     .status {
@@ -224,6 +230,21 @@ const InputFindUser = styled.div`
         background-color: #c5c5c5;
       }
     }
+
+    .listed-user{
+      position: relative;
+      border-radius: 50px;
+      height: 50px;
+
+      margin: 0 17px 0;
+
+      background-color: transparent;
+      transition: all .3s ease-in-out;
+
+      &:hover{
+        background-color: #afafaf;
+      }
+    }
   }
 `;
 
@@ -231,6 +252,8 @@ const InputFindUserMobile = styled.div`
   width: 100%;
   height: 45px;
   position: relative;
+
+  z-index: 3;
 
   .debounce-input-mobile {
     width: 100%;
@@ -256,6 +279,10 @@ const InputFindUserMobile = styled.div`
   }
 
   .list-users-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
     width: 100%;
     min-height: 45px;
 
@@ -272,6 +299,7 @@ const InputFindUserMobile = styled.div`
 
     div:first-child {
       margin-top: 30px;
+      font-weight: bold;
     }
 
     div {
@@ -285,7 +313,7 @@ const InputFindUserMobile = styled.div`
     }
     
     .name {
-      padding-right: 10px;
+      margin-left: 30px;
     }
 
     .status {
@@ -304,6 +332,21 @@ const InputFindUserMobile = styled.div`
         height: 10px;
         border-radius: 50%;
         background-color: #c5c5c5;
+      }
+    }
+
+    .listed-user{
+      position: relative;
+      border-radius: 50px;
+      height: 50px;
+
+      margin: 0 17px 0;
+
+      background-color: transparent;
+      transition: all .3s ease-in-out;
+
+      &:hover{
+        background-color: #afafaf;
       }
     }
   }

@@ -14,14 +14,14 @@ export default function ListUsers({ users, setUsers }) {
   }
 
   if (users.length === 0) {
-    return <div className="name">User not found</div>;
+    return <div>User not found</div>;
   }
 
   return (
     <>
       {users.map((el, i) => (
-        <div key={i} onClick={() => handleNavigate(`/user/${el.id}`)}>
-          <Image src={el.photo} alt={el.name} />
+        <div className="listed-user" key={i} onClick={() => handleNavigate(`/user/${el.id}`)}>
+          <Image src={el.photo} alt={el.name} positionControll={true} />
           <div className="name">{el.name}</div>
           <div className="status">
             {el.isFollowing && (

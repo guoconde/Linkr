@@ -40,6 +40,10 @@ const Image = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
+
+  position: ${(props) => props.positionControll ? "absolute" : "inherit"};
+  top: ${(props) => props.positionControll ? "0" : "inherit"};
+  left: ${(props) => props.positionControll ? "0" : "inherit"};
 `;
 
 const ContainerPost = styled.div`
