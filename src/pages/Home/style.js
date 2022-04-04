@@ -14,16 +14,38 @@ const Container = styled.div`
     display: flex;
   }
 
+  .styles_scroll-to-top__2A70v{
+    background-color: #171717;
+
+    transition: all 0.3s ease-in-out;
+
+    box-shadow: 0 9px 25px 0 rgb(0 0 0 / 28%);
+
+    &:hover{
+      background-color: #484848;
+    }
+  }
+
   @media screen and (max-width: 900px) {
     margin-top: 15px;
+    
+    .styles_scroll-to-top__2A70v{
+      display: none;
+    }
   }
+
   @media screen and (max-width: 650px){
     .all {
       width: 100%;
     }
+
     .main {
       justify-content: center;
       width: 100%;
+    }
+
+    .styles_scroll-to-top__2A70v{
+      display: none;
     }
   }
 `;
@@ -93,7 +115,7 @@ const FollowButton = styled.button`
   align-items: center;
   justify-content: center;
 
-  background: ${(props) => props.isFollowing ? "#FFF": "#1877F2"};
+  background: ${(props) => props.isFollowing ? "#FFF" : "#1877F2"};
   border-radius: 5px;
   border: none;
 
@@ -101,7 +123,7 @@ const FollowButton = styled.button`
   font-weight: 700;
   line-height: 17px;
   text-align: center;
-  color: ${(props) => props.isFollowing ? "#1877F2": "#FFF"};
+  color: ${(props) => props.isFollowing ? "#1877F2" : "#FFF"};
 
   cursor: pointer;
   ${(props) => props.isFollowing === null && "display: none;"}
@@ -112,10 +134,10 @@ const FollowButton = styled.button`
   }
 `;
 
-export { 
-  Container, 
+export {
+  Container,
   ContainerTitleProfile,
-  Content, 
+  Content,
   TitleOfSection,
   FollowButton
 }

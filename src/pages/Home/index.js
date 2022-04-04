@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
 import { useLocation } from "react-router";
+import { AiOutlineArrowUp } from "react-icons/ai";
 import useContexts from "../../hooks/useContexts";
 import PublishPost from "./PublishPost";
 import Trendings from "./Trendings";
 import Feed from "./Feed";
 import Title from "./Title";
+import ScrollToTop from "react-scroll-to-top";
 import { Container, Content } from "./style";
 
 export default function Home() {
@@ -25,12 +27,12 @@ export default function Home() {
   return (
     <Container onClick={() => handleHideLogout()}>
       <div className="all">
-        <Title 
-          userPhoto={userPhoto} 
-          title={title} 
-          isFollowing={isFollowing} 
+        <Title
+          userPhoto={userPhoto}
+          title={title}
+          isFollowing={isFollowing}
         />
-        
+
         <div className="main">
           <Content>
             <PublishPost />
@@ -39,10 +41,12 @@ export default function Home() {
               setUserPhoto={setUserPhoto}
             />
           </Content>
-          
+
           <Trendings />
         </div>
       </div>
+
+      <ScrollToTop smooth component={<AiOutlineArrowUp size={20} color="#FFFFFF" />} />
     </Container>
   );
 }
