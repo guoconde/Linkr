@@ -27,6 +27,9 @@ export default function Register() {
 
     try {
       const formData = { email, password,  username, picture }
+      if(formData.picture === ''){
+        formData.picture = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+      }
       
       if(email === '' || password === '' || username === ''){
         fireAlert("There are empty fields, fill them all to continue!");
