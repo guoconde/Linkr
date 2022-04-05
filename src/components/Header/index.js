@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DebounceInput } from "react-debounce-input";
 import ProfilePicture from "../ProfilePicture";
@@ -39,12 +39,6 @@ export default function Header() {
     handleHideSearchBar
   } = contexts.menu;
 
-  /*   
-  const [users, setUsers] = useState(null);
-  const [value, setValue] = useState("");
-  const [valueMobile, setValueMobile] = useState(""); 
-  */
-
   const handleKeyDown = async (event) => {
     if (event.key === 'Escape') {
       handleHideSearchBar();
@@ -74,6 +68,8 @@ export default function Header() {
 
   useEffect(() =>{
     handleHideSearchBar();
+
+    //eslint-disable-next-line
   }, [pathname]);
 
   if (pathname === "/" || pathname === "/sign-up") {
