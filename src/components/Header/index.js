@@ -25,11 +25,31 @@ export default function Header() {
   const contexts = useContexts();
   const navigate = useNavigate();
   const { auth, logout } = contexts.auth;
-  const { toggleLogout, handleToggleLogout, handleHideLogout } = contexts.menu;
   const { pathname } = useLocation();
+  const { 
+    toggleLogout,
+    handleToggleLogout,
+    handleHideLogout,
+    users,
+    setUsers,
+    value,
+    setValue,
+    valueMobile,
+    setValueMobile,
+    handleHideSearchBar
+  } = contexts.menu;
+
+  /*   
   const [users, setUsers] = useState(null);
   const [value, setValue] = useState("");
-  const [valueMobile, setValueMobile] = useState("");
+  const [valueMobile, setValueMobile] = useState(""); 
+  */
+
+  const handleKeyDown = async (event) => {
+    if (event.key === 'Escape') {
+      handleHideSearchBar();
+    }
+  }
 
   async function handleFindUsers(event) {
     let findAllUsers = event.target.value;
@@ -45,6 +65,7 @@ export default function Header() {
   useEffect(() => {
     if (!auth) {
       handleHideLogout();
+      handleHideSearchBar();
       navigate("/");
     }
 
@@ -52,9 +73,7 @@ export default function Header() {
   }, [auth]);
 
   useEffect(() =>{
-    setValue("");
-    setValueMobile("");
-    setUsers(null);
+    handleHideSearchBar();
   }, [pathname]);
 
   if (pathname === "/" || pathname === "/sign-up") {
@@ -64,9 +83,7 @@ export default function Header() {
   function handleClickTitle() {
     handleHideLogout();
     navigate("/timeline");
-    setValue("");
-    setValueMobile("");
-    setUsers(null);
+    handleHideSearchBar();
 
     window.scroll(0,0);
   }
@@ -90,6 +107,7 @@ export default function Header() {
               min="3"
               placeholder="Search for people and friends"
               value={value}
+              onKeyDown={handleKeyDown}
               onChange={event => handleDebounceInput(event)}
               onSubmit={event => event.preventDefault()}
             />
@@ -101,7 +119,7 @@ export default function Header() {
           </InputFindUser>
         </ContainerInputFindUser>
 
-        <UserIcon>
+        <UserIcon onClick={() => handleHideSearchBar()}>
           <DownArrow
             show={toggleLogout ? 1 : undefined}
             onClick={() => handleToggleLogout()}
@@ -121,6 +139,7 @@ export default function Header() {
                 min="3"
                 placeholder="Search for people and friends"
                 value={valueMobile}
+                onKeyDown={handleKeyDown}
                 onChange={event => handleDebounceInput(event)}
                 onSubmit={event => event.preventDefault()}
               />

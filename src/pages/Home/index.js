@@ -12,7 +12,7 @@ import { Container, Content } from "./style";
 export default function Home() {
   const contexts = useContexts();
   const { usernameSearched } = contexts.searchedUser;
-  const { handleHideLogout } = contexts.menu;
+  const { handleHideMenuItems } = contexts.menu;
   const { pathname } = useLocation();
   const [userPhoto, setUserPhoto] = useState(null);
   const [isFollowing, setIsFollowing] = useState(null);
@@ -25,7 +25,7 @@ export default function Home() {
     title.current = `${usernameSearched}'s posts`;
 
   return (
-    <Container onClick={() => handleHideLogout()}>
+    <Container onClick={() => handleHideMenuItems()}>
       <div className="all">
         <Title
           userPhoto={userPhoto}
