@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { fireAlert } from "../../../utils/alerts";
 import { MdOutlineLocationOn, MdOutlineLocationOff } from "react-icons/md";
+import GoogleMapReact from "google-map-react";
 import ReactTooltip from "react-tooltip";
 import useApi from "../../../hooks/useApi";
 import ProfilePicture from "../../../components/ProfilePicture";
@@ -16,7 +17,12 @@ import {
   TooltipContainer,
   SubmitContainer,
   LocationContainer,
-  ToggleTextLocation
+  ToggleTextLocation,
+  ModalMapContainer,
+  ModalMapContent,
+  StyledMdLocationOn,
+  StyledIoMdClose,
+  UserNameInModal
 } from "./style";
 import { findHashtags } from "../../../utils/findHastags";
 
@@ -34,7 +40,8 @@ export default function PublishPost() {
   const [error, setError] = useState("");
   const [isLocation, setIsLocation] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [userLocation, setUserLocation] = useState(localStorage.getItem('geolocation'));
+  const [userLocation, setUserLocation] = useState(JSON.parse(localStorage.getItem('geolocation')));
+  const [modalMap, setModalMap] = useState(false);
 
   useEffect(() => {
     if (!isLoading && userLocation) {
@@ -145,70 +152,104 @@ export default function PublishPost() {
   }
 
   return (
-    <Container onClick={() => handleHideLogout()}>
-      <ContainerProfilePicture>
-        <ProfilePicture />
-      </ContainerProfilePicture>
+    <>
+      <Container onClick={() => handleHideLogout()}>
+        <ContainerProfilePicture>
+          <ProfilePicture />
+        </ContainerProfilePicture>
 
-      <form onSubmit={handleSubmit}>
-        <Description>What are you going to share today?</Description>
+        <form onSubmit={handleSubmit}>
+          <Description>What are you going to share today?</Description>
 
-        <Input
-          type="url"
-          name="url"
-          value={formData.url}
-          placeholder="http://..."
-          onChange={handleInputChange}
-          disabled={isLoading}
-          required
-        />
+          <Input
+            type="url"
+            name="url"
+            value={formData.url}
+            placeholder="http://..."
+            onChange={handleInputChange}
+            disabled={isLoading}
+            required
+          />
 
-        <TextArea
-          ref={input}
-          name="description"
-          value={formData.description}
-          placeholder="Awesome article about #javascript"
-          onChange={handleInputChange}
-          disabled={isLoading}
-        />
-        <span className="error-message">{error}</span>
+          <TextArea
+            ref={input}
+            name="description"
+            value={formData.description}
+            placeholder="Awesome article about #javascript"
+            onChange={handleInputChange}
+            disabled={isLoading}
+          />
+          <span className="error-message">{error}</span>
 
-        <SubmitContainer>
-          <LocationContainer onClick={() => handleToggleLocation()}>
-            {isLocation || userLocation ?
-              <>
-                <MdOutlineLocationOn color="#707070" />
-                <ToggleTextLocation>Location enabled</ToggleTextLocation>
-              </>
-              :
-              <>
-                {errorMessage ?
-                  <>
-                    <TooltipContainer data-tip={errorMessage}>
-                      <MdOutlineLocationOff color="#dc3545" />
-                      <ToggleTextLocation error={true}>
+          <SubmitContainer>
+            <LocationContainer onClick={() => handleToggleLocation()}>
+              {isLocation || userLocation ?
+                <>
+                  <MdOutlineLocationOn color="#707070" />
+                  <ToggleTextLocation>Location enabled</ToggleTextLocation>
+                </>
+                :
+                <>
+                  {errorMessage ?
+                    <>
+                      <TooltipContainer data-tip={errorMessage}>
+                        <MdOutlineLocationOff color="#dc3545" />
+                        <ToggleTextLocation error={true}>
+                          Location disabled
+                        </ToggleTextLocation>
+                      </TooltipContainer>
+                      <ReactTooltip place="bottom" type="error" effect="float" />
+                    </>
+                    :
+                    <>
+                      <MdOutlineLocationOff color="#707070" />
+                      <ToggleTextLocation error={false}>
                         Location disabled
                       </ToggleTextLocation>
-                    </TooltipContainer>
-                    <ReactTooltip place="bottom" type="error" effect="float" />
-                  </>
-                  :
-                  <>
-                    <MdOutlineLocationOff color="#707070" />
-                    <ToggleTextLocation error={false}>
-                      Location disabled
-                    </ToggleTextLocation>
-                  </>
-                }
-              </>
-            }
-          </LocationContainer>
+                    </>
+                  }
+                </>
+              }
+            </LocationContainer>
 
-          <Button disabled={isLoading} onClick={() => setReloadPage(!reloadPage)}>
-            {isLoading ? "Publishing..." : "Publish"}
-          </Button>
-        </SubmitContainer>
-      </form>
-    </Container>
+            {isLocation &&
+              <button type="button" onClick={() => setModalMap(true)}>Google Map</button>
+            }
+
+            <Button disabled={isLoading} onClick={() => setReloadPage(!reloadPage)}>
+              {isLoading ? "Publishing..." : "Publish"}
+            </Button>
+          </SubmitContainer>
+        </form>
+      </Container>
+
+      {modalMap &&
+        <ModalMapContainer>
+          <ModalMapContent>
+            <UserNameInModal>User's location</UserNameInModal>
+
+            <GoogleMapReact
+              bootstrapURLKeys={{
+                key: "AIzaSyCiLNoIRap3ynkQ-x9BHNC_cv6qIQy43oo",
+                language: "en",
+                region: "US"
+              }}
+              defaultCenter={{ lat: userLocation.latitude, lng: userLocation.longitude }}
+              defaultZoom={15}
+            >
+              <StyledMdLocationOn
+                lat={userLocation.latitude}
+                lng={userLocation.longitude}
+              />
+            </GoogleMapReact>
+
+            <StyledIoMdClose
+              size={25}
+              onClick={() => setModalMap(false)}
+            />
+          </ModalMapContent>
+        </ModalMapContainer>
+      }
+    </>
   );
 }
