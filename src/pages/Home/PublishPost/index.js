@@ -15,8 +15,10 @@ import {
   SubmitContainer
 } from "./style";
 import { findHashtags } from "../../../utils/findHastags";
+/* 
 import ModalMapIcon from "../../../components/ModalMap/ModalMapIcon";
-import ModalMap from "../../../components/ModalMap";
+import ModalMap from "../../../components/ModalMap"; 
+*/
 
 export default function PublishPost() {
   const api = useApi();
@@ -27,7 +29,7 @@ export default function PublishPost() {
   const { auth, logout } = contexts.auth;
   const { reloadPage, setReloadPage } = contexts.post;
   const { handleHideLogout } = contexts.menu;
-  const { userLocation, modalMap, isLocation } = contexts.geolocation;
+  const { userLocation/* , modalMap, isLocation */ } = contexts.geolocation;
   const [formData, setFormData] = useState({ url: "", description: "", });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -136,9 +138,11 @@ export default function PublishPost() {
           <SubmitContainer>
             <Geolocation />
                        
+            {/*
             {isLocation &&
               <ModalMapIcon />
-            }
+            } 
+            */}
 
             <Button disabled={isLoading} onClick={() => setReloadPage(!reloadPage)}>
               {isLoading ? "Publishing..." : "Publish"}
@@ -147,9 +151,11 @@ export default function PublishPost() {
         </form>
       </Container>
      
+      {/*       
       {modalMap &&
         <ModalMap />
-      }
+      } 
+      */}
     </>
   );
 }

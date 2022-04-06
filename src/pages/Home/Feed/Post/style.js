@@ -66,6 +66,8 @@ const Name = styled(Link)`
   color: #fff;
   transition: all 0.3s ease;
 
+  margin-right: 5px;
+
   &:hover {
     color: #dbdbdb;
   }
@@ -190,7 +192,12 @@ const GrEditCustom = styled(GrEdit)`
       stroke: #856404;
     }
   }
+`;
 
+const ContainerUserInfoDescription = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 `;
 
 export {
@@ -204,5 +211,6 @@ export {
   MetaLink,
   ImagePost,
   ContainerAction,
-  GrEditCustom
+  GrEditCustom,
+  ContainerUserInfoDescription
 }

@@ -185,6 +185,8 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
     );
   }
 
+  console.log(data);
+
   return (
     <InfiniteScrooll
       pageStart={0}

@@ -8,14 +8,17 @@ import {
   UserNameInModal
 } from "./style";
 
-export default function ModalMap() {
+export default function ModalMap({ userName, latitude, longitude }) {
   const contexts = useContexts();
-  const { setModalMap, userLocation } = contexts.geolocation;
+  const { setModalMap } = contexts.geolocation;
+
+  console.log(latitude);
+  console.log(longitude);
 
   return (
     <ModalMapContainer>
       <ModalMapContent>
-        <UserNameInModal>User's location</UserNameInModal>
+        <UserNameInModal>{`${userName}'s location`}</UserNameInModal>
 
         <GoogleMapReact
           bootstrapURLKeys={{
@@ -23,12 +26,12 @@ export default function ModalMap() {
             language: "en",
             region: "US"
           }}
-          defaultCenter={{ lat: userLocation.latitude, lng: userLocation.longitude }}
+          defaultCenter={{ lat: latitude, lng: longitude }}
           defaultZoom={15}
         >
           <StyledMdLocationOn
-            lat={userLocation.latitude}
-            lng={userLocation.longitude}
+            lat={parseFloat(latitude)}
+            lng={parseFloat(longitude)}
           />
         </GoogleMapReact>
 
