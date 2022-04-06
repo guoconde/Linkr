@@ -128,11 +128,39 @@ const Button = styled.button`
   }
 `;
 
-export { 
-  Container, 
+const TooltipContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const SubmitContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const LocationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+`;
+
+const ToggleTextLocation = styled.p`
+  color: ${(props) => props.error ? "#dc3545" : "#707070"};
+`;
+
+export {
+  Container,
   ContainerProfilePicture,
-  Description, 
-  TextArea, 
-  Button, 
-  Input
+  Description,
+  TextArea,
+  Button,
+  Input,
+  TooltipContainer,
+  SubmitContainer,
+  LocationContainer,
+  ToggleTextLocation
 }
