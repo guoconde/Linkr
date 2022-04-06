@@ -8,7 +8,7 @@ import { LocationContainer, ToggleTextLocation, TooltipContainer  } from "./styl
 export default function Geolocation() {
   const contexts = useContexts();
   const { userLocation, setUserLocation } = contexts.geolocation;
-  const { isLocation, setIsLocation } = contexts.geolocation;
+  const [isLocation, setIsLocation] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {

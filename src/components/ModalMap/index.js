@@ -12,9 +12,6 @@ export default function ModalMap({ userName, latitude, longitude }) {
   const contexts = useContexts();
   const { setModalMap } = contexts.geolocation;
 
-  console.log(latitude);
-  console.log(longitude);
-
   return (
     <ModalMapContainer>
       <ModalMapContent>

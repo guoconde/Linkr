@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { findHashtags } from "../../../utils/findHastags";
 import { fireAlert } from "../../../utils/alerts";
 import Geolocation from "./Geolocation";
 import useApi from "../../../hooks/useApi";
@@ -14,11 +15,6 @@ import {
   TextArea,
   SubmitContainer
 } from "./style";
-import { findHashtags } from "../../../utils/findHastags";
-/* 
-import ModalMapIcon from "../../../components/ModalMap/ModalMapIcon";
-import ModalMap from "../../../components/ModalMap"; 
-*/
 
 export default function PublishPost() {
   const api = useApi();
@@ -29,7 +25,7 @@ export default function PublishPost() {
   const { auth, logout } = contexts.auth;
   const { reloadPage, setReloadPage } = contexts.post;
   const { handleHideLogout } = contexts.menu;
-  const { userLocation/* , modalMap, isLocation */ } = contexts.geolocation;
+  const { userLocation } = contexts.geolocation;
   const [formData, setFormData] = useState({ url: "", description: "", });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -69,7 +65,6 @@ export default function PublishPost() {
           latitude: userLocation.latitude.toString(),
           longitude: userLocation.longitude.toString()
         }
-        console.log(postGeolocation);
 
         await api.geolocation.insertGeolocation(postGeolocation, headers);
       }
@@ -103,8 +98,6 @@ export default function PublishPost() {
     return null;
   }
 
-  console.log(userLocation);
-
   return (
     <>
       <Container onClick={() => handleHideLogout()}>
@@ -136,13 +129,7 @@ export default function PublishPost() {
           <span className="error-message">{error}</span>
 
           <SubmitContainer>
-            <Geolocation />
-                       
-            {/*
-            {isLocation &&
-              <ModalMapIcon />
-            } 
-            */}
+            <Geolocation />            
 
             <Button disabled={isLoading} onClick={() => setReloadPage(!reloadPage)}>
               {isLoading ? "Publishing..." : "Publish"}
@@ -150,12 +137,6 @@ export default function PublishPost() {
           </SubmitContainer>
         </form>
       </Container>
-     
-      {/*       
-      {modalMap &&
-        <ModalMap />
-      } 
-      */}
     </>
   );
 }

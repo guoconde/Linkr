@@ -58,9 +58,6 @@ export default function Post({
   const { modalMap } = contexts.geolocation;
   const [loadPostComments, setLoadPostComments] = useState([]);
 
-  console.log(parseFloat(latitude));
-  console.log(parseFloat(longitude));
-
   return (
     <>
       <div>
