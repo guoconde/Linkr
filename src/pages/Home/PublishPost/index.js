@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { fireAlert } from "../../../utils/alerts";
+import Geolocation from "./Geolocation";
 import useApi from "../../../hooks/useApi";
 import ProfilePicture from "../../../components/ProfilePicture";
 import useContexts from "../../../hooks/useContexts";
@@ -10,26 +11,28 @@ import {
   ContainerProfilePicture,
   Description,
   Input,
-  TextArea
+  TextArea,
+  SubmitContainer
 } from "./style";
 import { findHashtags } from "../../../utils/findHastags";
+/* 
+import ModalMapIcon from "../../../components/ModalMap/ModalMapIcon";
+import ModalMap from "../../../components/ModalMap"; 
+*/
 
 export default function PublishPost() {
   const api = useApi();
-  const contexts = useContexts()
-  const { auth, logout } = contexts.auth
-  const { reloadPage, setReloadPage } = contexts.post
-  const { handleHideLogout } = contexts.menu
+  const contexts = useContexts();
+  const navigate = useNavigate();
+  const input = useRef();
+  const { pathname } = useLocation();
+  const { auth, logout } = contexts.auth;
+  const { reloadPage, setReloadPage } = contexts.post;
+  const { handleHideLogout } = contexts.menu;
+  const { userLocation/* , modalMap, isLocation */ } = contexts.geolocation;
   const [formData, setFormData] = useState({ url: "", description: "", });
   const [isLoading, setIsLoading] = useState(false);
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
   const [error, setError] = useState("");
-  const input = useRef();
-
-  function handleInputChange({ target }) {
-    setFormData({ ...formData, [target.name]: target.value });
-  }
 
   async function handleSubmit(e) {
     input.current.style.outlineColor = "#efefef";
@@ -57,6 +60,20 @@ export default function PublishPost() {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } }
 
       await api.posts.publish(formData, headers);
+
+      if (userLocation) {
+        const { data } = await api.posts.lastPost(auth.userId, headers);
+        const postGeolocation = {
+          userId: data.userId,
+          postId: data.postId,
+          latitude: userLocation.latitude.toString(),
+          longitude: userLocation.longitude.toString()
+        }
+        console.log(postGeolocation);
+
+        await api.geolocation.insertGeolocation(postGeolocation, headers);
+      }
+
       setFormData({ url: "", description: "", });
       setError("");
       setReloadPage(!reloadPage);
@@ -78,43 +95,67 @@ export default function PublishPost() {
     setIsLoading(false);
   }
 
+  function handleInputChange({ target }) {
+    setFormData({ ...formData, [target.name]: target.value });
+  }
+
   if (pathname.includes('hashtag') || pathname.includes('user')) {
     return null;
   }
 
+  console.log(userLocation);
+
   return (
-    <Container onClick={() => handleHideLogout()}>
-      <ContainerProfilePicture>
-        <ProfilePicture />
-      </ContainerProfilePicture>
+    <>
+      <Container onClick={() => handleHideLogout()}>
+        <ContainerProfilePicture>
+          <ProfilePicture />
+        </ContainerProfilePicture>
 
-      <form onSubmit={handleSubmit}>
-        <Description>What are you going to share today?</Description>
+        <form onSubmit={handleSubmit}>
+          <Description>What are you going to share today?</Description>
 
-        <Input
-          type="url"
-          name="url"
-          value={formData.url}
-          placeholder="http://..."
-          onChange={handleInputChange}
-          disabled={isLoading}
-          required
-        />
+          <Input
+            type="url"
+            name="url"
+            value={formData.url}
+            placeholder="http://..."
+            onChange={handleInputChange}
+            disabled={isLoading}
+            required
+          />
 
-        <TextArea
-          ref={input}
-          name="description"
-          value={formData.description}
-          placeholder="Awesome article about #javascript"
-          onChange={handleInputChange}
-          disabled={isLoading}
-        />
-        <span className="error-message">{error}</span>
+          <TextArea
+            ref={input}
+            name="description"
+            value={formData.description}
+            placeholder="Awesome article about #javascript"
+            onChange={handleInputChange}
+            disabled={isLoading}
+          />
+          <span className="error-message">{error}</span>
 
-        <Button disabled={isLoading} onClick={() => setReloadPage(!reloadPage)}>
-          {isLoading ? "Publishing..." : "Publish"}
-        </Button>
-      </form>
-    </Container>
+          <SubmitContainer>
+            <Geolocation />
+                       
+            {/*
+            {isLocation &&
+              <ModalMapIcon />
+            } 
+            */}
+
+            <Button disabled={isLoading} onClick={() => setReloadPage(!reloadPage)}>
+              {isLoading ? "Publishing..." : "Publish"}
+            </Button>
+          </SubmitContainer>
+        </form>
+      </Container>
+     
+      {/*       
+      {modalMap &&
+        <ModalMap />
+      } 
+      */}
+    </>
   );
 }

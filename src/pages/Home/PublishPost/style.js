@@ -128,11 +128,18 @@ const Button = styled.button`
   }
 `;
 
-export { 
-  Container, 
+const SubmitContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export {
+  Container,
   ContainerProfilePicture,
-  Description, 
-  TextArea, 
-  Button, 
-  Input
+  Description,
+  TextArea,
+  Button,
+  Input,
+  SubmitContainer
 }
