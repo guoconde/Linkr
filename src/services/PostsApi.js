@@ -5,6 +5,10 @@ export default class PostsApi {
     return api.post("/posts", data, headers);
   }
 
+  lastPost(userId, headers){
+    return api.get(`/posts/${userId}/lastPost`, headers);
+  }
+
   deletePost(id, headers) {
     return api.delete(`/posts/${id}`, headers);
   }

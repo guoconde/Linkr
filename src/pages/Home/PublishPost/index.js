@@ -27,7 +27,7 @@ export default function PublishPost() {
   const { auth, logout } = contexts.auth;
   const { reloadPage, setReloadPage } = contexts.post;
   const { handleHideLogout } = contexts.menu;
-  const { modalMap, isLocation } = contexts.geolocation;
+  const { userLocation, modalMap, isLocation } = contexts.geolocation;
   const [formData, setFormData] = useState({ url: "", description: "", });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -58,6 +58,20 @@ export default function PublishPost() {
       const headers = { headers: { Authorization: `Bearer ${auth?.token}` } }
 
       await api.posts.publish(formData, headers);
+
+      if (userLocation) {
+        const { data } = await api.posts.lastPost(auth.userId, headers);
+        const postGeolocation = {
+          userId: data.userId,
+          postId: data.postId,
+          latitude: userLocation.latitude.toString(),
+          longitude: userLocation.longitude.toString()
+        }
+        console.log(postGeolocation);
+
+        await api.geolocation.insertGeolocation(postGeolocation, headers);
+      }
+
       setFormData({ url: "", description: "", });
       setError("");
       setReloadPage(!reloadPage);
@@ -86,6 +100,8 @@ export default function PublishPost() {
   if (pathname.includes('hashtag') || pathname.includes('user')) {
     return null;
   }
+
+  console.log(userLocation);
 
   return (
     <>
