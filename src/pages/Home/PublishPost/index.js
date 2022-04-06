@@ -1,9 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { fireAlert } from "../../../utils/alerts";
-import { MdOutlineLocationOn, MdOutlineLocationOff } from "react-icons/md";
-import GoogleMapReact from "google-map-react";
-import ReactTooltip from "react-tooltip";
+import Geolocation from "./Geolocation";
 import useApi from "../../../hooks/useApi";
 import ProfilePicture from "../../../components/ProfilePicture";
 import useContexts from "../../../hooks/useContexts";
@@ -14,17 +12,11 @@ import {
   Description,
   Input,
   TextArea,
-  TooltipContainer,
-  SubmitContainer,
-  LocationContainer,
-  ToggleTextLocation,
-  ModalMapContainer,
-  ModalMapContent,
-  StyledMdLocationOn,
-  StyledIoMdClose,
-  UserNameInModal
+  SubmitContainer
 } from "./style";
 import { findHashtags } from "../../../utils/findHastags";
+import ModalMapIcon from "../../../components/ModalMap/ModalMapIcon";
+import ModalMap from "../../../components/ModalMap";
 
 export default function PublishPost() {
   const api = useApi();
@@ -35,27 +27,10 @@ export default function PublishPost() {
   const { auth, logout } = contexts.auth;
   const { reloadPage, setReloadPage } = contexts.post;
   const { handleHideLogout } = contexts.menu;
+  const { modalMap, isLocation } = contexts.geolocation;
   const [formData, setFormData] = useState({ url: "", description: "", });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [isLocation, setIsLocation] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [userLocation, setUserLocation] = useState(JSON.parse(localStorage.getItem('geolocation')));
-  const [modalMap, setModalMap] = useState(false);
-
-  useEffect(() => {
-    if (!isLoading && userLocation) {
-      setIsLocation(true);
-    }
-
-    if (errorMessage !== '') {
-      localStorage.removeItem('geolocation');
-      setUserLocation(null);
-      setIsLocation(false);
-    }
-
-    // eslint-disable-next-line
-  }, [errorMessage]);
 
   async function handleSubmit(e) {
     input.current.style.outlineColor = "#efefef";
@@ -108,45 +83,6 @@ export default function PublishPost() {
     setFormData({ ...formData, [target.name]: target.value });
   }
 
-  function handleToggleLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        const { latitude, longitude } = position.coords;
-
-        if (isLocation && userLocation) {
-          localStorage.removeItem('geolocation');
-          setUserLocation(null);
-          setIsLocation(false);
-        } else {
-          localStorage.setItem('geolocation', JSON.stringify({ latitude, longitude }));
-          setUserLocation({ latitude, longitude });
-          setIsLocation(true);
-        }
-
-        setErrorMessage('');
-      }, showError);
-    } else {
-      fireAlert("Geolocation is not supported by this browser.");
-    }
-  }
-
-  function showError(error) {
-    switch (error.code) {
-      case error.PERMISSION_DENIED:
-        setErrorMessage("The geolocation request was denied.");
-        break;
-      case error.POSITION_UNAVAILABLE:
-        setErrorMessage("Location information is unavailable.");
-        break;
-      case error.TIMEOUT:
-        setErrorMessage("The request to get user location timed out.");
-        break;
-      case error.UNKNOWN_ERROR:
-        setErrorMessage("An unknown error occurred.");
-        break;
-    }
-  }
-
   if (pathname.includes('hashtag') || pathname.includes('user')) {
     return null;
   }
@@ -182,38 +118,10 @@ export default function PublishPost() {
           <span className="error-message">{error}</span>
 
           <SubmitContainer>
-            <LocationContainer onClick={() => handleToggleLocation()}>
-              {isLocation || userLocation ?
-                <>
-                  <MdOutlineLocationOn color="#707070" />
-                  <ToggleTextLocation>Location enabled</ToggleTextLocation>
-                </>
-                :
-                <>
-                  {errorMessage ?
-                    <>
-                      <TooltipContainer data-tip={errorMessage}>
-                        <MdOutlineLocationOff color="#dc3545" />
-                        <ToggleTextLocation error={true}>
-                          Location disabled
-                        </ToggleTextLocation>
-                      </TooltipContainer>
-                      <ReactTooltip place="bottom" type="error" effect="float" />
-                    </>
-                    :
-                    <>
-                      <MdOutlineLocationOff color="#707070" />
-                      <ToggleTextLocation error={false}>
-                        Location disabled
-                      </ToggleTextLocation>
-                    </>
-                  }
-                </>
-              }
-            </LocationContainer>
-
+            <Geolocation />
+                       
             {isLocation &&
-              <button type="button" onClick={() => setModalMap(true)}>Google Map</button>
+              <ModalMapIcon />
             }
 
             <Button disabled={isLoading} onClick={() => setReloadPage(!reloadPage)}>
@@ -222,33 +130,9 @@ export default function PublishPost() {
           </SubmitContainer>
         </form>
       </Container>
-
+     
       {modalMap &&
-        <ModalMapContainer>
-          <ModalMapContent>
-            <UserNameInModal>User's location</UserNameInModal>
-
-            <GoogleMapReact
-              bootstrapURLKeys={{
-                key: "AIzaSyCiLNoIRap3ynkQ-x9BHNC_cv6qIQy43oo",
-                language: "en",
-                region: "US"
-              }}
-              defaultCenter={{ lat: userLocation.latitude, lng: userLocation.longitude }}
-              defaultZoom={15}
-            >
-              <StyledMdLocationOn
-                lat={userLocation.latitude}
-                lng={userLocation.longitude}
-              />
-            </GoogleMapReact>
-
-            <StyledIoMdClose
-              size={25}
-              onClick={() => setModalMap(false)}
-            />
-          </ModalMapContent>
-        </ModalMapContainer>
+        <ModalMap />
       }
     </>
   );
