@@ -199,7 +199,7 @@ const InputFindUser = styled.div`
     }
 
     div {
-      padding: 3px 17px;
+      padding: 0 10px 0 17px;
 
       display: flex;
       align-items: center;
@@ -210,22 +210,33 @@ const InputFindUser = styled.div`
 
     .name {
       margin-left: 30px;
+
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 19px;
+      line-height: 23px;
+
+      color: #515151;
     }
 
     .status {
       padding: 0px;
-      font-family: "Lato";
-      font-weight: 400;
-      font-size: 19px;
-      line-height: 23px;
-      color: #c5c5c5;
+
+      .is-following{
+        font-family: "Lato";
+        font-weight: 400;
+        font-size: 19px;
+        line-height: 23px;
+        color: #c5c5c5;
+      }
 
       .circle {
         padding: 0px;
         margin: 0px;
-        margin-right: 5px;
-        width: 10px;
-        height: 10px;
+        margin-right: 7px;
+        width: 8px;
+        height: 8px;
         border-radius: 50%;
         background-color: #c5c5c5;
       }
@@ -303,7 +314,7 @@ const InputFindUserMobile = styled.div`
     }
 
     div {
-      padding: 3px 17px;
+      padding: 0 10px 0 17px;
 
       display: flex;
       align-items: center;
@@ -314,22 +325,33 @@ const InputFindUserMobile = styled.div`
     
     .name {
       margin-left: 30px;
+
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 19px;
+      line-height: 23px;
+
+      color: #515151;
     }
 
     .status {
       padding: 0px;
-      font-family: "Lato";
-      font-weight: 400;
-      font-size: 19px;
-      line-height: 23px;
-      color: #c5c5c5;
+
+      .is-following{
+        font-family: "Lato";
+        font-weight: 400;
+        font-size: 19px;
+        line-height: 23px;
+        color: #c5c5c5;
+      }
 
       .circle {
         padding: 0px;
         margin: 0px;
-        margin-right: 5px;
-        width: 10px;
-        height: 10px;
+        margin-right: 7px;
+        width: 8px;
+        height: 8px;
         border-radius: 50%;
         background-color: #c5c5c5;
       }

@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router";
 import { Image } from "../../../pages/Home/Feed/Post/style";
 
-export default function ListUsers({ users, setUsers }) {
+export default function ListUsers({ users, handleHideSearchBar }) {
   const navigate = useNavigate();
 
   function handleNavigate(user) {
-    setUsers([]);
+    handleHideSearchBar();
     navigate(`${user}`);
   }
 
@@ -26,7 +26,8 @@ export default function ListUsers({ users, setUsers }) {
           <div className="status">
             {el.isFollowing && (
               <>
-                <div className="circle"></div> following
+                <div className="circle"></div> 
+                <span className="is-following">following</span>
               </>
             )}
           </div>

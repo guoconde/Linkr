@@ -110,7 +110,7 @@ export default function Header() {
             <SearchIcon />
 
             <div className="list-users">
-              <ListUsers users={users} setUsers={setUsers} />
+              <ListUsers users={users} handleHideSearchBar={handleHideSearchBar} />
             </div>
           </InputFindUser>
         </ContainerInputFindUser>
@@ -142,7 +142,7 @@ export default function Header() {
               <SearchIcon />
 
               <div className="list-users-mobile">
-                <ListUsers users={users} setUsers={setUsers} />
+                <ListUsers users={users} handleHideSearchBar={handleHideSearchBar} />
               </div>
             </InputFindUserMobile>
           </ContainerInputFindUserMobile>
