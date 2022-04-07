@@ -33,12 +33,8 @@ export default function Post({
   name,
   latitude,
   longitude,
-  edit,
-  setEdit,
-  comments,
   commentsCount,
   postIndex,
-  setComments,
   url,
   description,
   i,
@@ -48,9 +44,16 @@ export default function Post({
   metadataTitle,
   metadataDescription,
   metadataImage,
+  handleFeed,
+  edit,
+  setEdit,
   handleEdit,
+  comments,
+  setComments,
   handleComments,
-  handleFeed
+  map,
+  setMap,
+  handleMap
 }) {
 
   const contexts = useContexts();
@@ -90,7 +93,7 @@ export default function Post({
             <ContainerUserInfoDescription>
               <Name to={`/user/${userId}`}>{name}</Name>
               {(longitude && latitude) &&
-                <ModalMapIcon />
+                <ModalMapIcon postIndex={postIndex} handleMap={handleMap} />
               }
             </ContainerUserInfoDescription>
 
@@ -137,9 +140,10 @@ export default function Post({
         }
       </div>
 
-      {(modalMap && longitude && latitude) &&
+      {(modalMap && longitude && latitude && map === postIndex) &&
         <ModalMap
           userName={name}
+          setMap={setMap}
           latitude={parseFloat(latitude)}
           longitude={parseFloat(longitude)}
         />

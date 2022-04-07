@@ -33,6 +33,7 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
   const [hasMore, setHasmore] = useState(false);
   const [edit, setEdit] = useState(null);
   const [comments, setComments] = useState(null);
+  const [map, setMap] = useState(null);
   const [countPromisse, setCountPromisse] = useState()
   const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
 
@@ -159,6 +160,14 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
     }
   }
 
+  function handleMap(postIndex) {
+    if (map !== null && map === postIndex) {
+      setMap(null);
+    } else {
+      setMap(postIndex);
+    }    
+  }
+
   if (!data) {
     return (
       <Content>
@@ -224,10 +233,13 @@ export default function Feed({ setIsFollowing, setUserPhoto }) {
                 {...el}
                 edit={edit}
                 setEdit={setEdit}
+                handleEdit={handleEdit}
                 comments={comments}
                 setComments={setComments}
-                handleEdit={handleEdit}
                 handleComments={handleComments}
+                map={map}
+                setMap={setMap}
+                handleMap={handleMap}
                 handleFeed={handleFeed}
               />
             </div>

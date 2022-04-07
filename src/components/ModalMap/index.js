@@ -8,9 +8,14 @@ import {
   UserNameInModal
 } from "./style";
 
-export default function ModalMap({ userName, latitude, longitude }) {
+export default function ModalMap({ userName, latitude, longitude, setMap }) {
   const contexts = useContexts();
   const { setModalMap } = contexts.geolocation;
+
+  function handleCloseMap() {
+    setModalMap(false);
+    setMap(null);
+  }
 
   return (
     <ModalMapContainer>
@@ -34,7 +39,7 @@ export default function ModalMap({ userName, latitude, longitude }) {
 
         <StyledIoMdClose
           size={25}
-          onClick={() => setModalMap(false)}
+          onClick={() => handleCloseMap()}
         />
       </ModalMapContent>
     </ModalMapContainer>
