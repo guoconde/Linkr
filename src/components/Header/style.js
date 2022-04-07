@@ -179,6 +179,8 @@ const InputFindUser = styled.div`
 
     width: 100%;
     min-height: 45px;
+    max-height: 350px;
+    overflow-y: scroll;
 
     padding-top: 30px;
     padding-bottom: 15px;
@@ -188,18 +190,39 @@ const InputFindUser = styled.div`
 
     background-color: #e7e7e7;
     font-weight: regular;
-    color: red;
 
     position: absolute;
     top: 0;
     z-index: -1;
+
+    /* width */
+    ::-webkit-scrollbar {
+      width: 15px;
+    }
+  
+    /* Track */
+    ::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background-color: transparent;
+    }
+  
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(128,128,128,0.4);
+      border-radius: 10px;
+    }   
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: transparent; 
+    }
 
     div:first-child {
       margin-top: 30px;
     }
 
     div {
-      padding: 0 10px 0 17px;
+      padding: 0 10px 0 9px;
 
       display: flex;
       align-items: center;
@@ -248,6 +271,7 @@ const InputFindUser = styled.div`
       height: 50px;
 
       margin: 0 17px 0;
+      padding: 25px;
 
       background-color: transparent;
       transition: all .3s ease-in-out;
@@ -296,6 +320,8 @@ const InputFindUserMobile = styled.div`
 
     width: 100%;
     min-height: 45px;
+    max-height: 350px;
+    overflow-y: scroll;
 
     margin-top: -45px;
     padding-top: 30px;
@@ -306,7 +332,31 @@ const InputFindUserMobile = styled.div`
 
     background-color: #e7e7e7;
     font-weight: regular;
-    color: red;
+
+    position: absolute;
+    z-index: -1;
+    
+    /* width */
+    ::-webkit-scrollbar {
+      width: 15px;
+    }
+  
+    /* Track */
+    ::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background-color: transparent;
+    }
+  
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(128,128,128,0.4);
+      border-radius: 10px;
+    }   
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: transparent; 
+    }
 
     div:first-child {
       margin-top: 30px;
@@ -314,7 +364,7 @@ const InputFindUserMobile = styled.div`
     }
 
     div {
-      padding: 0 10px 0 17px;
+      padding: 0 10px 0 9px;
 
       display: flex;
       align-items: center;
@@ -363,6 +413,7 @@ const InputFindUserMobile = styled.div`
       height: 50px;
 
       margin: 0 17px 0;
+      padding: 25px;
 
       background-color: transparent;
       transition: all .3s ease-in-out;

@@ -18,7 +18,7 @@ const LoadCommentsContainer = styled.div`
   
     /* Handle */
     ::-webkit-scrollbar-thumb {
-      background-color:rgba(128,128,128,0.4);
+      background-color: rgba(128,128,128,0.4);
       border-radius: 10px;
     }
   }
