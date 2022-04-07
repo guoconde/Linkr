@@ -5,7 +5,7 @@ const ImageProfile = styled.img`
   height: ${(props) => props.sizeControl ? "39px" : "50px"};
   border-radius: 50%;
 
-  margin: ${(props) => props.titleMargin ? "0 18px 0 23px" : "0"};
+  margin: ${(props) => props.titleMargin ? "0 18px 0 25px" : "0"};
 
   cursor: ${(props) => props.cursorControl && "pointer"};
 
