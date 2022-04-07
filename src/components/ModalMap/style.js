@@ -36,7 +36,7 @@ const ModalMapContent = styled.div`
 `;
 
 const StyledMdLocationOn = styled(MdLocationOn)`
-  color: #d74c3d;
+  color: red;
   font-size: 30px;
 `;
 

@@ -26,7 +26,7 @@ export default function Header() {
   const navigate = useNavigate();
   const { auth, logout } = contexts.auth;
   const { pathname } = useLocation();
-  const { 
+  const {
     toggleLogout,
     handleToggleLogout,
     handleHideLogout,
@@ -47,7 +47,7 @@ export default function Header() {
 
   async function handleFindUsers(event) {
     let findAllUsers = event.target.value;
-    const headers = { headers: { Authorization: `Bearer ${auth?.token}`}};
+    const headers = { headers: { Authorization: `Bearer ${auth?.token}` } };
 
     if (event.target.value.length < 3) return setUsers(null);
 
@@ -66,7 +66,7 @@ export default function Header() {
     //eslint-disable-next-line
   }, [auth]);
 
-  useEffect(() =>{
+  useEffect(() => {
     handleHideSearchBar();
 
     //eslint-disable-next-line
@@ -81,7 +81,7 @@ export default function Header() {
     navigate("/timeline");
     handleHideSearchBar();
 
-    window.scroll(0,0);
+    window.scroll(0, 0);
   }
 
   function handleDebounceInput(event) {
@@ -121,7 +121,7 @@ export default function Header() {
             onClick={() => handleToggleLogout()}
           />
           <Logout onClick={() => logout()} show={toggleLogout ? 1 : undefined}>Logout</Logout>
-          <ProfilePicture cursorControl={true}/>
+          <ProfilePicture cursorControl={true} />
         </UserIcon>
       </Container>
 
@@ -140,7 +140,7 @@ export default function Header() {
                 onSubmit={event => event.preventDefault()}
               />
               <SearchIcon />
-              
+
               <div className="list-users-mobile">
                 <ListUsers users={users} setUsers={setUsers} />
               </div>

@@ -28,7 +28,9 @@ const Container = styled.div`
 
   @media screen and (max-width: 900px) {
     margin-top: 15px;
-    
+  }
+
+  @media screen and (max-width: 800px) {
     .styles_scroll-to-top__2A70v{
       display: none;
     }
@@ -42,10 +44,6 @@ const Container = styled.div`
     .main {
       justify-content: center;
       width: 100%;
-    }
-
-    .styles_scroll-to-top__2A70v{
-      display: none;
     }
   }
 `;

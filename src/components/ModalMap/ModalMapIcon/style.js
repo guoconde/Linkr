@@ -10,7 +10,7 @@ const StyledMdLocationOn = styled(MdLocationOn)`
   cursor: pointer;
 
   &:hover{
-    color: darkred;
+    color: #AE3910;
     transform: scale(1.2);
   }
 
