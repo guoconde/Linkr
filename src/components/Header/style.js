@@ -210,11 +210,6 @@ const InputFindUser = styled.div`
     ::-webkit-scrollbar-thumb {
       background-color: rgba(128,128,128,0.4);
       border-radius: 10px;
-    }   
-    
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-      background: transparent; 
     }
 
     div:first-child {
@@ -351,11 +346,6 @@ const InputFindUserMobile = styled.div`
     ::-webkit-scrollbar-thumb {
       background-color: rgba(128,128,128,0.4);
       border-radius: 10px;
-    }   
-    
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-      background: transparent; 
     }
 
     div:first-child {
