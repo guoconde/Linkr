@@ -17,6 +17,9 @@ export default function ModalMap({ userName, latitude, longitude, setMap }) {
     setMap(null);
   }
 
+  console.log(process.env.REACT_APP_API_BASE_URL);
+  console.log(process.env.API_GOOGLE_MAPS_KEY);
+
   return (
     <ModalMapContainer>
       <ModalMapContent>
@@ -24,7 +27,7 @@ export default function ModalMap({ userName, latitude, longitude, setMap }) {
 
         <GoogleMapReact
           bootstrapURLKeys={{
-            key: "AIzaSyCiLNoIRap3ynkQ-x9BHNC_cv6qIQy43oo",
+            key: process.env.API_GOOGLE_MAPS_KEY,
             language: "en",
             region: "US"
           }}
